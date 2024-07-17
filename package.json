@@ -9,9 +9,10 @@
     "lint": "next lint",
     "shadcn": "npx shadcn-ui@latest",
     "prisma": "prisma",
+    "db:generate": "prisma generate",
     "db:migrate": "prisma migrate",
-    "db:studio": "prisma studio",
-    "db:push": "prisma db push"
+    "db:push": "prisma db push",
+    "db:studio": "prisma studio"
   },
   "dependencies": {
     "@lucia-auth/adapter-prisma": "^4.0.1",
