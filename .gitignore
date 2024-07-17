@@ -16,6 +16,9 @@
 # production
 /build
 
+# prisma
+/prisma/migrations/migration_lock.toml
+
 # misc
 .DS_Store
 *.pem
@@ -27,6 +30,7 @@ yarn-error.log*
 
 # local env files
 .env*.local
+.env
 
 # vercel
 .vercel
