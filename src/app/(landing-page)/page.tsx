@@ -1,6 +1,8 @@
+import { routes } from "@/lib/routes";
 import { Button } from "@/shared/components/ui/button";
 import { Main } from "@/shared/components/ui/main";
 import { PageContainer } from "@/shared/components/ui/page-container";
+import Link from "next/link";
 
 export default function Page() {
   return (
@@ -16,7 +18,9 @@ export default function Page() {
           </p>
 
           <div className="space-y-4 md:space-x-4">
-            <Button className="w-full md:w-1/3">Get Started</Button>
+            <Button className="w-full md:w-1/3" asChild>
+              <Link href={routes.dashboard.root}>Get Started</Link>
+            </Button>
           </div>
         </div>
       </Main>
