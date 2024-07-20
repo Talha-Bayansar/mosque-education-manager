@@ -1,8 +1,8 @@
-"use session";
+"use server";
 
 import { getSession } from "@/features/auth/server-actions/auth";
 import { routes } from "@/lib/routes";
-import { redirect } from "next/navigation";
+import { redirect } from "@/navigation";
 
 type Props = {
   children: React.ReactNode;

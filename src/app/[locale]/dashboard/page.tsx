@@ -4,20 +4,20 @@ import { Header } from "@/shared/components/ui/header";
 import { Main } from "@/shared/components/ui/main";
 import { PageContainer } from "@/shared/components/ui/page-container";
 import { Title } from "@/shared/components/ui/title";
-import React from "react";
+import { getTranslations } from "next-intl/server";
 
-type Props = {};
+const DashboardPage = async () => {
+  const t = await getTranslations();
 
-const DashboardPage = (props: Props) => {
   return (
     <PageContainer>
       <Main>
         <Header>
-          <Title>Dashboard</Title>
+          <Title>{t("dashboard")}</Title>
         </Header>
         <form action={signout}>
           <Button type="submit" variant={"destructive"}>
-            Logout
+            {t("signOut")}
           </Button>
         </form>
       </Main>

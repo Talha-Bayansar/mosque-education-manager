@@ -16,8 +16,9 @@ import { AppForm } from "@/shared/components/app-form";
 import { useMutation } from "@tanstack/react-query";
 import { sendEmailVerificationCode } from "../server-actions/auth";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 import { routes } from "@/lib/routes";
+import { useTranslations } from "next-intl";
+import { useRouter } from "@/navigation";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -25,15 +26,16 @@ const formSchema = z.object({
 
 export const SendVerificationCodeForm = () => {
   const router = useRouter();
+  const t = useTranslations();
   const sendVerificationCodeMutation = useMutation({
     mutationFn: (email: string) => sendEmailVerificationCode(email),
     onSuccess: (_, variables) => {
-      toast.success("Verification code sent successfully");
+      toast.success(t("sendVerificationCodeSuccess"));
       const params = new URLSearchParams([["email", variables]]);
       router.push(`${routes.signin.root}?${params}`);
     },
     onError: () => {
-      toast.error("Failed to send verification code");
+      toast.error(t("sendVerificationCodeError"));
     },
   });
   const form = useForm<z.infer<typeof formSchema>>({
@@ -51,14 +53,16 @@ export const SendVerificationCodeForm = () => {
     <Form {...form}>
       <AppForm
         onSubmit={form.handleSubmit(onSubmit)}
-        submitButton={<Button type="submit">Send verification code</Button>}
+        submitButton={
+          <Button type="submit">{t("sendVerificationCode")}</Button>
+        }
       >
         <FormField
           control={form.control}
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>{t("email")}</FormLabel>
               <FormControl>
                 <Input placeholder="example@acme.com" {...field} />
               </FormControl>

@@ -4,6 +4,7 @@ import { Header } from "@/shared/components/ui/header";
 import { Main } from "@/shared/components/ui/main";
 import { PageContainer } from "@/shared/components/ui/page-container";
 import { Title } from "@/shared/components/ui/title";
+import { getTranslations } from "next-intl/server";
 
 type Props = {
   searchParams: {
@@ -11,14 +12,16 @@ type Props = {
   };
 };
 
-const SignInPage = ({ searchParams: { email } }: Props) => {
+const SignInPage = async ({ searchParams: { email } }: Props) => {
+  const t = await getTranslations();
+
   return (
-    <PageContainer>
-      <Main className="flex-grow">
+    <PageContainer className="md:grid md:place-items-center">
+      <Main className="md:max-w-[500px] flex-grow md:items-stretch">
         <Header>
-          <Title>Sign in</Title>
+          <Title>{t("signIn")}</Title>
         </Header>
-        <div className="flex flex-grow flex-col md:justify-center md:items-center">
+        <div className="flex-grow flex">
           {email ? (
             <VerifyCodeForm email={email} />
           ) : (

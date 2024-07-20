@@ -16,7 +16,7 @@ import { AppForm } from "@/shared/components/app-form";
 import { useMutation } from "@tanstack/react-query";
 import { signin } from "../server-actions/auth";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/navigation";
 import { routes } from "@/lib/routes";
 import {
   InputOTP,
@@ -24,6 +24,7 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from "@/shared/components/ui/input-otp";
+import { useTranslations } from "next-intl";
 
 type Props = {
   email: string;
@@ -35,13 +36,14 @@ const formSchema = z.object({
 
 export const VerifyCodeForm = ({ email }: Props) => {
   const router = useRouter();
+  const t = useTranslations();
   const sendVerificationCodeMutation = useMutation({
     mutationFn: (code: string) => signin(email, code),
     onSuccess: () => {
       router.push(routes.dashboard.root);
     },
     onError: () => {
-      toast.error("Invalid verification code");
+      toast.error(t("invalidVerificationCode"));
     },
   });
   const form = useForm<z.infer<typeof formSchema>>({
@@ -58,30 +60,33 @@ export const VerifyCodeForm = ({ email }: Props) => {
   return (
     <Form {...form}>
       <AppForm
+        className="w-max"
         onSubmit={form.handleSubmit(onSubmit)}
-        submitButton={<Button type="submit">Verify code</Button>}
+        submitButton={<Button type="submit">{t("verifyCode")}</Button>}
       >
         <FormField
           control={form.control}
           name="code"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Verification code</FormLabel>
+              <FormLabel>{t("verificationCode")}</FormLabel>
               <FormControl>
-                <InputOTP maxLength={8} {...field}>
-                  <InputOTPGroup>
-                    <InputOTPSlot index={0} />
-                    <InputOTPSlot index={1} />
-                    <InputOTPSlot index={2} />
-                    <InputOTPSlot index={3} />
-                  </InputOTPGroup>
-                  <InputOTPGroup>
-                    <InputOTPSlot index={4} />
-                    <InputOTPSlot index={5} />
-                    <InputOTPSlot index={6} />
-                    <InputOTPSlot index={7} />
-                  </InputOTPGroup>
-                </InputOTP>
+                <div className="flex justify-between">
+                  <InputOTP maxLength={8} {...field}>
+                    <InputOTPGroup>
+                      <InputOTPSlot index={0} />
+                      <InputOTPSlot index={1} />
+                      <InputOTPSlot index={2} />
+                      <InputOTPSlot index={3} />
+                    </InputOTPGroup>
+                    <InputOTPGroup>
+                      <InputOTPSlot index={4} />
+                      <InputOTPSlot index={5} />
+                      <InputOTPSlot index={6} />
+                      <InputOTPSlot index={7} />
+                    </InputOTPGroup>
+                  </InputOTP>
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>

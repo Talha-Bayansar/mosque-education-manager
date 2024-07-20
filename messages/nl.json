@@ -1,0 +1,15 @@
+{
+  "appName": "Moskee onderwijs beheerder",
+  "appDescription": "Eenvoudig het onderwijssysteem voor je moskee te beheren.",
+  "getStarted": "Aan de slag",
+  "signIn": "Aanmelden",
+  "signOut": "Afmelden",
+  "email": "E-mail",
+  "dashboard": "Dashboard",
+  "verificationCode": "Verificatiecode",
+  "verifyCode": "Code verifiëren",
+  "sendVerificationCode": "Verificatiecode verzenden",
+  "sendVerificationCodeSuccess": "Verificatiecode succesvol verzonden",
+  "sendVerificationCodeError": "Verificatiecode niet verzonden",
+  "invalidVerificationCode": "Ongeldige verificatiecode"
+}
