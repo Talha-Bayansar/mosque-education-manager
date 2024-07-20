@@ -1,8 +1,8 @@
 import { routes } from "@/lib/routes";
 import { Link } from "@/navigation";
 import { Button } from "@/shared/components/ui/button";
-import { Main } from "@/shared/components/ui/main";
-import { PageContainer } from "@/shared/components/ui/page-container";
+import { Main } from "@/shared/components/layout/main";
+import { PageContainer } from "@/shared/components/layout/page-container";
 import { getTranslations } from "next-intl/server";
 
 export default async function LandingPage() {

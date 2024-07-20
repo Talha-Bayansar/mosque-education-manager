@@ -52,6 +52,7 @@ export const SendVerificationCodeForm = () => {
   return (
     <Form {...form}>
       <AppForm
+        className="md:w-[500px]"
         onSubmit={form.handleSubmit(onSubmit)}
         submitButton={
           <Button type="submit">{t("sendVerificationCode")}</Button>

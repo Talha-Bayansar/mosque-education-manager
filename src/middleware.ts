@@ -3,7 +3,7 @@ import { locales } from "./config";
 
 export default createMiddleware({
   // A list of all locales that are supported
-  locales,
+  locales: locales,
 
   // Used when no locale matches
   defaultLocale: locales[0],
@@ -11,5 +11,5 @@ export default createMiddleware({
 
 export const config = {
   // Match only internationalized pathnames
-  matcher: ["/", `/(nl|tr})/:path*`],
+  matcher: ["/", `/(nl|tr)/:path*`],
 };

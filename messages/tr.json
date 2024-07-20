@@ -11,5 +11,6 @@
   "sendVerificationCode": "Doğrulama kodu gönder",
   "sendVerificationCodeSuccess": "Doğrulama kodu başarıyla gönderildi",
   "sendVerificationCodeError": "Doğrulama kodu gönderilmedi",
-  "invalidVerificationCode": "Geçersiz doğrulama kodu"
+  "invalidVerificationCode": "Geçersiz doğrulama kodu",
+  "selectLanguage": "Dil seçin"
 }

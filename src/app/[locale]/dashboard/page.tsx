@@ -1,9 +1,9 @@
 import { signout } from "@/features/auth/server-actions/auth";
 import { Button } from "@/shared/components/ui/button";
-import { Header } from "@/shared/components/ui/header";
-import { Main } from "@/shared/components/ui/main";
-import { PageContainer } from "@/shared/components/ui/page-container";
-import { Title } from "@/shared/components/ui/title";
+import { Header } from "@/shared/components/layout/header";
+import { Main } from "@/shared/components/layout/main";
+import { PageContainer } from "@/shared/components/layout/page-container";
+import { Title } from "@/shared/components/layout/title";
 import { getTranslations } from "next-intl/server";
 
 const DashboardPage = async () => {

@@ -11,5 +11,6 @@
   "sendVerificationCode": "Verificatiecode verzenden",
   "sendVerificationCodeSuccess": "Verificatiecode succesvol verzonden",
   "sendVerificationCodeError": "Verificatiecode niet verzonden",
-  "invalidVerificationCode": "Ongeldige verificatiecode"
+  "invalidVerificationCode": "Ongeldige verificatiecode",
+  "selectLanguage": "Selecteer taal"
 }
