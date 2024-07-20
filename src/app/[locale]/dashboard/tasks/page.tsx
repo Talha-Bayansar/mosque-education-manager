@@ -11,7 +11,7 @@ const TasksPage = async () => {
     <Main>
       <Header>
         <NavigationDrawer />
-        <Title>{t("dashboard")}</Title>
+        <Title>{t("tasks")}</Title>
       </Header>
     </Main>
   );

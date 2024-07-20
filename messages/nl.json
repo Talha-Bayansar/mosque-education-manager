@@ -12,5 +12,12 @@
   "sendVerificationCodeSuccess": "Verificatiecode succesvol verzonden",
   "sendVerificationCodeError": "Verificatiecode niet verzonden",
   "invalidVerificationCode": "Ongeldige verificatiecode",
-  "selectLanguage": "Selecteer taal"
+  "selectLanguage": "Selecteer taal",
+  "groups": "Groepen",
+  "meetups": "Bijeenkomsten",
+  "people": "Personen",
+  "posters": "Posters",
+  "settings": "Instellingen",
+  "tasks": "Taken",
+  "team": "Team"
 }

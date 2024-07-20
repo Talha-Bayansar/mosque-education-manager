@@ -12,5 +12,12 @@
   "sendVerificationCodeSuccess": "Doğrulama kodu başarıyla gönderildi",
   "sendVerificationCodeError": "Doğrulama kodu gönderilmedi",
   "invalidVerificationCode": "Geçersiz doğrulama kodu",
-  "selectLanguage": "Dil seçin"
+  "selectLanguage": "Dil seçin",
+  "groups": "Gruplar",
+  "meetups": "Sohbetler",
+  "people": "İnsanlar",
+  "posters": "Afişler",
+  "settings": "Ayarlar",
+  "tasks": "Görevler",
+  "team": "Ekip"
 }

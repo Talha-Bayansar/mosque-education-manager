@@ -11,7 +11,7 @@ const MeetupsPage = async () => {
     <Main>
       <Header>
         <NavigationDrawer />
-        <Title>{t("dashboard")}</Title>
+        <Title>{t("meetups")}</Title>
       </Header>
     </Main>
   );

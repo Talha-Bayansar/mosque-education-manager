@@ -11,7 +11,7 @@ const PeoplePage = async () => {
     <Main>
       <Header>
         <NavigationDrawer />
-        <Title>{t("dashboard")}</Title>
+        <Title>{t("people")}</Title>
       </Header>
     </Main>
   );

@@ -11,7 +11,7 @@ const TeamPage = async () => {
     <Main>
       <Header>
         <NavigationDrawer />
-        <Title>{t("dashboard")}</Title>
+        <Title>{t("team")}</Title>
       </Header>
     </Main>
   );

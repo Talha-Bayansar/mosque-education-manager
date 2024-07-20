@@ -11,7 +11,7 @@ const GroupsPage = async () => {
     <Main>
       <Header>
         <NavigationDrawer />
-        <Title>{t("dashboard")}</Title>
+        <Title>{t("groups")}</Title>
       </Header>
     </Main>
   );

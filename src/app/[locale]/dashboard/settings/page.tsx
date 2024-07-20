@@ -11,7 +11,7 @@ const SettingsPage = async () => {
     <Main>
       <Header>
         <NavigationDrawer />
-        <Title>{t("dashboard")}</Title>
+        <Title>{t("settings")}</Title>
       </Header>
     </Main>
   );

@@ -11,7 +11,7 @@ const PostersPage = async () => {
     <Main>
       <Header>
         <NavigationDrawer />
-        <Title>{t("dashboard")}</Title>
+        <Title>{t("posters")}</Title>
       </Header>
     </Main>
   );
