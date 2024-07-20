@@ -13,6 +13,7 @@
   "sendVerificationCodeError": "Doğrulama kodu gönderilmedi",
   "invalidVerificationCode": "Geçersiz doğrulama kodu",
   "selectLanguage": "Dil seçin",
+  "toggleMenu": "Menüyü aç / kapat",
   "groups": "Gruplar",
   "meetups": "Sohbetler",
   "people": "İnsanlar",
