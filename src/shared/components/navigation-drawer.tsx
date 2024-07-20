@@ -2,7 +2,14 @@
 
 import { Link } from "@/navigation";
 import { Button } from "./ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "./ui/sheet";
 import {
   Boxes,
   CalendarDays,
@@ -73,7 +80,11 @@ export const NavigationDrawer = async () => {
           <span className="sr-only">{t("toggleMenu")}</span>
         </Button>
       </SheetTrigger>
-      <SheetContent side="left" className="sm:max-w-xs">
+      <SheetContent aria-describedby="test" side="left" className="sm:max-w-xs">
+        <SheetHeader className="sr-only">
+          <SheetTitle>{t("navigationMenu")}</SheetTitle>
+          <SheetDescription>{t("navigationMenu")}</SheetDescription>
+        </SheetHeader>
         <nav className="flex flex-col gap-4 text-lg font-medium h-full">
           <div className="flex flex-col flex-grow gap-4 ">
             {navItems.map(({ label, href, Icon }) => (
