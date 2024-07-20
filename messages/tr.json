@@ -1,1 +1,15 @@
-{}
+{
+  "appName": "Cami eğitim yöneticisi",
+  "appDescription": "Caminiz için eğitim sistemini kolayca yönetin.",
+  "getStarted": "Başlayın",
+  "signIn": "Giriş yap",
+  "signOut": "Çıkış yap",
+  "email": "E-posta",
+  "dashboard": "Gösterge paneli",
+  "verificationCode": "Doğrulama kodu",
+  "verifyCode": "Kodu doğrulayın",
+  "sendVerificationCode": "Doğrulama kodu gönder",
+  "sendVerificationCodeSuccess": "Doğrulama kodu başarıyla gönderildi",
+  "sendVerificationCodeError": "Doğrulama kodu gönderilmedi",
+  "invalidVerificationCode": "Geçersiz doğrulama kodu"
+}
