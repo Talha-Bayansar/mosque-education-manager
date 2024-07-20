@@ -4,7 +4,7 @@ import { Main } from "@/shared/components/ui/main";
 import { PageContainer } from "@/shared/components/ui/page-container";
 import Link from "next/link";
 
-export default function Page() {
+export default function LandingPage() {
   return (
     <PageContainer>
       <Main className="justify-center md:items-center flex-grow gap-10">

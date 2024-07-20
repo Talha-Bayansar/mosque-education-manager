@@ -4,7 +4,10 @@ type Props = React.HTMLAttributes<HTMLElement>;
 
 export const Main = ({ children, className, ...rest }: Props) => {
   return (
-    <main className={cn("flex flex-col md:items-start", className)} {...rest}>
+    <main
+      className={cn("flex flex-col p-8 md:items-start", className)}
+      {...rest}
+    >
       {children}
     </main>
   );

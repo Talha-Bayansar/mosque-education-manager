@@ -64,7 +64,7 @@ export const sendEmail = async (email: string, verificationCode: string) => {
 export async function generateEmailVerificationCode(
   email: string
 ): Promise<string> {
-  await prisma.verificationCode.delete({
+  await prisma.verificationCode.deleteMany({
     where: { email: email.toLowerCase() },
   });
 
@@ -113,7 +113,7 @@ export async function signin(email: string, code: string) {
         sessionCookie.value,
         sessionCookie.attributes
       );
-      await prisma.verificationCode.delete({
+      await prisma.verificationCode.deleteMany({
         where: {
           id: verificationCode.id,
         },
@@ -137,7 +137,7 @@ export async function signin(email: string, code: string) {
           sessionCookie.value,
           sessionCookie.attributes
         );
-        await prisma.verificationCode.delete({
+        await prisma.verificationCode.deleteMany({
           where: {
             id: verificationCode.id,
           },
