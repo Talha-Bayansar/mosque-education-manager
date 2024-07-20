@@ -1,6 +1,6 @@
-"use server";
+"use client";
 
-import { Link } from "@/navigation";
+import { Link, usePathname } from "@/navigation";
 import { Button } from "./ui/button";
 import {
   Sheet,
@@ -22,8 +22,9 @@ import {
   User,
   Users,
 } from "lucide-react";
-import { getTranslations } from "next-intl/server";
 import { routes } from "@/lib/routes";
+import { useTranslations } from "next-intl";
+import { cn } from "@/lib/utils";
 
 type NavItem = {
   label: string;
@@ -31,8 +32,9 @@ type NavItem = {
   Icon: LucideIcon;
 };
 
-export const NavigationDrawer = async () => {
-  const t = await getTranslations();
+export const NavigationDrawer = () => {
+  const t = useTranslations();
+  const pathName = usePathname();
 
   const navItems: NavItem[] = [
     {
@@ -91,7 +93,12 @@ export const NavigationDrawer = async () => {
               <Link
                 key={label}
                 href={href}
-                className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+                className={cn(
+                  "flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground",
+                  {
+                    "text-foreground hover:text-primary": pathName === href,
+                  }
+                )}
               >
                 <Icon className="h-5 w-5" />
                 {label}
@@ -100,7 +107,13 @@ export const NavigationDrawer = async () => {
           </div>
           <Link
             href={routes.dashboard.settings.root}
-            className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+            className={cn(
+              "flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground",
+              {
+                "text-foreground hover:text-primary":
+                  pathName === routes.dashboard.settings.root,
+              }
+            )}
           >
             <Settings className="h-5 w-5" />
             {t("settings")}

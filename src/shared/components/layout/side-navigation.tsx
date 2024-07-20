@@ -1,4 +1,4 @@
-"use server";
+"use client";
 
 import { routes } from "@/lib/routes";
 import {
@@ -19,8 +19,9 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip";
-import { Link } from "@/navigation";
-import { getTranslations } from "next-intl/server";
+import { Link, usePathname } from "@/navigation";
+import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 type NavItem = {
   label: string;
@@ -28,8 +29,9 @@ type NavItem = {
   Icon: LucideIcon;
 };
 
-export const SideNavigation = async () => {
-  const t = await getTranslations();
+export const SideNavigation = () => {
+  const t = useTranslations();
+  const pathName = usePathname();
 
   const navItems: NavItem[] = [
     {
@@ -77,7 +79,12 @@ export const SideNavigation = async () => {
             {navItems.map(({ label, href, Icon }) => (
               <Tooltip key={label}>
                 <TooltipTrigger asChild>
-                  <Button variant="ghost">
+                  <Button
+                    variant="ghost"
+                    className={cn("text-muted-foreground", {
+                      "text-foreground hover:text-primary": pathName === href,
+                    })}
+                  >
                     <Link href={href}>
                       <Icon />
                       <span className="sr-only">{label}</span>
@@ -92,7 +99,13 @@ export const SideNavigation = async () => {
           </div>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant="ghost">
+              <Button
+                variant="ghost"
+                className={cn("text-muted-foreground", {
+                  "text-foreground hover:text-primary":
+                    pathName === routes.dashboard.settings.root,
+                })}
+              >
                 <Link href={routes.dashboard.settings.root}>
                   <Settings />
                   <span className="sr-only">{t("settings")}</span>
