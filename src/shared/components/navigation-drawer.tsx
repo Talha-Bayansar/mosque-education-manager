@@ -82,7 +82,7 @@ export const NavigationDrawer = () => {
           <span className="sr-only">{t("toggleMenu")}</span>
         </Button>
       </SheetTrigger>
-      <SheetContent aria-describedby="test" side="left" className="sm:max-w-xs">
+      <SheetContent aria-describedby="" side="left" className="sm:max-w-xs">
         <SheetHeader className="sr-only">
           <SheetTitle>{t("navigationMenu")}</SheetTitle>
           <SheetDescription>{t("navigationMenu")}</SheetDescription>

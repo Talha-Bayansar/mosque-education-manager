@@ -29,14 +29,16 @@ export default async function RootLayout({
 
   return (
     <html lang={locale}>
-      <body
-        className={cn(
-          "min-h-screen bg-background flex flex-col font-sans antialiased",
-          fontSans.variable
-        )}
-      >
+      <body className={cn("font-sans antialiased", fontSans.variable)}>
         <NextIntlClientProvider messages={messages}>
-          <ReactQueryProvider>{children}</ReactQueryProvider>
+          <ReactQueryProvider>
+            <div
+              className="flex flex-col min-h-screen w-full overflow-x-hidden bg-background"
+              vaul-drawer-wrapper=""
+            >
+              {children}
+            </div>
+          </ReactQueryProvider>
           <Toaster position="top-right" />
         </NextIntlClientProvider>
       </body>

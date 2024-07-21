@@ -1,5 +1,7 @@
 import { PeopleView } from "@/features/person/components/people-view";
 import { getPeople } from "@/features/person/server-actions/person";
+import { routes } from "@/lib/routes";
+import { Link } from "@/navigation";
 import { IconButton } from "@/shared/components/icon-button";
 import { Header } from "@/shared/components/layout/header";
 import { Main } from "@/shared/components/layout/main";
@@ -19,7 +21,9 @@ const PeoplePage = async () => {
         <Title>{t("people")}</Title>
         <div className="flex flex-grow items-center justify-end">
           <IconButton>
-            <Plus />
+            <Link href={routes.dashboard.people.create.root}>
+              <Plus />
+            </Link>
           </IconButton>
         </div>
       </Header>

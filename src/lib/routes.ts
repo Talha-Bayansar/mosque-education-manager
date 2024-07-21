@@ -11,6 +11,9 @@ export const routes = {
     },
     people: {
       root: "/dashboard/people",
+      create: {
+        root: "/dashboard/people/create",
+      },
     },
     posters: {
       root: "/dashboard/posters",
