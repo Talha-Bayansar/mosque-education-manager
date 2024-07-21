@@ -2,7 +2,6 @@
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Button } from "@/shared/components/ui/button";
 import {
   Form,
   FormControl,
@@ -11,7 +10,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/shared/components/ui/form";
-import { Input } from "@/shared/components/ui/input";
 import { AppForm } from "@/shared/components/app-form";
 import { useMutation } from "@tanstack/react-query";
 import { signin } from "../server-actions/auth";
@@ -21,10 +19,10 @@ import { routes } from "@/lib/routes";
 import {
   InputOTP,
   InputOTPGroup,
-  InputOTPSeparator,
   InputOTPSlot,
 } from "@/shared/components/ui/input-otp";
 import { useTranslations } from "next-intl";
+import { LoadingButton } from "@/shared/components/loading-button";
 
 type Props = {
   email: string;
@@ -62,7 +60,14 @@ export const VerifyCodeForm = ({ email }: Props) => {
       <AppForm
         className="w-max"
         onSubmit={form.handleSubmit(onSubmit)}
-        submitButton={<Button type="submit">{t("verifyCode")}</Button>}
+        submitButton={
+          <LoadingButton
+            isLoading={sendVerificationCodeMutation.isPending}
+            type="submit"
+          >
+            {t("verifyCode")}
+          </LoadingButton>
+        }
       >
         <FormField
           control={form.control}

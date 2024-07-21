@@ -2,7 +2,6 @@
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Button } from "@/shared/components/ui/button";
 import {
   Form,
   FormControl,
@@ -19,6 +18,7 @@ import { toast } from "sonner";
 import { routes } from "@/lib/routes";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/navigation";
+import { LoadingButton } from "@/shared/components/loading-button";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -55,7 +55,12 @@ export const SendVerificationCodeForm = () => {
         className="md:w-[500px]"
         onSubmit={form.handleSubmit(onSubmit)}
         submitButton={
-          <Button type="submit">{t("sendVerificationCode")}</Button>
+          <LoadingButton
+            isLoading={sendVerificationCodeMutation.isPending}
+            type="submit"
+          >
+            {t("sendVerificationCode")}
+          </LoadingButton>
         }
       >
         <FormField

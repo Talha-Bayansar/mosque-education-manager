@@ -2,8 +2,10 @@
 
 import { requireAuthentication } from "@/features/auth/server-actions/auth";
 import { prisma } from "@/lib/db";
+import { routes } from "@/lib/routes";
 import { Nullable } from "@/lib/utils";
 import type { Prisma } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 
 export const getPeople = async () => {
   const user = await requireAuthentication();
@@ -65,6 +67,8 @@ export const updatePerson = async (
         personInput.dateOfBirth && new Date(personInput.dateOfBirth.toString()),
     },
   });
+
+  revalidatePath(routes.dashboard.people.id(id).update.root);
 
   return person;
 };

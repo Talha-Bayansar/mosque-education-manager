@@ -1,11 +1,7 @@
 "use client";
-
-import { nl } from "date-fns/locale/nl";
-import { tr } from "date-fns/locale/tr";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Button } from "@/shared/components/ui/button";
 import {
   Form,
   FormControl,
@@ -16,15 +12,15 @@ import {
 } from "@/shared/components/ui/form";
 import { Input } from "@/shared/components/ui/input";
 import { AppForm } from "@/shared/components/app-form";
-import { format, type Locale } from "date-fns";
+import { format } from "date-fns";
 import { useMutation } from "@tanstack/react-query";
 import { createPerson } from "../server-actions/person";
 import { toast } from "sonner";
 import { useRouter } from "@/navigation";
 import { routes } from "@/lib/routes";
 import { useTranslations } from "next-intl";
-import { useParams } from "next/navigation";
 import { DateField } from "@/shared/components/date-field";
+import { LoadingButton } from "@/shared/components/loading-button";
 
 const formSchema = z.object({
   firstName: z.string().min(1).max(50),
@@ -37,15 +33,9 @@ const formSchema = z.object({
   houseNumber: z.string().optional(),
 });
 
-const locales: Record<string, Locale> = {
-  nl: nl,
-  tr: tr,
-};
-
 export const CreatePersonForm = () => {
   const t = useTranslations();
   const router = useRouter();
-  const { locale } = useParams<{ locale: string }>();
   const createPersonMutation = useMutation({
     mutationFn: (values: z.infer<typeof formSchema>) =>
       createPerson({
@@ -75,7 +65,14 @@ export const CreatePersonForm = () => {
     <Form {...form}>
       <AppForm
         onSubmit={form.handleSubmit(onSubmit)}
-        submitButton={<Button type="submit">{t("create")}</Button>}
+        submitButton={
+          <LoadingButton
+            isLoading={createPersonMutation.isPending}
+            type="submit"
+          >
+            {t("create")}
+          </LoadingButton>
+        }
       >
         <FormField
           control={form.control}
