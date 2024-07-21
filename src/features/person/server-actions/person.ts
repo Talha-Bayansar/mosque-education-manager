@@ -68,3 +68,13 @@ export const updatePerson = async (
 
   return person;
 };
+
+export const deletePerson = async (id: string) => {
+  const user = await requireAuthentication();
+
+  await prisma.person.delete({
+    where: { id, teamId: user.teamId },
+  });
+
+  return true;
+};

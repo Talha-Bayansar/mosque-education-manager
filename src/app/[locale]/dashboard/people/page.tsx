@@ -1,4 +1,4 @@
-import { PeopleView } from "@/features/person/components/people-view";
+import { PeopleTable } from "@/features/person/components/people-table";
 import { getPeople } from "@/features/person/server-actions/person";
 import { routes } from "@/lib/routes";
 import { Link } from "@/navigation";
@@ -27,7 +27,7 @@ const PeoplePage = async () => {
           </IconButton>
         </div>
       </Header>
-      <PeopleView peopleServer={people} />
+      <PeopleTable peopleServer={people} />
     </Main>
   );
 };

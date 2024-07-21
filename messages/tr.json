@@ -36,5 +36,13 @@
   "createPersonSuccess": "Kişi başarıyla oluşturuldu",
   "update": "Güncelle",
   "updatePerson": "Kişi güncelleme",
-  "updatePersonSuccess": "Kişi başarıyla güncellendi"
+  "updatePersonSuccess": "Kişi başarıyla güncellendi",
+  "delete": "Sil",
+  "actions": "İşlemer",
+  "openMenu": "Menü aç",
+  "deletePerson": "Kişiyi sil",
+  "deletePersonSuccess": "Kişi başarıyla silindi",
+  "warnAction": "Bu işleme devam etmek istediğinizden emin misiniz?",
+  "continue": "Devam et",
+  "cancel": "İptal et"
 }

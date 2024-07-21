@@ -36,5 +36,13 @@
   "createPersonSuccess": "Persoon werd succesvol aangemaakt",
   "update": "Bijwerken",
   "updatePerson": "Persoon bijwerken",
-  "updatePersonSuccess": "Persoon werd succesvol bijgewerkt"
+  "updatePersonSuccess": "Persoon werd succesvol bijgewerkt",
+  "delete": "Verwijderen",
+  "actions": "Acties",
+  "openMenu": "Open menu",
+  "deletePerson": "Persoon verwijderen",
+  "warnAction": "Weet je zeker dat je deze actie wilt voortzetten?",
+  "deletePersonSuccess": "Persoon werd succesvol verwijderd",
+  "continue": "Doorgaan",
+  "cancel": "Annuleren"
 }
