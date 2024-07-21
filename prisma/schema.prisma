@@ -1,34 +1,30 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider          = "postgresql"
+  url               = env("DATABASE_URL_DEV")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL_DEV")
 }
-
-// enum UserRole {
-//   ADMIN
-//   TEAM_MEMBER
-// }
 
 model User {
   id        String    @id @default(cuid())
   email     String    @unique
   name      String?
-  sessions  Session[]
+  teamId    String?
+  role      UserRole  @default(TEAM_MEMBER)
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+  sessions  Session[]
+  team      Team?     @relation(fields: [teamId], references: [id])
 }
 
 model Session {
   id        String   @id @default(cuid())
-  user      User     @relation(references: [id], fields: [userId], onDelete: Cascade)
   userId    String
   expiresAt DateTime
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model VerificationCode {
@@ -38,4 +34,35 @@ model VerificationCode {
   expiresAt DateTime
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Team {
+  id        String   @id @default(cuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  people    Person[]
+  members   User[]
+}
+
+model Person {
+  id          String    @id @default(cuid())
+  firstName   String
+  lastName    String
+  phoneNumber String?
+  dateOfBirth DateTime?
+  country     String?
+  city        String?
+  zipCode     String?
+  street      String?
+  houseNumber String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  teamId      String
+  Team        Team      @relation(fields: [teamId], references: [id], onDelete: Cascade)
+}
+
+enum UserRole {
+  ADMIN
+  TEAM_MEMBER
 }
