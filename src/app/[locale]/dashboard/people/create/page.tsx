@@ -12,7 +12,7 @@ const CreatePersonPage = async () => {
   return (
     <Main>
       <Header>
-        <Title>Create person</Title>
+        <Title>{t("createPerson")}</Title>
       </Header>
       <CreatePersonForm />
     </Main>

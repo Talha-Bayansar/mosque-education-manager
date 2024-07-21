@@ -28,6 +28,7 @@ import { createPerson } from "../server-actions/person";
 import { toast } from "sonner";
 import { useRouter } from "@/navigation";
 import { routes } from "@/lib/routes";
+import { useTranslations } from "next-intl";
 
 const formSchema = z.object({
   firstName: z.string().min(1).max(50),
@@ -41,11 +42,16 @@ const formSchema = z.object({
 });
 
 export const CreatePersonForm = () => {
+  const t = useTranslations();
   const router = useRouter();
   const createPersonMutation = useMutation({
     mutationFn: (values: z.infer<typeof formSchema>) => createPerson(values),
     onSuccess: () => {
-      toast.success("Person created successfully");
+      toast.success(t("createPersonSuccess"));
+      router.push(routes.dashboard.people.root);
+    },
+    onError: () => {
+      toast.error(t("somethingWentWrong"));
       router.push(routes.dashboard.people.root);
     },
   });
@@ -62,14 +68,14 @@ export const CreatePersonForm = () => {
     <Form {...form}>
       <AppForm
         onSubmit={form.handleSubmit(onSubmit)}
-        submitButton={<Button type="submit">Create</Button>}
+        submitButton={<Button type="submit">{t("create")}</Button>}
       >
         <FormField
           control={form.control}
           name="firstName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>First name*</FormLabel>
+              <FormLabel>{t("firstName")}*</FormLabel>
               <FormControl>
                 <Input placeholder="Talha" {...field} />
               </FormControl>
@@ -82,7 +88,7 @@ export const CreatePersonForm = () => {
           name="lastName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Last name*</FormLabel>
+              <FormLabel>{t("lastName")}*</FormLabel>
               <FormControl>
                 <Input placeholder="Bayansar" {...field} />
               </FormControl>
@@ -95,7 +101,7 @@ export const CreatePersonForm = () => {
           name="dateOfBirth"
           render={({ field }) => (
             <FormItem className="flex flex-col">
-              <FormLabel>Date of birth</FormLabel>
+              <FormLabel>{t("dateOfBirth")}</FormLabel>
               <FormControl>
                 <Popover>
                   <PopoverTrigger asChild>
@@ -110,7 +116,7 @@ export const CreatePersonForm = () => {
                         {field.value ? (
                           format(field.value, "PPP")
                         ) : (
-                          <span>Pick a date</span>
+                          <span>{t("dateOfBirth")}</span>
                         )}
                         <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                       </Button>
@@ -141,7 +147,7 @@ export const CreatePersonForm = () => {
           name="phoneNumber"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Phone number</FormLabel>
+              <FormLabel>{t("phoneNumber")}</FormLabel>
               <FormControl>
                 <Input
                   inputMode="tel"
@@ -158,9 +164,9 @@ export const CreatePersonForm = () => {
           name="city"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>City</FormLabel>
+              <FormLabel>{t("city")}</FormLabel>
               <FormControl>
-                <Input placeholder="City" {...field} />
+                <Input placeholder={t("city")} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -171,9 +177,9 @@ export const CreatePersonForm = () => {
           name="zipCode"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>ZIP</FormLabel>
+              <FormLabel>{t("zipCode")}</FormLabel>
               <FormControl>
-                <Input placeholder="ZIP" {...field} />
+                <Input placeholder={t("zipCode")} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -184,9 +190,9 @@ export const CreatePersonForm = () => {
           name="street"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Street</FormLabel>
+              <FormLabel>{t("street")}</FormLabel>
               <FormControl>
-                <Input placeholder="Street" {...field} />
+                <Input placeholder={t("street")} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -197,11 +203,11 @@ export const CreatePersonForm = () => {
           name="houseNumber"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>House number</FormLabel>
+              <FormLabel>{t("houseNumber")}</FormLabel>
               <FormControl>
                 <Input
                   inputMode="numeric"
-                  placeholder="House number"
+                  placeholder={t("houseNumber")}
                   {...field}
                 />
               </FormControl>

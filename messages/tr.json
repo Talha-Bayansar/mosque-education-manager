@@ -21,5 +21,17 @@
   "posters": "Afişler",
   "settings": "Ayarlar",
   "tasks": "Görevler",
-  "team": "Ekip"
+  "team": "Ekip",
+  "create": "Oluştur",
+  "createPerson": "Kişi oluştur",
+  "firstName": "İsim",
+  "lastName": "Soyisim",
+  "dateOfBirth": "Doğum tarihi",
+  "phoneNumber": "Telefon numarası",
+  "city": "Belediye",
+  "zipCode": "Posta kodu",
+  "street": "Sokak",
+  "houseNumber": "Ev numarası",
+  "somethingWentWrong": "Bir şeyler ters gitti",
+  "createPersonSuccess": "Kişi başarıyla oluşturuldu"
 }

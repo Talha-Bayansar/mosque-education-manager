@@ -21,5 +21,17 @@
   "posters": "Posters",
   "settings": "Instellingen",
   "tasks": "Taken",
-  "team": "Team"
+  "team": "Team",
+  "create": "Aanmaken",
+  "createPerson": "Persoon aanmaken",
+  "firstName": "Voornaam",
+  "lastName": "Achternaam",
+  "dateOfBirth": "Geboortedatum",
+  "phoneNumber": "Telefoonnummer",
+  "city": "Gemeente",
+  "zipCode": "Postcode",
+  "street": "Straat",
+  "houseNumber": "Huisnummer",
+  "somethingWentWrong": "Er ging iets mis",
+  "createPersonSuccess": "Persoon werd succesvol aangemaakt"
 }
