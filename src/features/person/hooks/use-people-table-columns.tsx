@@ -20,10 +20,12 @@ import { deletePerson } from "../server-actions/person";
 import { toast } from "sonner";
 import { getUsePeopleQueryKey } from "./use-people";
 import { AlertModal } from "@/shared/components/alert-modal";
+import { useMediaQuery } from "@/shared/hooks/use-media-query";
 
 export const usePeopleTableColumns = () => {
   const t = useTranslations();
   const queryClient = useQueryClient();
+  const isDesktop = useMediaQuery("(min-width: 768px)");
   const deletePersonMutation = useMutation({
     mutationFn: (personId: string) => deletePerson(personId),
     onSuccess: () => {
@@ -37,60 +39,110 @@ export const usePeopleTableColumns = () => {
     },
   });
 
-  const columns: ColumnDef<Person>[] = [
-    {
-      accessorKey: "firstName",
-      header: t("firstName"),
-    },
-    {
-      accessorKey: "lastName",
-      header: t("lastName"),
-    },
-    {
-      accessorKey: "dateOfBirth",
-      header: t("dateOfBirth"),
-      cell: ({ row }) => {
-        const dateOfBirth = row.original.dateOfBirth;
-        const formattedDate = dateOfBirth && format(dateOfBirth, "dd-MM-yyyy");
+  const columns: ColumnDef<Person>[] = isDesktop
+    ? [
+        {
+          accessorKey: "firstName",
+          header: t("firstName"),
+        },
+        {
+          accessorKey: "lastName",
+          header: t("lastName"),
+        },
+        {
+          accessorKey: "dateOfBirth",
+          header: t("dateOfBirth"),
+          cell: ({ row }) => {
+            const dateOfBirth = row.original.dateOfBirth;
+            const formattedDate =
+              dateOfBirth && format(dateOfBirth, "dd-MM-yyyy");
 
-        return formattedDate ?? "Not defined";
-      },
-    },
-    {
-      id: "actions",
-      cell: ({ row }) => {
-        const person = row.original;
+            return formattedDate ?? "Not defined";
+          },
+        },
+        {
+          id: "actions",
+          cell: ({ row }) => {
+            const person = row.original;
 
-        return (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <IconButton>
-                <span className="sr-only">{t("openMenu")}</span>
-                <MoreHorizontal />
-              </IconButton>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>{t("actions")}</DropdownMenuLabel>
-              <DropdownMenuItem>
-                <Link href={routes.dashboard.people.id(person.id).update.root}>
-                  {t("update")}
-                </Link>
-              </DropdownMenuItem>
-              <AlertModal
-                title={t("deletePerson")}
-                trigger={
-                  <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-                    {t("delete")}
+            return (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <IconButton>
+                    <span className="sr-only">{t("openMenu")}</span>
+                    <MoreHorizontal />
+                  </IconButton>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuLabel>{t("actions")}</DropdownMenuLabel>
+                  <DropdownMenuItem>
+                    <Link
+                      href={routes.dashboard.people.id(person.id).update.root}
+                    >
+                      {t("update")}
+                    </Link>
                   </DropdownMenuItem>
-                }
-                onContinue={() => deletePersonMutation.mutate(person.id)}
-              />
-            </DropdownMenuContent>
-          </DropdownMenu>
-        );
-      },
-    },
-  ];
+                  <AlertModal
+                    title={t("deletePerson")}
+                    trigger={
+                      <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                        {t("delete")}
+                      </DropdownMenuItem>
+                    }
+                    onContinue={() => deletePersonMutation.mutate(person.id)}
+                  />
+                </DropdownMenuContent>
+              </DropdownMenu>
+            );
+          },
+        },
+      ]
+    : [
+        {
+          accessorKey: "firstName",
+          header: t("firstName"),
+        },
+        {
+          accessorKey: "lastName",
+          header: t("lastName"),
+        },
+        {
+          id: "actions",
+          cell: ({ row }) => {
+            const person = row.original;
+
+            return (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <IconButton>
+                    <span className="sr-only">{t("openMenu")}</span>
+                    <MoreHorizontal />
+                  </IconButton>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuLabel>{t("actions")}</DropdownMenuLabel>
+                  <DropdownMenuItem>
+                    <Link
+                      href={routes.dashboard.people.id(person.id).update.root}
+                    >
+                      {t("update")}
+                    </Link>
+                  </DropdownMenuItem>
+                  <AlertModal
+                    title={t("deletePerson")}
+                    trigger={
+                      <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                        {t("delete")}
+                      </DropdownMenuItem>
+                    }
+                    onContinue={() => deletePersonMutation.mutate(person.id)}
+                  />
+                </DropdownMenuContent>
+              </DropdownMenu>
+            );
+          },
+        },
+      ];
 
   return columns;
 };
