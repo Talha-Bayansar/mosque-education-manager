@@ -45,5 +45,6 @@
   "warnAction": "Bu işleme devam etmek istediğinizden emin misiniz?",
   "continue": "Devam et",
   "cancel": "İptal et",
-  "pickDate": "Bir tarih seç"
+  "pickDate": "Bir tarih seç",
+  "noResults": "Sonuç yok"
 }

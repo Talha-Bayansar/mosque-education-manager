@@ -45,5 +45,6 @@
   "deletePersonSuccess": "Persoon werd succesvol verwijderd",
   "continue": "Doorgaan",
   "cancel": "Annuleren",
-  "pickDate": "Kies een datum"
+  "pickDate": "Kies een datum",
+  "noResults": "Geen resultaten"
 }
