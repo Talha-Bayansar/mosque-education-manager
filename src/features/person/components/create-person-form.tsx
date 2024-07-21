@@ -1,5 +1,7 @@
 "use client";
 
+import { nl } from "date-fns/locale/nl";
+import { tr } from "date-fns/locale/tr";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -22,13 +24,14 @@ import {
 import { cn } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
 import { Calendar } from "@/shared/components/ui/calendar";
-import { format } from "date-fns";
+import { format, type Locale } from "date-fns";
 import { useMutation } from "@tanstack/react-query";
 import { createPerson } from "../server-actions/person";
 import { toast } from "sonner";
 import { useRouter } from "@/navigation";
 import { routes } from "@/lib/routes";
 import { useTranslations } from "next-intl";
+import { useParams } from "next/navigation";
 
 const formSchema = z.object({
   firstName: z.string().min(1).max(50),
@@ -41,9 +44,15 @@ const formSchema = z.object({
   houseNumber: z.string().optional(),
 });
 
+const locales: Record<string, Locale> = {
+  nl: nl,
+  tr: tr,
+};
+
 export const CreatePersonForm = () => {
   const t = useTranslations();
   const router = useRouter();
+  const { locale } = useParams<{ locale: string }>();
   const createPersonMutation = useMutation({
     mutationFn: (values: z.infer<typeof formSchema>) => createPerson(values),
     onSuccess: () => {
@@ -126,6 +135,8 @@ export const CreatePersonForm = () => {
                     <Calendar
                       className="w-full"
                       captionLayout="dropdown-buttons"
+                      locale={locales[locale]}
+                      weekStartsOn={1}
                       fromDate={new Date(1900, 0, 1)}
                       toDate={new Date()}
                       mode="single"
