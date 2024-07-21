@@ -26,12 +26,13 @@ import { CalendarIcon } from "lucide-react";
 import { Calendar } from "@/shared/components/ui/calendar";
 import { format, type Locale } from "date-fns";
 import { useMutation } from "@tanstack/react-query";
-import { createPerson } from "../server-actions/person";
+import { updatePerson } from "../server-actions/person";
 import { toast } from "sonner";
 import { useRouter } from "@/navigation";
 import { routes } from "@/lib/routes";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
+import { type Person } from "@prisma/client";
 
 const formSchema = z.object({
   firstName: z.string().min(1).max(50),
@@ -49,20 +50,27 @@ const locales: Record<string, Locale> = {
   tr: tr,
 };
 
-export const CreatePersonForm = () => {
+type Props = {
+  person: Person;
+};
+
+export const UpdatePersonForm = ({ person }: Props) => {
   const t = useTranslations();
   const router = useRouter();
-  const { locale } = useParams<{ locale: string }>();
-  const createPersonMutation = useMutation({
+  const { locale, personId } = useParams<{
+    locale: string;
+    personId: string;
+  }>();
+  const updatePersonMutation = useMutation({
     mutationFn: (values: z.infer<typeof formSchema>) =>
-      createPerson({
+      updatePerson(personId, {
         ...values,
         dateOfBirth: values.dateOfBirth
           ? format(values.dateOfBirth, "yyyy-MM-dd")
           : undefined,
       }),
     onSuccess: () => {
-      toast.success(t("createPersonSuccess"));
+      toast.success(t("updatePersonSuccess"));
       router.push(routes.dashboard.people.root);
     },
     onError: () => {
@@ -72,17 +80,27 @@ export const CreatePersonForm = () => {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      firstName: person.firstName,
+      lastName: person.lastName,
+      phoneNumber: person.phoneNumber ?? undefined,
+      dateOfBirth: person.dateOfBirth ?? undefined,
+      city: person.city ?? undefined,
+      zipCode: person.zipCode ?? undefined,
+      street: person.street ?? undefined,
+      houseNumber: person.houseNumber ?? undefined,
+    },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    createPersonMutation.mutate(values);
+    updatePersonMutation.mutate(values);
   }
 
   return (
     <Form {...form}>
       <AppForm
         onSubmit={form.handleSubmit(onSubmit)}
-        submitButton={<Button type="submit">{t("create")}</Button>}
+        submitButton={<Button type="submit">{t("update")}</Button>}
       >
         <FormField
           control={form.control}

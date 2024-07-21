@@ -33,5 +33,8 @@
   "street": "Sokak",
   "houseNumber": "Ev numarası",
   "somethingWentWrong": "Bir şeyler ters gitti",
-  "createPersonSuccess": "Kişi başarıyla oluşturuldu"
+  "createPersonSuccess": "Kişi başarıyla oluşturuldu",
+  "update": "Güncelle",
+  "updatePerson": "Kişi güncelleme",
+  "updatePersonSuccess": "Kişi başarıyla güncellendi"
 }

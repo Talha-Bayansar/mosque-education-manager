@@ -14,6 +14,12 @@ export const routes = {
       create: {
         root: "/dashboard/people/create",
       },
+      id: (id: string) => ({
+        root: `/dashboard/people/${id}`,
+        update: {
+          root: `/dashboard/people/${id}/update`,
+        },
+      }),
     },
     posters: {
       root: "/dashboard/posters",

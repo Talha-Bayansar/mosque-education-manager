@@ -33,5 +33,8 @@
   "street": "Straat",
   "houseNumber": "Huisnummer",
   "somethingWentWrong": "Er ging iets mis",
-  "createPersonSuccess": "Persoon werd succesvol aangemaakt"
+  "createPersonSuccess": "Persoon werd succesvol aangemaakt",
+  "update": "Bijwerken",
+  "updatePerson": "Persoon bijwerken",
+  "updatePersonSuccess": "Persoon werd succesvol bijgewerkt"
 }
