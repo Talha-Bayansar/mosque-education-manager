@@ -16,14 +16,6 @@ import {
 } from "@/shared/components/ui/form";
 import { Input } from "@/shared/components/ui/input";
 import { AppForm } from "@/shared/components/app-form";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/shared/components/ui/popover";
-import { cn } from "@/lib/utils";
-import { CalendarIcon } from "lucide-react";
-import { Calendar } from "@/shared/components/ui/calendar";
 import { format, type Locale } from "date-fns";
 import { useMutation } from "@tanstack/react-query";
 import { createPerson } from "../server-actions/person";
@@ -32,6 +24,7 @@ import { useRouter } from "@/navigation";
 import { routes } from "@/lib/routes";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
+import { DateField } from "@/shared/components/date-field";
 
 const formSchema = z.object({
   firstName: z.string().min(1).max(50),
@@ -117,42 +110,7 @@ export const CreatePersonForm = () => {
             <FormItem className="flex flex-col">
               <FormLabel>{t("dateOfBirth")}</FormLabel>
               <FormControl>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <FormControl>
-                      <Button
-                        variant={"outline"}
-                        className={cn(
-                          "pl-3 text-left font-normal",
-                          !field.value && "text-muted-foreground"
-                        )}
-                      >
-                        {field.value ? (
-                          format(field.value, "PPP")
-                        ) : (
-                          <span>{t("dateOfBirth")}</span>
-                        )}
-                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                      </Button>
-                    </FormControl>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar
-                      className="w-full"
-                      captionLayout="dropdown-buttons"
-                      locale={locales[locale]}
-                      weekStartsOn={1}
-                      fromDate={new Date(1900, 0, 1)}
-                      toDate={new Date()}
-                      mode="single"
-                      selected={field.value}
-                      onSelect={field.onChange}
-                      disabled={(date) =>
-                        date > new Date() || date < new Date("1900-01-01")
-                      }
-                    />
-                  </PopoverContent>
-                </Popover>
+                <DateField field={field} />
               </FormControl>
               <FormMessage />
             </FormItem>

@@ -44,5 +44,6 @@
   "warnAction": "Weet je zeker dat je deze actie wilt voortzetten?",
   "deletePersonSuccess": "Persoon werd succesvol verwijderd",
   "continue": "Doorgaan",
-  "cancel": "Annuleren"
+  "cancel": "Annuleren",
+  "pickDate": "Kies een datum"
 }

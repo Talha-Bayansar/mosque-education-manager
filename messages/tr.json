@@ -44,5 +44,6 @@
   "deletePersonSuccess": "Kişi başarıyla silindi",
   "warnAction": "Bu işleme devam etmek istediğinizden emin misiniz?",
   "continue": "Devam et",
-  "cancel": "İptal et"
+  "cancel": "İptal et",
+  "pickDate": "Bir tarih seç"
 }

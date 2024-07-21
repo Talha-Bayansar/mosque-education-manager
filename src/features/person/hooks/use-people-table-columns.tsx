@@ -4,17 +4,6 @@ import { routes } from "@/lib/routes";
 import { Link } from "@/navigation";
 import { IconButton } from "@/shared/components/icon-button";
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/shared/components/ui/alert-dialog";
-import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -30,6 +19,7 @@ import { useTranslations } from "next-intl";
 import { deletePerson } from "../server-actions/person";
 import { toast } from "sonner";
 import { getUsePeopleQueryKey } from "./use-people";
+import { AlertModal } from "@/shared/components/alert-modal";
 
 export const usePeopleTableColumns = () => {
   const t = useTranslations();
@@ -86,29 +76,15 @@ export const usePeopleTableColumns = () => {
                   {t("update")}
                 </Link>
               </DropdownMenuItem>
-              <AlertDialog>
-                <AlertDialogTrigger asChild>
+              <AlertModal
+                title={t("deletePerson")}
+                trigger={
                   <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                     {t("delete")}
                   </DropdownMenuItem>
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>{t("deletePerson")}</AlertDialogTitle>
-                  </AlertDialogHeader>
-                  <AlertDialogDescription>
-                    {t("warnAction")}
-                  </AlertDialogDescription>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
-                    <AlertDialogAction
-                      onClick={() => deletePersonMutation.mutate(person.id)}
-                    >
-                      {t("continue")}
-                    </AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
+                }
+                onContinue={() => deletePersonMutation.mutate(person.id)}
+              />
             </DropdownMenuContent>
           </DropdownMenu>
         );
