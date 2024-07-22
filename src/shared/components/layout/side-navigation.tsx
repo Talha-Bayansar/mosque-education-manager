@@ -73,7 +73,7 @@ export const SideNavigation = () => {
 
   return (
     <TooltipProvider>
-      <aside className="fixed top-0 bottom-0 left-0 hidden flex-col border-r bg-background sm:flex">
+      <aside className="fixed top-0 bottom-0 left-0 z-50 hidden flex-col border-r bg-background sm:flex">
         <nav className="flex flex-col items-center gap-4 h-full px-2 sm:py-5">
           <div className="flex flex-col gap-4 items-center flex-grow">
             {navItems.map(({ label, href, Icon }) => (
