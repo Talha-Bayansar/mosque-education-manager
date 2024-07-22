@@ -55,6 +55,16 @@ export const CreatePersonForm = () => {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      phoneNumber: "",
+      dateOfBirth: new Date(),
+      city: "",
+      zipCode: "",
+      street: "",
+      houseNumber: "",
+    },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
