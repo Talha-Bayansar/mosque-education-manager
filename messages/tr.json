@@ -47,5 +47,12 @@
   "cancel": "İptal et",
   "pickDate": "Bir tarih seç",
   "noResults": "Sonuç yok",
-  "notspecified": "Belirtilmedi"
+  "notspecified": "Belirtilmedi",
+  "name": "İsim",
+  "createGroup": "Grup oluştur",
+  "createGroupSuccess": "Grup başarıyla oluşturuldu",
+  "updateGroup": "Grup güncelleme",
+  "deleteGroup": "Grubu sil",
+  "deleteGroupSuccess": "Grup başarıyla silindi",
+  "count": "Sayı"
 }

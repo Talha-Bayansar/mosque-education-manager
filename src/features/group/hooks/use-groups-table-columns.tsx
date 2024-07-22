@@ -1,8 +1,11 @@
-"use client";
-
-import { routes } from "@/lib/routes";
-import { Link } from "@/navigation";
-import { IconButton } from "@/shared/components/icon-button";
+import { useIsDesktop } from "@/shared/hooks/use-is-desktop";
+import { useQueryClient, useMutation } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
+import { toast } from "sonner";
+import { deleteGroup } from "../server-actions/group";
+import type { Group } from "@prisma/client";
+import { type ColumnDef } from "@tanstack/react-table";
+import { getUseGroupsQueryKey } from "./use-groups";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,53 +13,40 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/shared/components/ui/dropdown-menu";
-import type { Person } from "@prisma/client";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { ColumnDef } from "@tanstack/react-table";
-import { format } from "date-fns";
-import { MoreHorizontal } from "lucide-react";
-import { useTranslations } from "next-intl";
-import { deletePerson } from "../server-actions/person";
-import { toast } from "sonner";
-import { getUsePeopleQueryKey } from "./use-people";
+import { routes } from "@/lib/routes";
 import { AlertModal } from "@/shared/components/alert-modal";
-import { useIsDesktop } from "@/shared/hooks/use-is-desktop";
+import { IconButton } from "@/shared/components/icon-button";
+import { MoreHorizontal } from "lucide-react";
+import { Link } from "@/navigation";
 
-export const usePeopleTableColumns = () => {
+export const useGroupsTableColumns = () => {
   const t = useTranslations();
   const queryClient = useQueryClient();
   const isDesktop = useIsDesktop();
-  const deletePersonMutation = useMutation({
-    mutationFn: (personId: string) => deletePerson(personId),
+  const deleteGroupMutation = useMutation({
+    mutationFn: (groupId: string) => deleteGroup(groupId),
     onSuccess: () => {
-      toast.success(t("deletePersonSuccess"));
+      toast.success(t("deleteGroupSuccess"));
       queryClient.refetchQueries({
-        queryKey: getUsePeopleQueryKey(),
+        queryKey: getUseGroupsQueryKey(),
       });
     },
     onError: () => {
       toast.error(t("somethingWentWrong"));
     },
   });
-
-  const columns: ColumnDef<Person>[] = [
+  const columns: ColumnDef<Group & { _count: { members: number } }>[] = [
     {
-      accessorKey: "lastName",
-      header: t("lastName"),
+      accessorKey: "name",
+      header: t("name"),
     },
     {
-      accessorKey: "firstName",
-      header: t("firstName"),
-    },
-    {
-      accessorKey: "dateOfBirth",
-      header: t("dateOfBirth"),
-      enableHiding: true,
+      accessorKey: "members",
+      header: t("count"),
       cell: ({ row }) => {
-        const dateOfBirth = row.original.dateOfBirth;
-        const formattedDate = dateOfBirth && format(dateOfBirth, "dd-MM-yyyy");
+        const group = row.original;
 
-        return formattedDate ?? t("notSpecified");
+        return group._count.members;
       },
     },
     {
@@ -80,13 +70,13 @@ export const usePeopleTableColumns = () => {
                 </Link>
               </DropdownMenuItem>
               <AlertModal
-                title={t("deletePerson")}
+                title={t("deleteGroup")}
                 trigger={
                   <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                     {t("delete")}
                   </DropdownMenuItem>
                 }
-                onContinue={() => deletePersonMutation.mutate(person.id)}
+                onContinue={() => deleteGroupMutation.mutate(person.id)}
               />
             </DropdownMenuContent>
           </DropdownMenu>

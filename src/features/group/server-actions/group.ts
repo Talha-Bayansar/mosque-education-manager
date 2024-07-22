@@ -17,6 +17,13 @@ export const getGroups = async () => {
     orderBy: {
       name: "asc",
     },
+    include: {
+      _count: {
+        select: {
+          members: true,
+        },
+      },
+    },
   });
 
   return groups;

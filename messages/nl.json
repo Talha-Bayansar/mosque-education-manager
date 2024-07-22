@@ -47,5 +47,12 @@
   "cancel": "Annuleren",
   "pickDate": "Kies een datum",
   "noResults": "Geen resultaten",
-  "notSpecified": "Niet aangegeven"
+  "notSpecified": "Niet aangegeven",
+  "name": "Naam",
+  "createGroup": "Groep aanmaken",
+  "createGroupSuccess": "Groep werd succesvol aangemaakt",
+  "updateGroup": "Groep bijwerken",
+  "deleteGroup": "Groep verwijderen",
+  "deleteGroupSuccess": "Groep werd succesvol verwijderd",
+  "count": "Aantal"
 }
