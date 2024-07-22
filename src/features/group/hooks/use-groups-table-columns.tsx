@@ -84,6 +84,13 @@ export const useGroupsTableColumns = () => {
                   <UpdateGroupForm group={group} />
                 </DrawerContent>
               </Drawer>
+              <DropdownMenuItem>
+                <Link
+                  href={routes.dashboard.groups.id(group.id).updateMembers.root}
+                >
+                  {t("updateMembers")}
+                </Link>
+              </DropdownMenuItem>
               <AlertModal
                 title={t("deleteGroup")}
                 trigger={

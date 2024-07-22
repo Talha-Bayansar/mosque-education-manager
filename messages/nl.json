@@ -55,5 +55,8 @@
   "updateGroupSuccess": "Groep werd succesvol bijgewerkt",
   "deleteGroup": "Groep verwijderen",
   "deleteGroupSuccess": "Groep werd succesvol verwijderd",
-  "count": "Aantal"
+  "count": "Aantal",
+  "updateMembers": "Leden bijwerken",
+  "updateMembersSuccess": "Leden werden succesvol bijgewerkt",
+  "save": "Opslaan"
 }

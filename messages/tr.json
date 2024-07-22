@@ -55,5 +55,8 @@
   "updateGroupSuccess": "Grup başarıyla güncellendi",
   "deleteGroup": "Grubu sil",
   "deleteGroupSuccess": "Grup başarıyla silindi",
-  "count": "Sayı"
+  "count": "Sayı",
+  "updateMembers": "Üyeleri güncelleme",
+  "updateMembersSuccess": "Üyeler başarıyla güncellendi",
+  "save": "Kaydet"
 }

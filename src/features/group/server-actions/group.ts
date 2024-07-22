@@ -2,10 +2,8 @@
 
 import { requireAuthentication } from "@/features/auth/server-actions/auth";
 import { prisma } from "@/lib/db";
-import { routes } from "@/lib/routes";
 import { Nullable } from "@/lib/utils";
 import type { Prisma } from "@prisma/client";
-import { revalidatePath } from "next/cache";
 
 export const getGroups = async () => {
   const user = await requireAuthentication();
@@ -73,9 +71,27 @@ export const updateGroup = async (
     data: groupInput,
   });
 
-  revalidatePath(routes.dashboard.groups.id(id).update.root);
-
   return group;
+};
+
+export const updateGroupMembers = async (
+  groupId: string,
+  memberIdsToAdd: string[],
+  memberIdsToRemove: string[]
+) => {
+  const user = await requireAuthentication();
+
+  await prisma.group.update({
+    where: { id: groupId, teamId: user.teamId },
+    data: {
+      members: {
+        connect: memberIdsToAdd.map((id) => ({ id })),
+        disconnect: memberIdsToRemove.map((id) => ({ id })),
+      },
+    },
+  });
+
+  return true;
 };
 
 export const deleteGroup = async (id: string) => {

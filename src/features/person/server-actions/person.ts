@@ -22,6 +22,38 @@ export const getPeople = async () => {
   return people;
 };
 
+export const getPeopleByGroupId = async (
+  groupId: string,
+  onlyIds: boolean = false
+) => {
+  const user = await requireAuthentication();
+  let filter: any = {
+    orderBy: {
+      lastName: "asc",
+    },
+  };
+
+  if (onlyIds) {
+    filter = {
+      ...filter.orderBy,
+      select: {
+        id: true,
+      },
+    };
+  }
+
+  const people = await prisma.group
+    .findUnique({
+      where: { id: groupId, teamId: user.teamId },
+      select: {
+        members: filter,
+      },
+    })
+    .members();
+
+  return onlyIds ? people?.map((p) => p.id) : people;
+};
+
 export const getPersonById = async (id: string) => {
   const user = await requireAuthentication();
 

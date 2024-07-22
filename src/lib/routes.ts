@@ -10,8 +10,8 @@ export const routes = {
       },
       id: (id: string) => ({
         root: `/dashboard/groups/${id}`,
-        update: {
-          root: `/dashboard/groups/${id}/update`,
+        updateMembers: {
+          root: `/dashboard/groups/${id}/update-members`,
         },
       }),
     },
