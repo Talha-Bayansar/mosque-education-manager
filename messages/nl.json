@@ -64,5 +64,10 @@
   "updateMeetup": "Bijeenkomst bijwerken",
   "updateMeetupSuccess": "Bijeenkomst werd succesvol bijgewerkt",
   "deleteMeetup": "Bijeenkomst verwijderen",
-  "deleteMeetupSuccess": "Bijeenkomst werd succesvol verwijderd"
+  "deleteMeetupSuccess": "Bijeenkomst werd succesvol verwijderd",
+  "subject": "Onderwerp",
+  "speaker": "Spreeker",
+  "host": "Gastheer",
+  "date": "Datum",
+  "attendance": "Deelname"
 }

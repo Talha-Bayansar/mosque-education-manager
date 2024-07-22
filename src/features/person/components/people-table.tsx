@@ -12,7 +12,7 @@ type Props = {
 export const PeopleTable = ({ peopleServer }: Props) => {
   const columns = usePeopleTableColumns();
 
-  const { data } = usePeople(peopleServer);
+  const { data } = usePeople({ initialData: peopleServer });
 
   return <AppTable columns={columns} data={data!} />;
 };

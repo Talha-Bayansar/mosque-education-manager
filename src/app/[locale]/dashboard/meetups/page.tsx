@@ -1,3 +1,7 @@
+"use server";
+
+import { MeetupsTable } from "@/features/meetup/components/meetups-table";
+import { getMeetups } from "@/features/meetup/server-actions/meetup";
 import { routes } from "@/lib/routes";
 import { Link } from "@/navigation";
 import { AddButton } from "@/shared/components/add-button";
@@ -9,6 +13,7 @@ import { getTranslations } from "next-intl/server";
 
 const MeetupsPage = async () => {
   const t = await getTranslations();
+  const meetups = await getMeetups();
 
   return (
     <Main>
@@ -21,6 +26,7 @@ const MeetupsPage = async () => {
           </Link>
         </div>
       </Header>
+      <MeetupsTable meetupsServer={meetups} />
     </Main>
   );
 };

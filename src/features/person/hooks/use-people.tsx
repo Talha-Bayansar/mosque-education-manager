@@ -4,7 +4,11 @@ import type { Person } from "@prisma/client";
 
 export const getUsePeopleQueryKey = () => ["people"];
 
-export const usePeople = (initialData?: Person[]) => {
+type Props = {
+  initialData?: Person[];
+};
+
+export const usePeople = ({ initialData }: Props) => {
   const query = useQuery({
     queryKey: getUsePeopleQueryKey(),
     queryFn: async () => await getPeople(),

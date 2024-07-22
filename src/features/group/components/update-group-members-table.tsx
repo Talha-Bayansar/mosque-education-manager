@@ -10,7 +10,7 @@ type Props = {
 };
 
 export const UpdateGroupMembersTable = ({ peopleServer }: Props) => {
-  const { data } = usePeople(peopleServer);
+  const { data } = usePeople({ initialData: peopleServer });
   const columns = useGroupMembersTableColumns();
 
   return <AppTable data={data!} columns={columns} />;

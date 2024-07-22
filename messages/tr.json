@@ -64,5 +64,10 @@
   "updateMeetup": "Sohbet güncelleme",
   "updateMeetupSuccess": "Sohbet başarıyla güncellendi",
   "deleteMeetup": "Sohbeti sil",
-  "deleteMeetupSuccess": "Sohbet başarıyla silindi"
+  "deleteMeetupSuccess": "Sohbet başarıyla silindi",
+  "subject": "Konu",
+  "speaker": "Hatip",
+  "host": "Ev sahibi",
+  "date": "Tarih",
+  "attendance": "Katılım"
 }

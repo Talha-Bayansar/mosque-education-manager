@@ -10,26 +10,26 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/shared/components/ui/dropdown-menu";
-import type { Person } from "@prisma/client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { MoreHorizontal } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { deletePerson } from "../server-actions/person";
 import { toast } from "sonner";
-import { getUsePeopleQueryKey } from "./use-people";
 import { AlertModal } from "@/shared/components/alert-modal";
+import { deleteMeetup } from "../server-actions/meetup";
+import { getUseMeetupsQueryKey } from "../hooks/use-meetups";
+import type { Meetup, Person } from "@prisma/client";
 
-export const usePeopleTableColumns = () => {
+export const useMeetupsTableColumns = () => {
   const t = useTranslations();
   const queryClient = useQueryClient();
-  const deletePersonMutation = useMutation({
-    mutationFn: (personId: string) => deletePerson(personId),
+  const deleteMeetupMutation = useMutation({
+    mutationFn: (personId: string) => deleteMeetup(personId),
     onSuccess: () => {
-      toast.success(t("deletePersonSuccess"));
+      toast.success(t("deleteMeetupSuccess"));
       queryClient.refetchQueries({
-        queryKey: getUsePeopleQueryKey(),
+        queryKey: getUseMeetupsQueryKey(),
       });
     },
     onError: () => {
@@ -37,29 +37,42 @@ export const usePeopleTableColumns = () => {
     },
   });
 
-  const columns: ColumnDef<Person>[] = [
+  const columns: ColumnDef<
+    Meetup & { speaker: Person; _count: { attendance: number } }
+  >[] = [
     {
-      accessorKey: "lastName",
-      header: t("lastName"),
+      accessorKey: "subject",
+      header: t("subject"),
     },
     {
-      accessorKey: "firstName",
-      header: t("firstName"),
-    },
-    {
-      accessorKey: "dateOfBirth",
-      header: t("dateOfBirth"),
+      header: t("speaker"),
       cell: ({ row }) => {
-        const dateOfBirth = row.original.dateOfBirth;
-        const formattedDate = dateOfBirth && format(dateOfBirth, "dd-MM-yyyy");
+        const speaker = row.original.speaker;
 
-        return formattedDate ?? t("notSpecified");
+        return `${speaker.firstName} ${speaker.lastName}`;
+      },
+    },
+    {
+      header: t("date"),
+      cell: ({ row }) => {
+        const date = row.original.date;
+        const formattedDate = date && format(date, "dd-MM-yyyy HH:mm");
+
+        return formattedDate;
+      },
+    },
+    {
+      header: t("attendance"),
+      cell: ({ row }) => {
+        const attendance = row.original._count.attendance;
+
+        return attendance;
       },
     },
     {
       id: "actions",
       cell: ({ row }) => {
-        const person = row.original;
+        const meetup = row.original;
 
         return (
           <DropdownMenu>
@@ -72,18 +85,18 @@ export const usePeopleTableColumns = () => {
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>{t("actions")}</DropdownMenuLabel>
               <DropdownMenuItem>
-                <Link href={routes.dashboard.people.id(person.id).update.root}>
+                <Link href={routes.dashboard.meetups.id(meetup.id).update.root}>
                   {t("update")}
                 </Link>
               </DropdownMenuItem>
               <AlertModal
-                title={t("deletePerson")}
+                title={t("deleteMeetup")}
                 trigger={
                   <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                     {t("delete")}
                   </DropdownMenuItem>
                 }
-                onContinue={() => deletePersonMutation.mutate(person.id)}
+                onContinue={() => deleteMeetupMutation.mutate(meetup.id)}
               />
             </DropdownMenuContent>
           </DropdownMenu>
