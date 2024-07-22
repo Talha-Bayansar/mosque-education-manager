@@ -80,8 +80,11 @@ export const createPerson = async (
     data: {
       ...personInput,
       dateOfBirth: personInput.dateOfBirth && new Date(personInput.dateOfBirth),
-      teamId: user.teamId as string,
-      team: undefined,
+      team: {
+        connect: {
+          id: user.teamId,
+        },
+      },
     },
   });
 
@@ -100,6 +103,11 @@ export const updatePerson = async (
       ...personInput,
       dateOfBirth:
         personInput.dateOfBirth && new Date(personInput.dateOfBirth.toString()),
+      team: {
+        connect: {
+          id: user.teamId,
+        },
+      },
     },
   });
 

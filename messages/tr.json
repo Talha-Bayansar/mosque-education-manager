@@ -58,5 +58,11 @@
   "count": "Sayı",
   "updateMembers": "Üyeleri güncelleme",
   "updateMembersSuccess": "Üyeler başarıyla güncellendi",
-  "save": "Kaydet"
+  "save": "Kaydet",
+  "createMeetup": "Sohbet oluştur",
+  "createMeetupSuccess": "Sohbet başarıyla oluşturuldu",
+  "updateMeetup": "Sohbet güncelleme",
+  "updateMeetupSuccess": "Sohbet başarıyla güncellendi",
+  "deleteMeetup": "Sohbeti sil",
+  "deleteMeetupSuccess": "Sohbet başarıyla silindi"
 }

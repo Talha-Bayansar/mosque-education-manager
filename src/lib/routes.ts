@@ -17,6 +17,15 @@ export const routes = {
     },
     meetups: {
       root: "/dashboard/meetups",
+      create: {
+        root: "/dashboard/meetups/create",
+      },
+      id: (id: string) => ({
+        root: `/dashboard/meetups/${id}`,
+        update: {
+          root: `/dashboard/meetups/${id}/update`,
+        },
+      }),
     },
     people: {
       root: "/dashboard/people",

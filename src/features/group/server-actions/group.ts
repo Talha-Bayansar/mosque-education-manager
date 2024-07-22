@@ -52,8 +52,11 @@ export const createGroup = async (
   const group = await prisma.group.create({
     data: {
       ...groupInput,
-      teamId: user.teamId as string,
-      team: undefined,
+      team: {
+        connect: {
+          id: user.teamId,
+        },
+      },
     },
   });
 
@@ -68,7 +71,14 @@ export const updateGroup = async (
 
   const group = await prisma.group.update({
     where: { id, teamId: user.teamId },
-    data: groupInput,
+    data: {
+      ...groupInput,
+      team: {
+        connect: {
+          id: user.teamId,
+        },
+      },
+    },
   });
 
   return group;

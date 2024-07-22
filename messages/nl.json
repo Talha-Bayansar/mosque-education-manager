@@ -58,5 +58,11 @@
   "count": "Aantal",
   "updateMembers": "Leden bijwerken",
   "updateMembersSuccess": "Leden werden succesvol bijgewerkt",
-  "save": "Opslaan"
+  "save": "Opslaan",
+  "createMeetup": "Bijeenkomst aanmaken",
+  "createMeetupSuccess": "Bijeenkomst werd succesvol aangemaakt",
+  "updateMeetup": "Bijeenkomst bijwerken",
+  "updateMeetupSuccess": "Bijeenkomst werd succesvol bijgewerkt",
+  "deleteMeetup": "Bijeenkomst verwijderen",
+  "deleteMeetupSuccess": "Bijeenkomst werd succesvol verwijderd"
 }
