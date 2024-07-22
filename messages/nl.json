@@ -52,6 +52,7 @@
   "createGroup": "Groep aanmaken",
   "createGroupSuccess": "Groep werd succesvol aangemaakt",
   "updateGroup": "Groep bijwerken",
+  "updateGroupSuccess": "Groep werd succesvol bijgewerkt",
   "deleteGroup": "Groep verwijderen",
   "deleteGroupSuccess": "Groep werd succesvol verwijderd",
   "count": "Aantal"

@@ -52,6 +52,7 @@
   "createGroup": "Grup oluştur",
   "createGroupSuccess": "Grup başarıyla oluşturuldu",
   "updateGroup": "Grup güncelleme",
+  "updateGroupSuccess": "Grup başarıyla güncellendi",
   "deleteGroup": "Grubu sil",
   "deleteGroupSuccess": "Grup başarıyla silindi",
   "count": "Sayı"

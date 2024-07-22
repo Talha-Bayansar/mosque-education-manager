@@ -18,6 +18,13 @@ import { AlertModal } from "@/shared/components/alert-modal";
 import { IconButton } from "@/shared/components/icon-button";
 import { MoreHorizontal } from "lucide-react";
 import { Link } from "@/navigation";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/shared/components/ui/drawer";
+import { UpdateGroupForm } from "../components/update-group-form";
 
 export const useGroupsTableColumns = () => {
   const t = useTranslations();
@@ -52,7 +59,7 @@ export const useGroupsTableColumns = () => {
     {
       id: "actions",
       cell: ({ row }) => {
-        const person = row.original;
+        const group = row.original;
 
         return (
           <DropdownMenu>
@@ -64,11 +71,19 @@ export const useGroupsTableColumns = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>{t("actions")}</DropdownMenuLabel>
-              <DropdownMenuItem>
-                <Link href={routes.dashboard.people.id(person.id).update.root}>
-                  {t("update")}
-                </Link>
-              </DropdownMenuItem>
+              <Drawer>
+                <DrawerTrigger asChild>
+                  <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                    {t("update")}
+                  </DropdownMenuItem>
+                </DrawerTrigger>
+                <DrawerContent aria-describedby="">
+                  <DrawerTitle className="sr-only">
+                    {t("updateGroup")}
+                  </DrawerTitle>
+                  <UpdateGroupForm group={group} />
+                </DrawerContent>
+              </Drawer>
               <AlertModal
                 title={t("deleteGroup")}
                 trigger={
@@ -76,7 +91,7 @@ export const useGroupsTableColumns = () => {
                     {t("delete")}
                   </DropdownMenuItem>
                 }
-                onContinue={() => deleteGroupMutation.mutate(person.id)}
+                onContinue={() => deleteGroupMutation.mutate(group.id)}
               />
             </DropdownMenuContent>
           </DropdownMenu>
