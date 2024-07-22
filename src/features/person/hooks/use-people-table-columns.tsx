@@ -41,12 +41,12 @@ export const usePeopleTableColumns = () => {
 
   const columns: ColumnDef<Person>[] = [
     {
-      accessorKey: "firstName",
-      header: t("firstName"),
-    },
-    {
       accessorKey: "lastName",
       header: t("lastName"),
+    },
+    {
+      accessorKey: "firstName",
+      header: t("firstName"),
     },
     {
       accessorKey: "dateOfBirth",
@@ -56,7 +56,7 @@ export const usePeopleTableColumns = () => {
         const dateOfBirth = row.original.dateOfBirth;
         const formattedDate = dateOfBirth && format(dateOfBirth, "dd-MM-yyyy");
 
-        return formattedDate ?? "Not defined";
+        return formattedDate ?? t("notSpecified");
       },
     },
     {

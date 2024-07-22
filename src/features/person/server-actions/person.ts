@@ -14,6 +14,9 @@ export const getPeople = async () => {
     where: {
       teamId: user.teamId,
     },
+    orderBy: {
+      lastName: "asc",
+    },
   });
 
   return people;

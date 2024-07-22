@@ -46,5 +46,6 @@
   "continue": "Devam et",
   "cancel": "İptal et",
   "pickDate": "Bir tarih seç",
-  "noResults": "Sonuç yok"
+  "noResults": "Sonuç yok",
+  "notspecified": "Belirtilmedi"
 }

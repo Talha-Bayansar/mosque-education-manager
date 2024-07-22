@@ -46,5 +46,6 @@
   "continue": "Doorgaan",
   "cancel": "Annuleren",
   "pickDate": "Kies een datum",
-  "noResults": "Geen resultaten"
+  "noResults": "Geen resultaten",
+  "notSpecified": "Niet aangegeven"
 }

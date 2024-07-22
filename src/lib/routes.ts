@@ -5,6 +5,15 @@ export const routes = {
     root: "/dashboard",
     groups: {
       root: "/dashboard/groups",
+      create: {
+        root: "/dashboard/groups/create",
+      },
+      id: (id: string) => ({
+        root: `/dashboard/groups/${id}`,
+        update: {
+          root: `/dashboard/groups/${id}/update`,
+        },
+      }),
     },
     meetups: {
       root: "/dashboard/meetups",
