@@ -117,8 +117,10 @@ export const UpdateMeetupForm = ({ meetup }: Props) => {
                     })) || []
                   }
                   placeholder={t("selectSpeaker")}
-                  initialValue={meetup.speaker.id}
-                  initialLabel={`${meetup.speaker.lastName} ${meetup.speaker.firstName}`}
+                  selectedItem={{
+                    label: `${meetup.speaker.lastName} ${meetup.speaker.firstName}`,
+                    value: meetup.speaker.id,
+                  }}
                   isLoading={isLoading}
                   onSelect={(value) => form.setValue("speakerId", value)}
                   onQueryChange={setQuery}
