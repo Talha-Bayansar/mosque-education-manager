@@ -2,8 +2,10 @@
 
 import { requireAuthentication } from "@/features/auth/server-actions/auth";
 import { prisma } from "@/lib/db";
+import { routes } from "@/lib/routes";
 import { Nullable } from "@/lib/utils";
 import type { Prisma } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 
 export const getMeetups = async () => {
   const user = await requireAuthentication();
@@ -35,6 +37,9 @@ export const getMeetupById = async (id: string) => {
     where: {
       id,
       teamId: user.teamId,
+    },
+    include: {
+      speaker: true,
     },
   });
 
@@ -82,7 +87,7 @@ export const updateMeetup = async (
     },
   });
 
-  //   revalidatePath(routes.dashboard.people.id(id).update.root);
+  revalidatePath(routes.dashboard.meetups.id(id).update.root);
 
   return meetup;
 };

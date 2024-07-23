@@ -23,7 +23,8 @@ export type SearchSelectItem = {
 
 type Props = {
   items: SearchSelectItem[];
-  selectedValue?: string;
+  initialValue?: string;
+  initialLabel?: string;
   placeholder: string;
   isLoading?: boolean;
   onSelect: (value: string) => void;
@@ -32,7 +33,8 @@ type Props = {
 
 export const SearchSelect = ({
   items,
-  selectedValue,
+  initialValue,
+  initialLabel,
   placeholder,
   isLoading,
   onSelect,
@@ -40,14 +42,14 @@ export const SearchSelect = ({
 }: Props) => {
   const t = useTranslations();
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(selectedValue || "");
+  const [value, setValue] = useState(initialValue || "");
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button variant="outline" role="combobox" className="justify-between">
           {value
-            ? items.find((item) => item.value === value)?.label
+            ? items.find((item) => item.value === value)?.label || initialLabel
             : placeholder}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
