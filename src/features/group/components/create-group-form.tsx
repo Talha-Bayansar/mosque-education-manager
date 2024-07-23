@@ -65,7 +65,7 @@ export const CreateGroupForm = () => {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("name")}</FormLabel>
+              <FormLabel>{t("name")}*</FormLabel>
               <FormControl>
                 <Input placeholder={t("name")} {...field} />
               </FormControl>

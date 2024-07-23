@@ -22,6 +22,29 @@ export const getPeople = async () => {
   return people;
 };
 
+export const searchPeople = async (query?: string) => {
+  const user = await requireAuthentication();
+
+  if (!query) {
+    return [];
+  }
+
+  const people = await prisma.person.findMany({
+    where: {
+      OR: [
+        { lastName: { contains: query, mode: "insensitive" } },
+        { firstName: { contains: query, mode: "insensitive" } },
+      ],
+      teamId: user.teamId,
+    },
+    orderBy: {
+      lastName: "asc",
+    },
+  });
+
+  return people;
+};
+
 export const getPeopleByGroupId = async (
   groupId: string,
   onlyIds: boolean = false

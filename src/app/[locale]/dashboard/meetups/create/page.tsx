@@ -1,3 +1,4 @@
+import { CreateMeetupForm } from "@/features/meetup/components/create-meetup-form";
 import { routes } from "@/lib/routes";
 import { Header } from "@/shared/components/layout/header";
 import { Main } from "@/shared/components/layout/main";
@@ -29,6 +30,7 @@ const CreateMeetupPage = async () => {
         <Title>{t("createMeetup")}</Title>
       </Header>
       <NavigationHistory items={history} />
+      <CreateMeetupForm />
     </Main>
   );
 };

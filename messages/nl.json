@@ -69,5 +69,7 @@
   "speaker": "Spreeker",
   "host": "Gastheer",
   "date": "Datum",
-  "attendance": "Deelname"
+  "attendance": "Deelname",
+  "selectSpeaker": "Selecteer spreeker",
+  "search": "Zoek"
 }

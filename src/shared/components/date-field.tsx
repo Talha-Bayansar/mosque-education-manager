@@ -7,7 +7,7 @@ import { CalendarIcon } from "lucide-react";
 import { FormControl } from "./ui/form";
 import { Calendar } from "./ui/calendar";
 import { format, type Locale } from "date-fns";
-import type { ControllerRenderProps, FieldValues } from "react-hook-form";
+import type { ControllerRenderProps } from "react-hook-form";
 import { nl } from "date-fns/locale/nl";
 import { tr } from "date-fns/locale/tr";
 import { useParams } from "next/navigation";
@@ -15,6 +15,7 @@ import { useTranslations } from "next-intl";
 
 type Props = {
   field: ControllerRenderProps<any>;
+  enableFutureSelection?: boolean;
 };
 
 const locales: Record<string, Locale> = {
@@ -22,7 +23,7 @@ const locales: Record<string, Locale> = {
   tr: tr,
 };
 
-export const DateField = ({ field }: Props) => {
+export const DateField = ({ field, enableFutureSelection = false }: Props) => {
   const t = useTranslations();
   const { locale } = useParams<{
     locale: string;
@@ -55,13 +56,10 @@ export const DateField = ({ field }: Props) => {
           locale={locales[locale]}
           weekStartsOn={1}
           fromDate={new Date(1900, 0, 1)}
-          toDate={new Date()}
+          toDate={enableFutureSelection ? undefined : new Date()}
           mode="single"
           selected={field.value}
           onSelect={field.onChange}
-          disabled={(date) =>
-            date > new Date() || date < new Date("1900-01-01")
-          }
         />
       </PopoverContent>
     </Popover>

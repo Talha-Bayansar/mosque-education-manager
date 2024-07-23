@@ -69,5 +69,7 @@
   "speaker": "Hatip",
   "host": "Ev sahibi",
   "date": "Tarih",
-  "attendance": "Katılım"
+  "attendance": "Katılım",
+  "selectSpeaker": "Hatip seçin",
+  "search": "Ara"
 }

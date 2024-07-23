@@ -2,6 +2,7 @@
 
 import { requireAuthentication } from "@/features/auth/server-actions/auth";
 import { prisma } from "@/lib/db";
+import { Nullable } from "@/lib/utils";
 import type { Prisma } from "@prisma/client";
 
 export const getMeetups = async () => {
@@ -44,7 +45,9 @@ export const getMeetupById = async (id: string) => {
   return meetup;
 };
 
-export const createMeetup = async (input: Prisma.MeetupCreateInput) => {
+export const createMeetup = async (
+  input: Nullable<Prisma.MeetupCreateInput, "team">
+) => {
   const user = await requireAuthentication();
 
   const meetup = await prisma.meetup.create({
