@@ -23,6 +23,7 @@ export const getMeetups = async () => {
           attendance: true,
         },
       },
+      group: true,
       speaker: true,
     },
   });
@@ -40,6 +41,7 @@ export const getMeetupById = async (id: string) => {
     },
     include: {
       speaker: true,
+      group: true,
     },
   });
 

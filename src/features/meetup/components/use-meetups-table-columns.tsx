@@ -19,7 +19,7 @@ import { toast } from "sonner";
 import { AlertModal } from "@/shared/components/alert-modal";
 import { deleteMeetup } from "../server-actions/meetup";
 import { getUseMeetupsQueryKey } from "../hooks/use-meetups";
-import type { Meetup, Person } from "@prisma/client";
+import type { Group, Meetup, Person } from "@prisma/client";
 
 export const useMeetupsTableColumns = () => {
   const t = useTranslations();
@@ -38,7 +38,7 @@ export const useMeetupsTableColumns = () => {
   });
 
   const columns: ColumnDef<
-    Meetup & { speaker: Person; _count: { attendance: number } }
+    Meetup & { speaker: Person; group?: Group; _count: { attendance: number } }
   >[] = [
     {
       accessorKey: "subject",
@@ -59,6 +59,14 @@ export const useMeetupsTableColumns = () => {
         const formattedDate = date && format(date, "dd-MM-yyyy HH:mm");
 
         return formattedDate;
+      },
+    },
+    {
+      header: t("group"),
+      cell: ({ row }) => {
+        const group = row.original.group;
+
+        return group?.name ?? t("notSpecified");
       },
     },
     {
@@ -87,6 +95,13 @@ export const useMeetupsTableColumns = () => {
               <DropdownMenuItem>
                 <Link href={routes.dashboard.meetups.id(meetup.id).update.root}>
                   {t("update")}
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link
+                  href={routes.dashboard.meetups.id(meetup.id).attendance.root}
+                >
+                  {t("attendance")}
                 </Link>
               </DropdownMenuItem>
               <AlertModal

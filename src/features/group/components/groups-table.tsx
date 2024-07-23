@@ -10,7 +10,7 @@ type Props = {
 };
 
 export const GroupsTable = ({ groupsServer }: Props) => {
-  const { data } = useGroups(groupsServer);
+  const { data } = useGroups({ initialData: groupsServer });
   const columns = useGroupsTableColumns();
 
   return <AppTable data={data!} columns={columns} />;

@@ -71,5 +71,7 @@
   "date": "Datum",
   "attendance": "Deelname",
   "selectSpeaker": "Selecteer spreeker",
-  "search": "Zoek"
+  "search": "Zoek",
+  "group": "Groep",
+  "selectGroup": "Selecteer groep"
 }

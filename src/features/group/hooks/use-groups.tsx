@@ -6,7 +6,11 @@ import { getGroups } from "../server-actions/group";
 
 export const getUseGroupsQueryKey = () => ["groups"];
 
-export const useGroups = (initialData?: Group[]) => {
+type Props = {
+  initialData?: Group[];
+};
+
+export const useGroups = ({ initialData }: Props) => {
   const query = useQuery({
     queryKey: getUseGroupsQueryKey(),
     queryFn: async () => await getGroups(),

@@ -1,6 +1,5 @@
-import { getGroups } from "@/features/group/server-actions/group";
-import { UpdateMeetupForm } from "@/features/meetup/components/update-meetup-form";
-import { getMeetupById } from "@/features/meetup/server-actions/meetup";
+"use server";
+
 import { routes } from "@/lib/routes";
 import { Header } from "@/shared/components/layout/header";
 import { Main } from "@/shared/components/layout/main";
@@ -10,8 +9,8 @@ import {
   NavigationHistory,
   type NavigationHistoryItem,
 } from "@/shared/components/navigation-history";
-import type { Group, Meetup, Person } from "@prisma/client";
 import { getTranslations } from "next-intl/server";
+import { SaveAttendanceButton } from "./_components/save-attendance-button";
 
 type Props = {
   params: {
@@ -19,10 +18,8 @@ type Props = {
   };
 };
 
-const UpdateMeetupPage = async ({ params: { meetupId } }: Props) => {
+const MeetupAttendancePage = async ({ params: { meetupId } }: Props) => {
   const t = await getTranslations();
-  const meetup = await getMeetupById(meetupId);
-  const groups = await getGroups();
 
   const history: NavigationHistoryItem[] = [
     {
@@ -30,7 +27,7 @@ const UpdateMeetupPage = async ({ params: { meetupId } }: Props) => {
       label: t("meetups"),
     },
     {
-      label: t("updateMeetup"),
+      label: t("attendance"),
     },
   ];
 
@@ -38,20 +35,14 @@ const UpdateMeetupPage = async ({ params: { meetupId } }: Props) => {
     <Main>
       <Header>
         <NavigationDrawer />
-        <Title>{t("updateMeetup")}</Title>
+        <Title>{t("attendance")}</Title>
+        <div className="flex flex-grow justify-end">
+          <SaveAttendanceButton />
+        </div>
       </Header>
       <NavigationHistory items={history} />
-      <UpdateMeetupForm
-        groupsServer={groups}
-        meetup={
-          meetup as Meetup & {
-            speaker: Person;
-            group?: Group;
-          }
-        }
-      />
     </Main>
   );
 };
 
-export default UpdateMeetupPage;
+export default MeetupAttendancePage;

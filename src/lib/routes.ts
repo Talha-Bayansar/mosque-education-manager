@@ -25,6 +25,9 @@ export const routes = {
         update: {
           root: `/dashboard/meetups/${id}/update`,
         },
+        attendance: {
+          root: `/dashboard/meetups/${id}/attendance`,
+        },
       }),
     },
     people: {

@@ -71,5 +71,7 @@
   "date": "Tarih",
   "attendance": "Katılım",
   "selectSpeaker": "Hatip seçin",
-  "search": "Ara"
+  "search": "Ara",
+  "group": "Grup",
+  "selectGroup": "Grup seçin"
 }

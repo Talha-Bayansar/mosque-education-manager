@@ -24,18 +24,26 @@ import { DateField } from "@/shared/components/date-field";
 import { SearchSelect } from "@/shared/components/search-select";
 import { useSearchPeople } from "@/features/person/hooks/use-search-people";
 import { useDebounceValue } from "@/shared/hooks/use-debounce-value";
+import type { Group } from "@prisma/client";
+import { useGroups } from "@/features/group/hooks/use-groups";
 
 const formSchema = z.object({
   subject: z.string().min(1).max(50),
   date: z.date(),
   speakerId: z.string().min(1).max(50),
+  groupId: z.string().min(1).max(50),
 });
 
-export const CreateMeetupForm = () => {
+type Props = {
+  groupsServer: Group[];
+};
+
+export const CreateMeetupForm = ({ groupsServer }: Props) => {
   const t = useTranslations();
   const router = useRouter();
   const [query, setQuery] = useDebounceValue<string>("", 500);
   const { data: speakers, isLoading } = useSearchPeople({ query });
+  const { data: groups } = useGroups({ initialData: groupsServer });
   const createMeetupMutation = useMutation({
     mutationFn: (values: z.infer<typeof formSchema>) =>
       createMeetup({
@@ -44,6 +52,11 @@ export const CreateMeetupForm = () => {
         speaker: {
           connect: {
             id: values.speakerId,
+          },
+        },
+        group: {
+          connect: {
+            id: values.groupId,
           },
         },
       }),
@@ -61,6 +74,7 @@ export const CreateMeetupForm = () => {
     defaultValues: {
       subject: "",
       speakerId: "",
+      groupId: "",
       date: new Date(),
     },
   });
@@ -113,6 +127,26 @@ export const CreateMeetupForm = () => {
                   isLoading={isLoading}
                   onSelect={(value) => form.setValue("speakerId", value)}
                   onQueryChange={setQuery}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="groupId"
+          render={() => (
+            <FormItem className="flex flex-col">
+              <FormLabel>{t("group")}*</FormLabel>
+              <FormControl>
+                <SearchSelect
+                  items={groups!.map((g) => ({
+                    label: g.name,
+                    value: g.id,
+                  }))}
+                  placeholder={t("selectGroup")}
+                  onSelect={(value) => form.setValue("groupId", value)}
                 />
               </FormControl>
               <FormMessage />

@@ -1,3 +1,4 @@
+import { getGroups } from "@/features/group/server-actions/group";
 import { CreateMeetupForm } from "@/features/meetup/components/create-meetup-form";
 import { routes } from "@/lib/routes";
 import { Header } from "@/shared/components/layout/header";
@@ -12,6 +13,7 @@ import { getTranslations } from "next-intl/server";
 
 const CreateMeetupPage = async () => {
   const t = await getTranslations();
+  const groups = await getGroups();
 
   const history: NavigationHistoryItem[] = [
     {
@@ -30,7 +32,7 @@ const CreateMeetupPage = async () => {
         <Title>{t("createMeetup")}</Title>
       </Header>
       <NavigationHistory items={history} />
-      <CreateMeetupForm />
+      <CreateMeetupForm groupsServer={groups} />
     </Main>
   );
 };

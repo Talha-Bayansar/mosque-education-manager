@@ -27,7 +27,7 @@ type Props = {
   placeholder: string;
   isLoading?: boolean;
   onSelect: (value: string) => void;
-  onQueryChange: (value: string) => void;
+  onQueryChange?: (value: string) => void;
 };
 
 export const SearchSelect = ({
