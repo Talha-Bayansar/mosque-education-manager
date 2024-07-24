@@ -16,7 +16,7 @@ const DashboardLayout = async ({ children }: Props) => {
   if (!session.session) redirect(routes.signin.root);
 
   return (
-    <PageContainer className="sm:pl-[72px]">
+    <PageContainer sessionServer={session} className="sm:pl-[72px]">
       <SideNavigation />
       {children}
     </PageContainer>

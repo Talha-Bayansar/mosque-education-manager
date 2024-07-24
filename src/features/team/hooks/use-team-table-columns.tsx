@@ -17,6 +17,7 @@ import { toast } from "sonner";
 import { AlertModal } from "@/shared/components/alert-modal";
 import { deleteTeamMember } from "../server-actions/team";
 import { getUseMyTeamQueryKey } from "./use-my-team";
+import { RequireRole } from "@/features/auth/components/require-role";
 
 export const useTeamTableColumns = () => {
   const t = useTranslations();
@@ -49,29 +50,31 @@ export const useTeamTableColumns = () => {
         const user = row.original;
 
         return (
-          <DropdownMenu>
-            <DropdownMenuTrigger
-              disabled={user.role === UserRole.ADMIN}
-              asChild
-            >
-              <IconButton>
-                <span className="sr-only">{t("openMenu")}</span>
-                <MoreHorizontal />
-              </IconButton>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>{t("actions")}</DropdownMenuLabel>
-              <AlertModal
-                title={t("deleteTeamMember")}
-                trigger={
-                  <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-                    {t("delete")}
-                  </DropdownMenuItem>
-                }
-                onContinue={() => deleteTeamMemberMutation.mutate(user.id)}
-              />
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <RequireRole roles={[UserRole.ADMIN]}>
+            <DropdownMenu>
+              <DropdownMenuTrigger
+                disabled={user.role === UserRole.ADMIN}
+                asChild
+              >
+                <IconButton>
+                  <span className="sr-only">{t("openMenu")}</span>
+                  <MoreHorizontal />
+                </IconButton>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>{t("actions")}</DropdownMenuLabel>
+                <AlertModal
+                  title={t("deleteTeamMember")}
+                  trigger={
+                    <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                      {t("delete")}
+                    </DropdownMenuItem>
+                  }
+                  onContinue={() => deleteTeamMemberMutation.mutate(user.id)}
+                />
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </RequireRole>
         );
       },
     },
