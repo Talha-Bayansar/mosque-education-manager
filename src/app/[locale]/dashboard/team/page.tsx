@@ -1,3 +1,5 @@
+import { TeamTable } from "@/features/team/components/team-table";
+import { getMyTeam } from "@/features/team/server-actions/team";
 import { Header } from "@/shared/components/layout/header";
 import { Main } from "@/shared/components/layout/main";
 import { Title } from "@/shared/components/layout/title";
@@ -6,6 +8,7 @@ import { getTranslations } from "next-intl/server";
 
 const TeamPage = async () => {
   const t = await getTranslations();
+  const team = await getMyTeam();
 
   return (
     <Main>
@@ -13,6 +16,7 @@ const TeamPage = async () => {
         <NavigationDrawer />
         <Title>{t("team")}</Title>
       </Header>
+      <TeamTable teamServer={team} />
     </Main>
   );
 };

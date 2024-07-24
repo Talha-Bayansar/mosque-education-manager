@@ -75,5 +75,9 @@
   "search": "Zoek",
   "group": "Groep",
   "selectGroup": "Selecteer groep",
-  "updateAttendanceSuccess": "Deelname werd succesvol bijgewerkt"
+  "updateAttendanceSuccess": "Deelname werd succesvol bijgewerkt",
+  "role": "Rol",
+  "deleteTeamMember": "Teamlid verwijderen",
+  "deleteTeamMemberSuccess": "Teamlid werd succesvol verwijderd",
+  "add": "Toevoegen"
 }

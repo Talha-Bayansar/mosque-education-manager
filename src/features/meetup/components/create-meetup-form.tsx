@@ -119,7 +119,7 @@ export const CreateMeetupForm = ({ groupsServer }: Props) => {
                 <SearchSelect
                   items={
                     speakers?.map((s) => ({
-                      label: `${s.lastName} ${s.firstName}`,
+                      label: `${s.firstName} ${s.lastName}`,
                       value: s.id,
                     })) || []
                   }

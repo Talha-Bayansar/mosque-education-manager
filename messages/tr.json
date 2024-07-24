@@ -75,5 +75,9 @@
   "search": "Ara",
   "group": "Grup",
   "selectGroup": "Grup seçin",
-  "updateAttendanceSuccess": "Katılım başarıyla güncellendi"
+  "updateAttendanceSuccess": "Katılım başarıyla güncellendi",
+  "role": "Rol",
+  "deleteTeamMember": "Ekip üyesi sil",
+  "deleteTeamMemberSuccess": "Ekip üyesi başarıyla silindi",
+  "add": "Ekle"
 }

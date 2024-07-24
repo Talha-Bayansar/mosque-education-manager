@@ -131,7 +131,7 @@ export const UpdateMeetupForm = ({ meetup, groupsServer }: Props) => {
                   }
                   placeholder={t("selectSpeaker")}
                   selectedItem={{
-                    label: `${meetup.speaker.lastName} ${meetup.speaker.firstName}`,
+                    label: `${meetup.speaker.firstName} ${meetup.speaker.lastName}`,
                     value: meetup.speaker.id,
                   }}
                   isLoading={isLoadingSpeakers}

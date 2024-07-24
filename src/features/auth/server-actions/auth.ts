@@ -8,6 +8,12 @@ import type { Session, User } from "lucia";
 import nodemailer from "nodemailer";
 import Mail from "nodemailer/lib/mailer";
 import { prisma } from "@/lib/db";
+import { getTranslations } from "next-intl/server";
+
+const allowedEmails = [
+  "talha.bayansar@hotmail.com",
+  "talha.bayansar@gmail.com",
+];
 
 export const requireAuthentication = async () => {
   const { user } = await getSession();
@@ -18,6 +24,7 @@ export const requireAuthentication = async () => {
 };
 
 export const sendEmail = async (email: string, verificationCode: string) => {
+  const t = await getTranslations();
   const transport = nodemailer.createTransport({
     service: "gmail",
     /* 
@@ -38,7 +45,7 @@ export const sendEmail = async (email: string, verificationCode: string) => {
   const mailOptions: Mail.Options = {
     from: process.env.MY_EMAIL,
     to: email,
-    subject: "Verification Code",
+    subject: t("verificationCode"),
     text: verificationCode,
   };
 
@@ -80,8 +87,12 @@ export async function generateEmailVerificationCode(
 }
 
 export async function sendEmailVerificationCode(email: string) {
-  const code = await generateEmailVerificationCode(email.toLowerCase());
-  await sendEmail(email.toLowerCase(), code);
+  if (allowedEmails.includes(email.toLowerCase())) {
+    const code = await generateEmailVerificationCode(email.toLowerCase());
+    await sendEmail(email.toLowerCase(), code);
+  } else {
+    throw new Error("Email not allowed");
+  }
 }
 
 export async function signin(email: string, code: string) {
@@ -122,10 +133,29 @@ export async function signin(email: string, code: string) {
     } else {
       const email = verificationCode.email;
       const name = email.split("@")[0];
+      const team = await prisma.team.findFirst({
+        where: {
+          members: {
+            some: {
+              email: allowedEmails[0],
+            },
+          },
+        },
+      });
+
+      if (!team) {
+        throw new Error("No team found to create user");
+      }
+
       const newUser = await prisma.user.create({
         data: {
           email: email.toLowerCase(),
           name: name,
+          team: {
+            connect: {
+              id: team.id,
+            },
+          },
         },
       });
 
