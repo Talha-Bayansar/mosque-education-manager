@@ -79,5 +79,7 @@
   "role": "Rol",
   "deleteTeamMember": "Ekip üyesi sil",
   "deleteTeamMemberSuccess": "Ekip üyesi başarıyla silindi",
+  "addTeamMember": "Ekip üyesi ekle",
+  "addTeamMemberSuccess": "Ekip üyesi başarıyla eklendi",
   "add": "Ekle"
 }

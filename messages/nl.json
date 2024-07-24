@@ -79,5 +79,7 @@
   "role": "Rol",
   "deleteTeamMember": "Teamlid verwijderen",
   "deleteTeamMemberSuccess": "Teamlid werd succesvol verwijderd",
+  "addTeamMember": "Teamlid toevoegen",
+  "addTeamMemberSuccess": "Teamlid werd succesvol toegevoegd",
   "add": "Toevoegen"
 }

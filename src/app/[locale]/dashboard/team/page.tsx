@@ -1,6 +1,7 @@
 "use server";
 
 import { RequireRole } from "@/features/auth/components/require-role";
+import { AddTeamMemberForm } from "@/features/team/components/add-team-member-form";
 import { TeamTable } from "@/features/team/components/team-table";
 import { getMyTeam } from "@/features/team/server-actions/team";
 import { AddButton } from "@/shared/components/add-button";
@@ -33,7 +34,10 @@ const TeamPage = async () => {
                 <AddButton />
               </DrawerTrigger>
               <DrawerContent aria-describedby="">
-                <DrawerTitle className="sr-only">{t("add")}</DrawerTitle>
+                <DrawerTitle className="sr-only">
+                  {t("addTeamMember")}
+                </DrawerTitle>
+                <AddTeamMemberForm />
               </DrawerContent>
             </Drawer>
           </div>
