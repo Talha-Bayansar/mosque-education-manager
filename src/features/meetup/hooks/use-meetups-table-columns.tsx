@@ -56,7 +56,7 @@ export const useMeetupsTableColumns = () => {
       header: t("date"),
       cell: ({ row }) => {
         const date = row.original.date;
-        const formattedDate = date && format(date, "dd-MM-yyyy HH:mm");
+        const formattedDate = date && format(date, "dd-MM-yyyy");
 
         return formattedDate;
       },
