@@ -19,7 +19,7 @@ export const usePeopleByGroupId = ({
   initialData,
 }: Props) => {
   const query = useQuery({
-    queryKey: getUsePeopleByGroupIdQueryKey(groupId),
+    queryKey: getUsePeopleByGroupIdQueryKey(groupId, onlyIds),
     queryFn: async () => await getPeopleByGroupId(groupId, onlyIds),
     initialData: initialData,
   });

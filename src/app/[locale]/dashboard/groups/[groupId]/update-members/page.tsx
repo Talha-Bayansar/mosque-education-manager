@@ -49,7 +49,7 @@ const UpdateGroupPage = async ({ params: { groupId } }: Props) => {
           <NavigationDrawer />
           <Title>{t("updateMembers")}</Title>
           <div className="flex flex-grow justify-end">
-            <SaveMembersButton peopleByGroupServer={peopleByGroupServer} />
+            <SaveMembersButton />
           </div>
         </Header>
         <NavigationHistory items={history} />

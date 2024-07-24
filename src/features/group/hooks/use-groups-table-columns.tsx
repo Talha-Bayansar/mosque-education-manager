@@ -88,7 +88,7 @@ export const useGroupsTableColumns = () => {
                 <Link
                   href={routes.dashboard.groups.id(group.id).updateMembers.root}
                 >
-                  {t("updateMembers")}
+                  {t("members")}
                 </Link>
               </DropdownMenuItem>
               <AlertModal

@@ -3,7 +3,7 @@
 import { AppTable } from "@/shared/components/app-table";
 import type { Meetup } from "@prisma/client";
 import { useMeetups } from "../hooks/use-meetups";
-import { useMeetupsTableColumns } from "./use-meetups-table-columns";
+import { useMeetupsTableColumns } from "../hooks/use-meetups-table-columns";
 
 type Props = {
   meetupsServer: Meetup[];

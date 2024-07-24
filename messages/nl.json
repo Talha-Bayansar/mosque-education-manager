@@ -56,6 +56,7 @@
   "deleteGroup": "Groep verwijderen",
   "deleteGroupSuccess": "Groep werd succesvol verwijderd",
   "count": "Aantal",
+  "members": "Leden",
   "updateMembers": "Leden bijwerken",
   "updateMembersSuccess": "Leden werden succesvol bijgewerkt",
   "save": "Opslaan",
@@ -73,5 +74,6 @@
   "selectSpeaker": "Selecteer spreeker",
   "search": "Zoek",
   "group": "Groep",
-  "selectGroup": "Selecteer groep"
+  "selectGroup": "Selecteer groep",
+  "updateAttendanceSuccess": "Deelname werd succesvol bijgewerkt"
 }

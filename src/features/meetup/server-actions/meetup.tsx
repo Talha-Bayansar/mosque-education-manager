@@ -94,6 +94,26 @@ export const updateMeetup = async (
   return meetup;
 };
 
+export const updateMeetupAttendance = async (
+  meetupId: string,
+  personIdsToAdd: string[],
+  personIdsToRemove: string[]
+) => {
+  const user = await requireAuthentication();
+
+  await prisma.meetup.update({
+    where: { id: meetupId, teamId: user.teamId },
+    data: {
+      attendance: {
+        connect: personIdsToAdd.map((id) => ({ id })),
+        disconnect: personIdsToRemove.map((id) => ({ id })),
+      },
+    },
+  });
+
+  return true;
+};
+
 export const deleteMeetup = async (id: string) => {
   const user = await requireAuthentication();
 

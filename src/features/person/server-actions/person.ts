@@ -50,31 +50,54 @@ export const getPeopleByGroupId = async (
   onlyIds: boolean = false
 ) => {
   const user = await requireAuthentication();
-  let filter: any = {
-    orderBy: {
-      lastName: "asc",
-    },
-  };
+  let filter: any = {};
 
   if (onlyIds) {
     filter = {
-      ...filter.orderBy,
       select: {
         id: true,
       },
     };
+  } else {
+    filter = {
+      orderBy: {
+        lastName: "asc",
+      },
+    };
   }
 
-  const people = await prisma.group
-    .findUnique({
-      where: { id: groupId, teamId: user.teamId },
-      select: {
-        members: filter,
-      },
-    })
-    .members();
+  const people = await prisma.group.findUnique({
+    where: { id: groupId, teamId: user.teamId },
+    select: {
+      members: filter,
+    },
+  });
 
-  return onlyIds ? people?.map((p) => p.id) : people;
+  return onlyIds ? people?.members.map((p) => p.id) : people?.members;
+};
+
+export const getAttendanceByMeetupId = async (
+  meetupId: string,
+  onlyIds: boolean = false
+) => {
+  const user = await requireAuthentication();
+
+  const attendance = await prisma.person.findMany({
+    where: {
+      attendanceMeetups: {
+        some: {
+          id: meetupId,
+        },
+      },
+      teamId: user.teamId,
+    },
+    orderBy: {
+      lastName: "asc",
+    },
+    select: onlyIds ? { id: true } : undefined,
+  });
+
+  return onlyIds ? attendance.map((a) => a.id) : attendance;
 };
 
 export const getPersonById = async (id: string) => {
