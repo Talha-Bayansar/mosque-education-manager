@@ -26,17 +26,17 @@ export const NavigationHistory = ({ items }: Props) => {
           if (!isLastOfArray(i, items)) {
             return (
               <>
-                <BreadcrumbItem>
+                <BreadcrumbItem key={`${item.label}`}>
                   <BreadcrumbLink asChild>
                     <Link href={item.href!}>{item.label}</Link>
                   </BreadcrumbLink>
                 </BreadcrumbItem>
-                <BreadcrumbSeparator />
+                <BreadcrumbSeparator key={`${item.label}_separator`} />
               </>
             );
           } else {
             return (
-              <BreadcrumbItem>
+              <BreadcrumbItem key={`${item.label}`}>
                 <BreadcrumbPage>{item.label}</BreadcrumbPage>
               </BreadcrumbItem>
             );

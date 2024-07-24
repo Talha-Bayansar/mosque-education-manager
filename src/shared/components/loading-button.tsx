@@ -15,3 +15,5 @@ export const LoadingButton = React.forwardRef<HTMLButtonElement, Props>(
     );
   }
 );
+
+LoadingButton.displayName = "LoadingButton";
