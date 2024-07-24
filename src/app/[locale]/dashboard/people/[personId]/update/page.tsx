@@ -16,7 +16,7 @@ type Props = {
   };
 };
 
-export const UpdatePersonPage = async ({ params: { personId } }: Props) => {
+const UpdatePersonPage = async ({ params: { personId } }: Props) => {
   const t = await getTranslations();
   const person = await getPersonById(personId);
   const history: NavigationHistoryItem[] = [
