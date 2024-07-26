@@ -59,7 +59,7 @@ export const CreatePersonForm = () => {
       firstName: "",
       lastName: "",
       phoneNumber: "",
-      dateOfBirth: new Date(),
+      dateOfBirth: undefined,
       city: "",
       zipCode: "",
       street: "",

@@ -5,7 +5,7 @@ import { prisma } from "@/lib/db";
 import { Nullable } from "@/lib/utils";
 import type { Prisma } from "@prisma/client";
 
-export const getGroups = async () => {
+export const getGroups = async (take?: number, skip?: number) => {
   const user = await requireAuthentication();
 
   const groups = await prisma.group.findMany({
@@ -22,9 +22,23 @@ export const getGroups = async () => {
         },
       },
     },
+    take,
+    skip,
   });
 
   return groups;
+};
+
+export const getGroupsCount = async () => {
+  const user = await requireAuthentication();
+
+  const count = await prisma.group.count({
+    where: {
+      teamId: user.teamId,
+    },
+  });
+
+  return count;
 };
 
 export const getGroupById = async (id: string) => {

@@ -1,6 +1,9 @@
 import { CreateGroupForm } from "@/features/group/components/create-group-form";
 import { GroupsTable } from "@/features/group/components/groups-table";
-import { getGroups } from "@/features/group/server-actions/group";
+import {
+  getGroups,
+  getGroupsCount,
+} from "@/features/group/server-actions/group";
 import { AddButton } from "@/shared/components/add-button";
 import { Header } from "@/shared/components/layout/header";
 import { Main } from "@/shared/components/layout/main";
@@ -14,9 +17,17 @@ import {
 } from "@/shared/components/ui/drawer";
 import { getTranslations } from "next-intl/server";
 
-const GroupsPage = async () => {
+type Props = {
+  searchParams: {
+    page?: string;
+  };
+};
+
+const GroupsPage = async ({ searchParams: { page } }: Props) => {
+  const pageNumber = Number(page ?? 1);
   const t = await getTranslations();
-  const groupsServer = await getGroups();
+  const groupsServer = await getGroups(10, (pageNumber - 1) * 10);
+  const groupsCount = await getGroupsCount();
 
   return (
     <Main>
@@ -35,7 +46,7 @@ const GroupsPage = async () => {
           </Drawer>
         </div>
       </Header>
-      <GroupsTable groupsServer={groupsServer} />
+      <GroupsTable groupsServer={groupsServer} groupsCount={groupsCount} />
     </Main>
   );
 };
