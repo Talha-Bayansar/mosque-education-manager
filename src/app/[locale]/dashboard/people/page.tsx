@@ -1,5 +1,8 @@
 import { PeopleTable } from "@/features/person/components/people-table";
-import { getPeople } from "@/features/person/server-actions/person";
+import {
+  getPeople,
+  getPeopleCount,
+} from "@/features/person/server-actions/person";
 import { routes } from "@/lib/routes";
 import { Link } from "@/navigation";
 import { AddButton } from "@/shared/components/add-button";
@@ -9,9 +12,17 @@ import { Title } from "@/shared/components/layout/title";
 import { NavigationDrawer } from "@/shared/components/navigation-drawer";
 import { getTranslations } from "next-intl/server";
 
-const PeoplePage = async () => {
+type Props = {
+  searchParams: {
+    page?: string;
+  };
+};
+
+const PeoplePage = async ({ searchParams: { page } }: Props) => {
+  const pageNumber = Number(page ?? 1);
   const t = await getTranslations();
-  const people = await getPeople();
+  const people = await getPeople(10, (pageNumber - 1) * 10);
+  const peopleCount = await getPeopleCount();
 
   return (
     <Main>
@@ -24,7 +35,7 @@ const PeoplePage = async () => {
           </Link>
         </div>
       </Header>
-      <PeopleTable peopleServer={people} />
+      <PeopleTable peopleServer={people} peopleCount={peopleCount} />
     </Main>
   );
 };

@@ -7,7 +7,7 @@ import { Nullable } from "@/lib/utils";
 import type { Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
-export const getPeople = async () => {
+export const getPeople = async (take?: number, skip?: number) => {
   const user = await requireAuthentication();
 
   const people = await prisma.person.findMany({
@@ -17,9 +17,23 @@ export const getPeople = async () => {
     orderBy: {
       lastName: "asc",
     },
+    take,
+    skip,
   });
 
   return people;
+};
+
+export const getPeopleCount = async () => {
+  const user = await requireAuthentication();
+
+  const count = await prisma.person.count({
+    where: {
+      teamId: user.teamId,
+    },
+  });
+
+  return count;
 };
 
 export const searchPeople = async (query?: string) => {
