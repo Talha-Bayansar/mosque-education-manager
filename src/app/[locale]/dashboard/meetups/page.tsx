@@ -1,7 +1,10 @@
 "use server";
 
 import { MeetupsTable } from "@/features/meetup/components/meetups-table";
-import { getMeetups } from "@/features/meetup/server-actions/meetup";
+import {
+  getMeetups,
+  getMeetupsCount,
+} from "@/features/meetup/server-actions/meetup";
 import { routes } from "@/lib/routes";
 import { Link } from "@/navigation";
 import { AddButton } from "@/shared/components/add-button";
@@ -11,9 +14,17 @@ import { Title } from "@/shared/components/layout/title";
 import { NavigationDrawer } from "@/shared/components/navigation-drawer";
 import { getTranslations } from "next-intl/server";
 
-const MeetupsPage = async () => {
+type Props = {
+  searchParams: {
+    page?: string;
+  };
+};
+
+const MeetupsPage = async ({ searchParams: { page } }: Props) => {
+  const pageNumber = Number(page ?? 1);
   const t = await getTranslations();
-  const meetups = await getMeetups();
+  const meetups = await getMeetups(10, (pageNumber - 1) * 10);
+  const meetupsCount = await getMeetupsCount();
 
   return (
     <Main>
@@ -26,7 +37,7 @@ const MeetupsPage = async () => {
           </Link>
         </div>
       </Header>
-      <MeetupsTable meetupsServer={meetups} />
+      <MeetupsTable meetupsServer={meetups} meetupsCount={meetupsCount} />
     </Main>
   );
 };

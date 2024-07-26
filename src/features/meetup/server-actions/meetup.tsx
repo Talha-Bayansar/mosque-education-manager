@@ -7,7 +7,7 @@ import { Nullable } from "@/lib/utils";
 import type { Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
-export const getMeetups = async () => {
+export const getMeetups = async (take?: number, skip?: number) => {
   const user = await requireAuthentication();
 
   const meetups = await prisma.meetup.findMany({
@@ -26,9 +26,23 @@ export const getMeetups = async () => {
       group: true,
       speaker: true,
     },
+    take,
+    skip,
   });
 
   return meetups;
+};
+
+export const getMeetupsCount = async () => {
+  const user = await requireAuthentication();
+
+  const count = await prisma.meetup.count({
+    where: {
+      teamId: user.teamId,
+    },
+  });
+
+  return count;
 };
 
 export const getMeetupById = async (id: string) => {

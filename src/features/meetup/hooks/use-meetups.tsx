@@ -6,14 +6,26 @@ import { getMeetups } from "../server-actions/meetup";
 
 type Props = {
   initialData?: Meetup[];
+  page?: number;
 };
 
-export const getUseMeetupsQueryKey = () => ["meetups"];
+export const getUseMeetupsQueryKey = (page?: number) => [
+  "meetups",
+  `page=${page}`,
+];
 
-export const useMeetups = ({ initialData }: Props) => {
+export const useMeetups = ({ initialData, page }: Props) => {
   const query = useQuery({
-    queryKey: getUseMeetupsQueryKey(),
-    queryFn: async () => await getMeetups(),
+    queryKey: getUseMeetupsQueryKey(page),
+    queryFn: async () => {
+      let response;
+      if (page) {
+        response = await getMeetups(10, (page - 1) * 10);
+      } else {
+        response = await getMeetups();
+      }
+      return response;
+    },
     initialData,
   });
 
