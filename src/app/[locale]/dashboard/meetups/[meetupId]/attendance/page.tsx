@@ -64,7 +64,7 @@ const MeetupAttendancePage = async ({ params: { meetupId } }: Props) => {
         </Header>
         <NavigationHistory items={history} />
         <MeetupAttendanceTable
-          peopleByGroupServer={people}
+          peopleByGroup={people}
           groupId={meetup.groupId}
           meetupServer={meetup}
         />

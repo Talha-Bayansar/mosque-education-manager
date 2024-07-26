@@ -15,10 +15,9 @@ import { Input } from "@/shared/components/ui/input";
 import { AppForm } from "@/shared/components/app-form";
 import { useTranslations } from "next-intl";
 import { LoadingButton } from "@/shared/components/loading-button";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { updateGroup } from "../server-actions/group";
 import { toast } from "sonner";
-import { getUseGroupsQueryKey } from "../hooks/use-groups";
 import type { Group } from "@prisma/client";
 
 type Props = {
@@ -31,15 +30,11 @@ const formSchema = z.object({
 
 export const UpdateGroupForm = ({ group }: Props) => {
   const t = useTranslations();
-  const queryClient = useQueryClient();
   const updateGroupMutation = useMutation({
     mutationFn: (values: z.infer<typeof formSchema>) =>
       updateGroup(group.id, values),
     onSuccess: () => {
       toast.success(t("updateGroupSuccess"));
-      queryClient.refetchQueries({
-        queryKey: getUseGroupsQueryKey(),
-      });
     },
     onError: () => {
       toast.error(t("somethingWentWrong"));

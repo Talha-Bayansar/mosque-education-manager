@@ -35,7 +35,7 @@ const PeoplePage = async ({ searchParams: { page } }: Props) => {
           </Link>
         </div>
       </Header>
-      <PeopleTable peopleServer={people} peopleCount={peopleCount} />
+      <PeopleTable people={people} peopleCount={peopleCount} />
     </Main>
   );
 };

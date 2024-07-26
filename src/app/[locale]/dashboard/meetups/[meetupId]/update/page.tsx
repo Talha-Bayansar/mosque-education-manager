@@ -42,7 +42,7 @@ const UpdateMeetupPage = async ({ params: { meetupId } }: Props) => {
       </Header>
       <NavigationHistory items={history} />
       <UpdateMeetupForm
-        groupsServer={groups}
+        groups={groups}
         meetup={
           meetup as Meetup & {
             speaker: Person;

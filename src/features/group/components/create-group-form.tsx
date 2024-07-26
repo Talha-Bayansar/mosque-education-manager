@@ -15,10 +15,9 @@ import { Input } from "@/shared/components/ui/input";
 import { AppForm } from "@/shared/components/app-form";
 import { useTranslations } from "next-intl";
 import { LoadingButton } from "@/shared/components/loading-button";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { createGroup } from "../server-actions/group";
 import { toast } from "sonner";
-import { getUseGroupsQueryKey } from "../hooks/use-groups";
 
 const formSchema = z.object({
   name: z.string().min(1).max(50),
@@ -26,14 +25,10 @@ const formSchema = z.object({
 
 export const CreateGroupForm = () => {
   const t = useTranslations();
-  const queryClient = useQueryClient();
   const createGroupMutation = useMutation({
     mutationFn: (values: z.infer<typeof formSchema>) => createGroup(values),
     onSuccess: () => {
       toast.success(t("createGroupSuccess"));
-      queryClient.refetchQueries({
-        queryKey: getUseGroupsQueryKey(),
-      });
     },
     onError: () => {
       toast.error(t("somethingWentWrong"));

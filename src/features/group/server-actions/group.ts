@@ -76,6 +76,8 @@ export const createGroup = async (
     },
   });
 
+  revalidatePath(routes.dashboard.groups.root);
+
   return group;
 };
 
@@ -96,6 +98,9 @@ export const updateGroup = async (
       },
     },
   });
+
+  revalidatePath(routes.dashboard.groups.id(id).updateMembers.root);
+  revalidatePath(routes.dashboard.groups.root);
 
   return group;
 };
@@ -129,6 +134,8 @@ export const deleteGroup = async (id: string) => {
   await prisma.group.delete({
     where: { id, teamId: user.teamId },
   });
+
+  revalidatePath(routes.dashboard.groups.root);
 
   return true;
 };

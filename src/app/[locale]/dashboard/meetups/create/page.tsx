@@ -32,7 +32,7 @@ const CreateMeetupPage = async () => {
         <Title>{t("createMeetup")}</Title>
       </Header>
       <NavigationHistory items={history} />
-      <CreateMeetupForm groupsServer={groups} />
+      <CreateMeetupForm groups={groups} />
     </Main>
   );
 };

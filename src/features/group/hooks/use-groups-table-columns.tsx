@@ -1,11 +1,10 @@
 import { useIsDesktop } from "@/shared/hooks/use-is-desktop";
-import { useQueryClient, useMutation } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { deleteGroup } from "../server-actions/group";
 import type { Group } from "@prisma/client";
 import { type ColumnDef } from "@tanstack/react-table";
-import { getUseGroupsQueryKey } from "./use-groups";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -28,15 +27,11 @@ import { UpdateGroupForm } from "../components/update-group-form";
 
 export const useGroupsTableColumns = () => {
   const t = useTranslations();
-  const queryClient = useQueryClient();
   const isDesktop = useIsDesktop();
   const deleteGroupMutation = useMutation({
     mutationFn: (groupId: string) => deleteGroup(groupId),
     onSuccess: () => {
       toast.success(t("deleteGroupSuccess"));
-      queryClient.refetchQueries({
-        queryKey: getUseGroupsQueryKey(),
-      });
     },
     onError: () => {
       toast.error(t("somethingWentWrong"));

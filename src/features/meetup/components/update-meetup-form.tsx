@@ -23,7 +23,6 @@ import { LoadingButton } from "@/shared/components/loading-button";
 import { DateField } from "@/shared/components/date-field";
 import { SearchSelect } from "@/shared/components/search-select";
 import type { Group, Meetup, Person } from "@prisma/client";
-import { useGroups } from "@/features/group/hooks/use-groups";
 import { SearchPeopleSelect } from "@/features/person/components/search-people-select";
 
 const formSchema = z.object({
@@ -38,13 +37,12 @@ type Props = {
     speaker: Person;
     group?: Group;
   };
-  groupsServer: Group[];
+  groups: Group[];
 };
 
-export const UpdateMeetupForm = ({ meetup, groupsServer }: Props) => {
+export const UpdateMeetupForm = ({ meetup, groups }: Props) => {
   const t = useTranslations();
   const router = useRouter();
-  const { data: groups } = useGroups({ initialData: groupsServer });
   const updateMeetupMutation = useMutation({
     mutationFn: (values: z.infer<typeof formSchema>) =>
       updateMeetup(meetup.id, {
