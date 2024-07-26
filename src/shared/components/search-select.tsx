@@ -15,7 +15,7 @@ import {
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import { Spinner } from "./spinner";
-import InfiniteScroll from "react-infinite-scroll-component";
+import { InfiniteScroll } from "./infinite-scroll";
 
 export type SearchSelectItem = {
   label: string;
@@ -31,6 +31,7 @@ type Props = {
   onQueryChange?: (value: string) => void;
   hasMore?: boolean;
   onNextPage?: () => unknown;
+  isFetchingNextPage?: boolean;
 };
 
 export const SearchSelect = ({
@@ -42,6 +43,7 @@ export const SearchSelect = ({
   onQueryChange,
   hasMore = false,
   onNextPage,
+  isFetchingNextPage = false,
 }: Props) => {
   const t = useTranslations();
   const [open, setOpen] = useState(false);
@@ -75,10 +77,9 @@ export const SearchSelect = ({
               <CommandList>
                 <CommandGroup>
                   <InfiniteScroll
-                    dataLength={items.length}
+                    isLoading={isFetchingNextPage}
                     hasMore={hasMore}
-                    loader={<Spinner />}
-                    next={() => {
+                    fetchNextPage={() => {
                       if (onNextPage) {
                         onNextPage();
                       }

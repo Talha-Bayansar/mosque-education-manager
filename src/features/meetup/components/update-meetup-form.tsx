@@ -34,7 +34,7 @@ const formSchema = z.object({
 
 type Props = {
   meetup: Meetup & {
-    speaker: Person;
+    speaker?: Person;
     group?: Group;
   };
   groups: Group[];
@@ -116,10 +116,12 @@ export const UpdateMeetupForm = ({ meetup, groups }: Props) => {
               <FormLabel>{t("speaker")}*</FormLabel>
               <FormControl>
                 <SearchPeopleSelect
-                  selectedItem={{
-                    label: `${meetup.speaker.firstName} ${meetup.speaker.lastName}`,
-                    value: meetup.speaker.id,
-                  }}
+                  selectedItem={
+                    meetup.speaker && {
+                      label: `${meetup.speaker.firstName} ${meetup.speaker.lastName}`,
+                      value: meetup.speaker.id,
+                    }
+                  }
                   onSelect={(value) => form.setValue("speakerId", value)}
                 />
               </FormControl>

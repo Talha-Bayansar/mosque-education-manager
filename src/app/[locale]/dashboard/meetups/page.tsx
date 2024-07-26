@@ -37,7 +37,7 @@ const MeetupsPage = async ({ searchParams: { page } }: Props) => {
           </Link>
         </div>
       </Header>
-      <MeetupsTable meetupsServer={meetups} meetupsCount={meetupsCount} />
+      <MeetupsTable meetups={meetups} meetupsCount={meetupsCount} />
     </Main>
   );
 };

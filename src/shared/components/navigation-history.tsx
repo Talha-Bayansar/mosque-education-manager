@@ -8,6 +8,7 @@ import {
   BreadcrumbPage,
 } from "./ui/breadcrumb";
 import { Link } from "@/navigation";
+import { Fragment } from "react";
 
 type Props = {
   items: NavigationHistoryItem[];
@@ -25,14 +26,14 @@ export const NavigationHistory = ({ items }: Props) => {
         {items.map((item, i) => {
           if (!isLastOfArray(i, items)) {
             return (
-              <>
-                <BreadcrumbItem key={`${item.label}`}>
+              <Fragment key={`${item.label}`}>
+                <BreadcrumbItem>
                   <BreadcrumbLink asChild>
                     <Link href={item.href!}>{item.label}</Link>
                   </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator key={`${item.label}_separator`} />
-              </>
+              </Fragment>
             );
           } else {
             return (

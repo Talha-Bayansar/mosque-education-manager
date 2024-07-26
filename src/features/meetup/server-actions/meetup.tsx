@@ -82,6 +82,8 @@ export const createMeetup = async (
     },
   });
 
+  revalidatePath(routes.dashboard.meetups.root);
+
   return meetup;
 };
 
@@ -104,6 +106,7 @@ export const updateMeetup = async (
   });
 
   revalidatePath(routes.dashboard.meetups.id(id).update.root);
+  revalidatePath(routes.dashboard.meetups.root);
 
   return meetup;
 };
@@ -136,6 +139,8 @@ export const deleteMeetup = async (id: string) => {
   await prisma.meetup.delete({
     where: { id, teamId: user.teamId },
   });
+
+  revalidatePath(routes.dashboard.meetups.root);
 
   return true;
 };

@@ -43,7 +43,8 @@ export const searchPeople = async (
 ): Promise<InfiniteScrollResponse<Person>> => {
   const user = await requireAuthentication();
 
-  if (!query || !cursor) {
+  if (!query) {
+    console.log("Query or cursor is not available");
     return {
       data: [],
       metaData: {

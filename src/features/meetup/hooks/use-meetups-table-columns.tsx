@@ -10,7 +10,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/shared/components/ui/dropdown-menu";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { MoreHorizontal } from "lucide-react";
@@ -18,19 +18,14 @@ import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { AlertModal } from "@/shared/components/alert-modal";
 import { deleteMeetup } from "../server-actions/meetup";
-import { getUseMeetupsQueryKey } from "../hooks/use-meetups";
 import type { Group, Meetup, Person } from "@prisma/client";
 
 export const useMeetupsTableColumns = () => {
   const t = useTranslations();
-  const queryClient = useQueryClient();
   const deleteMeetupMutation = useMutation({
     mutationFn: (personId: string) => deleteMeetup(personId),
     onSuccess: () => {
       toast.success(t("deleteMeetupSuccess"));
-      queryClient.refetchQueries({
-        queryKey: getUseMeetupsQueryKey(),
-      });
     },
     onError: () => {
       toast.error(t("somethingWentWrong"));
@@ -38,7 +33,7 @@ export const useMeetupsTableColumns = () => {
   });
 
   const columns: ColumnDef<
-    Meetup & { speaker: Person; group?: Group; _count: { attendance: number } }
+    Meetup & { speaker?: Person; group?: Group; _count: { attendance: number } }
   >[] = [
     {
       accessorKey: "subject",
@@ -48,7 +43,7 @@ export const useMeetupsTableColumns = () => {
       header: t("speaker"),
       cell: ({ row }) => {
         const speaker = row.original.speaker;
-
+        if (!speaker) return t("notSpecified");
         return `${speaker.firstName} ${speaker.lastName}`;
       },
     },

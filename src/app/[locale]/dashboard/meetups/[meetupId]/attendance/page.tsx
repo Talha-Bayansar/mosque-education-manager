@@ -63,7 +63,6 @@ const MeetupAttendancePage = async ({ params: { meetupId } }: Props) => {
         <MeetupAttendanceTable
           peopleByGroup={people}
           groupId={meetup.groupId}
-          meetupServer={meetup}
         />
       </Main>
     </MeetupAttendanceContextProvider>
