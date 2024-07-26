@@ -34,8 +34,6 @@ type Props = {
   totalCount?: number;
 };
 
-const PAGE_SIZE = 10;
-
 export const AppTable = ({ columns, data, totalCount = 10 }: Props) => {
   const t = useTranslations();
   const table = useReactTable({

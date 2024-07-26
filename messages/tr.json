@@ -81,5 +81,7 @@
   "deleteTeamMemberSuccess": "Ekip üyesi başarıyla silindi",
   "addTeamMember": "Ekip üyesi ekle",
   "addTeamMemberSuccess": "Ekip üyesi başarıyla eklendi",
-  "add": "Ekle"
+  "add": "Ekle",
+  "next": "Sonraki",
+  "previous": "Önceki"
 }

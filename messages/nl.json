@@ -81,5 +81,7 @@
   "deleteTeamMemberSuccess": "Teamlid werd succesvol verwijderd",
   "addTeamMember": "Teamlid toevoegen",
   "addTeamMemberSuccess": "Teamlid werd succesvol toegevoegd",
-  "add": "Toevoegen"
+  "add": "Toevoegen",
+  "next": "Volgende",
+  "previous": "Vorige"
 }
