@@ -22,10 +22,9 @@ import { AppForm } from "@/shared/components/app-form";
 import { LoadingButton } from "@/shared/components/loading-button";
 import { DateField } from "@/shared/components/date-field";
 import { SearchSelect } from "@/shared/components/search-select";
-import { useSearchPeople } from "@/features/person/hooks/use-search-people";
-import { useDebounceValue } from "@/shared/hooks/use-debounce-value";
 import type { Group } from "@prisma/client";
 import { useGroups } from "@/features/group/hooks/use-groups";
+import { SearchPeopleSelect } from "@/features/person/components/search-people-select";
 
 const formSchema = z.object({
   subject: z.string().min(1).max(50),
@@ -41,8 +40,6 @@ type Props = {
 export const CreateMeetupForm = ({ groupsServer }: Props) => {
   const t = useTranslations();
   const router = useRouter();
-  const [query, setQuery] = useDebounceValue<string>("", 500);
-  const { data: speakers, isLoading } = useSearchPeople({ query });
   const { data: groups } = useGroups({ initialData: groupsServer });
   const createMeetupMutation = useMutation({
     mutationFn: (values: z.infer<typeof formSchema>) =>
@@ -116,17 +113,8 @@ export const CreateMeetupForm = ({ groupsServer }: Props) => {
             <FormItem className="flex flex-col">
               <FormLabel>{t("speaker")}*</FormLabel>
               <FormControl>
-                <SearchSelect
-                  items={
-                    speakers?.map((s) => ({
-                      label: `${s.firstName} ${s.lastName}`,
-                      value: s.id,
-                    })) || []
-                  }
-                  placeholder={t("selectSpeaker")}
-                  isLoading={isLoading}
+                <SearchPeopleSelect
                   onSelect={(value) => form.setValue("speakerId", value)}
-                  onQueryChange={setQuery}
                 />
               </FormControl>
               <FormMessage />

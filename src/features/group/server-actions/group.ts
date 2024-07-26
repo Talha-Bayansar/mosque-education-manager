@@ -2,8 +2,10 @@
 
 import { requireAuthentication } from "@/features/auth/server-actions/auth";
 import { prisma } from "@/lib/db";
+import { routes } from "@/lib/routes";
 import { Nullable } from "@/lib/utils";
 import type { Prisma } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 
 export const getGroups = async (take?: number, skip?: number) => {
   const user = await requireAuthentication();
@@ -114,6 +116,9 @@ export const updateGroupMembers = async (
       },
     },
   });
+
+  revalidatePath(routes.dashboard.groups.id(groupId).updateMembers.root);
+  revalidatePath(routes.dashboard.groups.root);
 
   return true;
 };

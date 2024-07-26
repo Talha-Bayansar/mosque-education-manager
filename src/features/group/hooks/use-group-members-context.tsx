@@ -1,9 +1,6 @@
 "use client";
 
 import { createContext, useContext, useState } from "react";
-import { usePeopleByGroupId } from "@/features/person/hooks/use-people-by-group-id";
-import { useParams } from "next/navigation";
-import type { Person } from "@prisma/client";
 
 const GroupMembersContext = createContext<
   | {
@@ -17,36 +14,29 @@ const GroupMembersContext = createContext<
 
 type Props = {
   children: React.ReactNode;
-  peopleByGroupServer: Person[] | string[];
+  peopleByGroupIds: string[];
 };
 
 export const GroupMembersContextProvider = ({
   children,
-  peopleByGroupServer,
+  peopleByGroupIds,
 }: Props) => {
-  const { groupId } = useParams<{ groupId: string }>();
-  const { data } = usePeopleByGroupId({
-    groupId,
-    onlyIds: true,
-    initialData: peopleByGroupServer,
-  });
-  const [selectedMemberIds, setSelectedMemberIds] = useState<string[]>(
-    data as string[]
-  );
+  const [selectedMemberIds, setSelectedMemberIds] =
+    useState<string[]>(peopleByGroupIds);
   const [memberIdsToAdd, setMemberIdsToAdd] = useState<string[]>([]);
   const [memberIdsToRemove, setMemberIdsToRemove] = useState<string[]>([]);
 
   const handleCheck = (isChecked: boolean, memberId: string) => {
     if (isChecked) {
       setSelectedMemberIds((prev) => [...prev, memberId]);
-      if (!!data!.find((id) => id === memberId)) {
+      if (!!peopleByGroupIds.find((id) => id === memberId)) {
         setMemberIdsToRemove((prev) => prev.filter((id) => id !== memberId));
       } else {
         setMemberIdsToAdd((prev) => [...prev, memberId]);
       }
     } else {
       setSelectedMemberIds((prev) => prev.filter((e) => e !== memberId));
-      if (!!data!.find((id) => id === memberId)) {
+      if (!!peopleByGroupIds.find((id) => id === memberId)) {
         setMemberIdsToRemove((prev) => [...prev, memberId]);
       } else {
         setMemberIdsToAdd((prev) => prev.filter((id) => id !== memberId));

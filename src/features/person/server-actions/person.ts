@@ -4,7 +4,8 @@ import { requireAuthentication } from "@/features/auth/server-actions/auth";
 import { prisma } from "@/lib/db";
 import { routes } from "@/lib/routes";
 import { Nullable } from "@/lib/utils";
-import type { Prisma } from "@prisma/client";
+import { InfiniteScrollResponse } from "@/shared/types/infinite-scroll-response";
+import type { Person, Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
 export const getPeople = async (take?: number, skip?: number) => {
@@ -36,14 +37,23 @@ export const getPeopleCount = async () => {
   return count;
 };
 
-export const searchPeople = async (query?: string) => {
+export const searchPeople = async (
+  query?: string,
+  cursor?: string
+): Promise<InfiniteScrollResponse<Person>> => {
   const user = await requireAuthentication();
 
-  if (!query) {
-    return [];
+  if (!query || !cursor) {
+    return {
+      data: [],
+      metaData: {
+        cursor: null,
+        hasNextPage: false,
+      },
+    };
   }
 
-  const people = await prisma.person.findMany({
+  const result = await prisma.person.findMany({
     where: {
       OR: [
         { lastName: { contains: query, mode: "insensitive" } },
@@ -51,43 +61,93 @@ export const searchPeople = async (query?: string) => {
       ],
       teamId: user.teamId,
     },
+    take: 10,
+    ...(cursor && {
+      skip: 1, // Do not include the cursor itself in the query result.
+      cursor: {
+        id: cursor,
+      },
+    }),
     orderBy: {
       lastName: "asc",
     },
   });
 
-  return people;
-};
-
-export const getPeopleByGroupId = async (
-  groupId: string,
-  onlyIds: boolean = false
-) => {
-  const user = await requireAuthentication();
-  let filter: any = {};
-
-  if (onlyIds) {
-    filter = {
-      select: {
-        id: true,
-      },
-    };
-  } else {
-    filter = {
-      orderBy: {
-        lastName: "asc",
+  if (result.length == 0) {
+    return {
+      data: [],
+      metaData: {
+        cursor: null,
+        hasNextPage: false,
       },
     };
   }
 
-  const people = await prisma.group.findUnique({
-    where: { id: groupId, teamId: user.teamId },
-    select: {
-      members: filter,
+  const lastItem = result[result.length - 1];
+  const newCursor = lastItem.id;
+
+  const nextPage = await prisma.person.findMany({
+    take: 10,
+    skip: 1, // Do not include the cursor itself in the query result.
+    cursor: {
+      id: newCursor,
     },
   });
 
-  return onlyIds ? people?.members.map((p) => p.id) : people?.members;
+  const data = {
+    data: result,
+    metaData: {
+      cursor: newCursor,
+      hasNextPage: nextPage.length > 0,
+    },
+  };
+
+  return data;
+};
+
+export const getPeopleByGroupId = async (
+  groupId: string,
+  take?: number,
+  skip?: number
+) => {
+  const user = await requireAuthentication();
+
+  const people = await prisma.group.findUnique({
+    where: { id: groupId, teamId: user.teamId },
+    select: {
+      _count: {
+        select: {
+          members: true,
+        },
+      },
+      members: {
+        orderBy: {
+          lastName: "asc",
+        },
+        take,
+        skip,
+      },
+    },
+  });
+
+  return people?.members;
+};
+
+export const getPeopleIdsByGroupId = async (groupId: string) => {
+  const user = await requireAuthentication();
+
+  const peopleIds = await prisma.group.findUnique({
+    where: { id: groupId, teamId: user.teamId },
+    select: {
+      members: {
+        select: {
+          id: true,
+        },
+      },
+    },
+  });
+
+  return peopleIds?.members.map((m) => m.id);
 };
 
 export const getAttendanceByMeetupId = async (

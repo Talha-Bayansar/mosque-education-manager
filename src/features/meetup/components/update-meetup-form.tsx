@@ -22,10 +22,9 @@ import { AppForm } from "@/shared/components/app-form";
 import { LoadingButton } from "@/shared/components/loading-button";
 import { DateField } from "@/shared/components/date-field";
 import { SearchSelect } from "@/shared/components/search-select";
-import { useSearchPeople } from "@/features/person/hooks/use-search-people";
-import { useDebounceValue } from "@/shared/hooks/use-debounce-value";
 import type { Group, Meetup, Person } from "@prisma/client";
 import { useGroups } from "@/features/group/hooks/use-groups";
+import { SearchPeopleSelect } from "@/features/person/components/search-people-select";
 
 const formSchema = z.object({
   subject: z.string().min(1).max(50),
@@ -45,10 +44,6 @@ type Props = {
 export const UpdateMeetupForm = ({ meetup, groupsServer }: Props) => {
   const t = useTranslations();
   const router = useRouter();
-  const [query, setQuery] = useDebounceValue<string>("", 500);
-  const { data: speakers, isLoading: isLoadingSpeakers } = useSearchPeople({
-    query,
-  });
   const { data: groups } = useGroups({ initialData: groupsServer });
   const updateMeetupMutation = useMutation({
     mutationFn: (values: z.infer<typeof formSchema>) =>
@@ -122,21 +117,12 @@ export const UpdateMeetupForm = ({ meetup, groupsServer }: Props) => {
             <FormItem className="flex flex-col">
               <FormLabel>{t("speaker")}*</FormLabel>
               <FormControl>
-                <SearchSelect
-                  items={
-                    speakers?.map((s) => ({
-                      label: `${s.lastName} ${s.firstName}`,
-                      value: s.id,
-                    })) || []
-                  }
-                  placeholder={t("selectSpeaker")}
+                <SearchPeopleSelect
                   selectedItem={{
                     label: `${meetup.speaker.firstName} ${meetup.speaker.lastName}`,
                     value: meetup.speaker.id,
                   }}
-                  isLoading={isLoadingSpeakers}
                   onSelect={(value) => form.setValue("speakerId", value)}
-                  onQueryChange={setQuery}
                 />
               </FormControl>
               <FormMessage />

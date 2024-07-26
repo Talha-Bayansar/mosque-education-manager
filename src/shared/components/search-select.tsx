@@ -15,6 +15,7 @@ import {
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import { Spinner } from "./spinner";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 export type SearchSelectItem = {
   label: string;
@@ -28,6 +29,8 @@ type Props = {
   isLoading?: boolean;
   onSelect: (value: string) => void;
   onQueryChange?: (value: string) => void;
+  hasMore?: boolean;
+  onNextPage?: () => unknown;
 };
 
 export const SearchSelect = ({
@@ -37,6 +40,8 @@ export const SearchSelect = ({
   isLoading,
   onSelect,
   onQueryChange,
+  hasMore = false,
+  onNextPage,
 }: Props) => {
   const t = useTranslations();
   const [open, setOpen] = useState(false);
@@ -69,27 +74,38 @@ export const SearchSelect = ({
               <CommandEmpty>{t("noResults")}</CommandEmpty>
               <CommandList>
                 <CommandGroup>
-                  {items.map((item) => (
-                    <CommandItem
-                      key={item.value}
-                      value={item.value}
-                      onSelect={(currentValue) => {
-                        if (onSelect) {
-                          onSelect(currentValue);
-                        }
-                        setValue(currentValue === value ? "" : currentValue);
-                        setOpen(false);
-                      }}
-                    >
-                      <Check
-                        className={cn(
-                          "mr-2 h-4 w-4",
-                          value === item.value ? "opacity-100" : "opacity-0"
-                        )}
-                      />
-                      {item.label}
-                    </CommandItem>
-                  ))}
+                  <InfiniteScroll
+                    dataLength={items.length}
+                    hasMore={hasMore}
+                    loader={<Spinner />}
+                    next={() => {
+                      if (onNextPage) {
+                        onNextPage();
+                      }
+                    }}
+                  >
+                    {items.map((item) => (
+                      <CommandItem
+                        key={item.value}
+                        value={item.value}
+                        onSelect={(currentValue) => {
+                          if (onSelect) {
+                            onSelect(currentValue);
+                          }
+                          setValue(currentValue === value ? "" : currentValue);
+                          setOpen(false);
+                        }}
+                      >
+                        <Check
+                          className={cn(
+                            "mr-2 h-4 w-4",
+                            value === item.value ? "opacity-100" : "opacity-0"
+                          )}
+                        />
+                        {item.label}
+                      </CommandItem>
+                    ))}
+                  </InfiniteScroll>
                 </CommandGroup>
               </CommandList>
             </>

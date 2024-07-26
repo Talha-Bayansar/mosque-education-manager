@@ -26,7 +26,7 @@ type Props = {
 const GroupsPage = async ({ searchParams: { page } }: Props) => {
   const pageNumber = Number(page ?? 1);
   const t = await getTranslations();
-  const groupsServer = await getGroups(10, (pageNumber - 1) * 10);
+  const groups = await getGroups(10, (pageNumber - 1) * 10);
   const groupsCount = await getGroupsCount();
 
   return (
@@ -46,7 +46,7 @@ const GroupsPage = async ({ searchParams: { page } }: Props) => {
           </Drawer>
         </div>
       </Header>
-      <GroupsTable groupsServer={groupsServer} groupsCount={groupsCount} />
+      <GroupsTable groups={groups} groupsCount={groupsCount} />
     </Main>
   );
 };

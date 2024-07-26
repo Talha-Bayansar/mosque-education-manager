@@ -3,7 +3,7 @@
 import { UpdateGroupMembersTable } from "@/features/group/components/update-group-members-table";
 import {
   getPeople,
-  getPeopleByGroupId,
+  getPeopleIdsByGroupId,
 } from "@/features/person/server-actions/person";
 import { routes } from "@/lib/routes";
 import { Header } from "@/shared/components/layout/header";
@@ -23,14 +23,21 @@ type Props = {
   params: {
     groupId: string;
   };
+  searchParams: {
+    page?: string;
+  };
 };
 
-const UpdateGroupPage = async ({ params: { groupId } }: Props) => {
+const UpdateGroupPage = async ({
+  params: { groupId },
+  searchParams: { page },
+}: Props) => {
   const t = await getTranslations();
-  const peopleServer = await getPeople();
-  const peopleByGroupServer = await getPeopleByGroupId(groupId, true);
+  const pageNumber = Number(page ?? 1);
+  const peopleServer = await getPeople(10, (pageNumber - 1) * 10);
+  const peopleIds = await getPeopleIdsByGroupId(groupId);
 
-  if (!peopleByGroupServer) notFound();
+  if (!peopleIds) notFound();
 
   const history: NavigationHistoryItem[] = [
     {
@@ -43,7 +50,7 @@ const UpdateGroupPage = async ({ params: { groupId } }: Props) => {
   ];
 
   return (
-    <GroupMembersContextProvider peopleByGroupServer={peopleByGroupServer}>
+    <GroupMembersContextProvider peopleByGroupIds={peopleIds}>
       <Main>
         <Header>
           <NavigationDrawer />
