@@ -7,15 +7,22 @@ import { getMyTeam } from "../server-actions/team";
 type Props = {
   initialData?: Team & {
     members: User[];
+    _count: {
+      members: number;
+    };
   };
+  page?: number;
 };
 
-export const getUseMyTeamQueryKey = () => ["my-team"];
+export const getUseMyTeamQueryKey = (page?: number) => [
+  "my-team",
+  `page=${page}`,
+];
 
-export const useMyTeam = ({ initialData }: Props) => {
+export const useMyTeam = ({ initialData, page }: Props) => {
   const query = useQuery({
     queryKey: getUseMyTeamQueryKey(),
-    queryFn: async () => await getMyTeam(),
+    queryFn: async () => await getMyTeam(page && 10, page && (page - 1) * 10),
     initialData,
   });
 

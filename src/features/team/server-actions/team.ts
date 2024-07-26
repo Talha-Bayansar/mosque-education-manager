@@ -4,7 +4,7 @@ import { requireAuthentication } from "@/features/auth/server-actions/auth";
 import { requireAdmin } from "@/features/auth/server-actions/user";
 import { prisma } from "@/lib/db";
 
-export const getMyTeam = async () => {
+export const getMyTeam = async (take?: number, skip?: number) => {
   const user = await requireAuthentication();
 
   const team = await prisma.team.findUnique({
@@ -12,7 +12,15 @@ export const getMyTeam = async () => {
       id: user.teamId,
     },
     include: {
-      members: true,
+      _count: {
+        select: {
+          members: true,
+        },
+      },
+      members: {
+        take,
+        skip,
+      },
     },
   });
 
