@@ -14,7 +14,7 @@ import { SaveAttendanceButton } from "./_components/save-attendance-button";
 import { MeetupAttendanceTable } from "@/features/meetup/components/meetup-attendance-table";
 import { getMeetupById } from "@/features/meetup/server-actions/meetup";
 import {
-  getAttendanceByMeetupId,
+  getAttendanceIdsByMeetupId,
   getPeopleByGroupId,
 } from "@/features/person/server-actions/person";
 import type { Person } from "@prisma/client";
@@ -37,10 +37,7 @@ const MeetupAttendancePage = async ({ params: { meetupId } }: Props) => {
   if (meetup.groupId) {
     people = (await getPeopleByGroupId(meetup.groupId)) as Person[];
   }
-  const attendanceIds = (await getAttendanceByMeetupId(
-    meetupId,
-    true
-  )) as string[];
+  const attendanceIds = await getAttendanceIdsByMeetupId(meetupId);
 
   const history: NavigationHistoryItem[] = [
     {
@@ -53,7 +50,7 @@ const MeetupAttendancePage = async ({ params: { meetupId } }: Props) => {
   ];
 
   return (
-    <MeetupAttendanceContextProvider attendanceIdsServer={attendanceIds}>
+    <MeetupAttendanceContextProvider attendanceIds={attendanceIds}>
       <Main>
         <Header>
           <NavigationDrawer />

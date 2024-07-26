@@ -150,10 +150,7 @@ export const getPeopleIdsByGroupId = async (groupId: string) => {
   return peopleIds?.members.map((m) => m.id);
 };
 
-export const getAttendanceByMeetupId = async (
-  meetupId: string,
-  onlyIds: boolean = false
-) => {
+export const getAttendanceByMeetupId = async (meetupId: string) => {
   const user = await requireAuthentication();
 
   const attendance = await prisma.person.findMany({
@@ -168,10 +165,30 @@ export const getAttendanceByMeetupId = async (
     orderBy: {
       lastName: "asc",
     },
-    select: onlyIds ? { id: true } : undefined,
   });
 
-  return onlyIds ? attendance.map((a) => a.id) : attendance;
+  return attendance;
+};
+
+export const getAttendanceIdsByMeetupId = async (meetupId: string) => {
+  const user = await requireAuthentication();
+
+  const attendance = await prisma.person.findMany({
+    where: {
+      attendanceMeetups: {
+        some: {
+          id: meetupId,
+        },
+      },
+      teamId: user.teamId,
+    },
+    orderBy: {
+      lastName: "asc",
+    },
+    select: { id: true },
+  });
+
+  return attendance.map((a) => a.id);
 };
 
 export const getPersonById = async (id: string) => {
@@ -208,6 +225,8 @@ export const createPerson = async (
     },
   });
 
+  revalidatePath(routes.dashboard.people.root);
+
   return person;
 };
 
@@ -232,6 +251,7 @@ export const updatePerson = async (
   });
 
   revalidatePath(routes.dashboard.people.id(id).update.root);
+  revalidatePath(routes.dashboard.people.root);
 
   return person;
 };
@@ -242,6 +262,8 @@ export const deletePerson = async (id: string) => {
   await prisma.person.delete({
     where: { id, teamId: user.teamId },
   });
+
+  revalidatePath(routes.dashboard.people.root);
 
   return true;
 };

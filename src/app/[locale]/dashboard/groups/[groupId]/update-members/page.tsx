@@ -3,6 +3,7 @@
 import { UpdateGroupMembersTable } from "@/features/group/components/update-group-members-table";
 import {
   getPeople,
+  getPeopleCount,
   getPeopleIdsByGroupId,
 } from "@/features/person/server-actions/person";
 import { routes } from "@/lib/routes";
@@ -34,7 +35,8 @@ const UpdateGroupPage = async ({
 }: Props) => {
   const t = await getTranslations();
   const pageNumber = Number(page ?? 1);
-  const peopleServer = await getPeople(10, (pageNumber - 1) * 10);
+  const people = await getPeople(10, (pageNumber - 1) * 10);
+  const peopleCount = await getPeopleCount();
   const peopleIds = await getPeopleIdsByGroupId(groupId);
 
   if (!peopleIds) notFound();
@@ -60,7 +62,7 @@ const UpdateGroupPage = async ({
           </div>
         </Header>
         <NavigationHistory items={history} />
-        <UpdateGroupMembersTable peopleServer={peopleServer} />
+        <UpdateGroupMembersTable people={people} peopleCount={peopleCount} />
       </Main>
     </GroupMembersContextProvider>
   );

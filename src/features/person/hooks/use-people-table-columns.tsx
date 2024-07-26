@@ -11,26 +11,21 @@ import {
   DropdownMenuTrigger,
 } from "@/shared/components/ui/dropdown-menu";
 import type { Person } from "@prisma/client";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { MoreHorizontal } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { deletePerson } from "../server-actions/person";
 import { toast } from "sonner";
-import { getUsePeopleQueryKey } from "./use-people";
 import { AlertModal } from "@/shared/components/alert-modal";
 
 export const usePeopleTableColumns = () => {
   const t = useTranslations();
-  const queryClient = useQueryClient();
   const deletePersonMutation = useMutation({
     mutationFn: (personId: string) => deletePerson(personId),
     onSuccess: () => {
       toast.success(t("deletePersonSuccess"));
-      queryClient.refetchQueries({
-        queryKey: getUsePeopleQueryKey(),
-      });
     },
     onError: () => {
       toast.error(t("somethingWentWrong"));

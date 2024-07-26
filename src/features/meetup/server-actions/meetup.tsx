@@ -125,6 +125,8 @@ export const updateMeetupAttendance = async (
     },
   });
 
+  revalidatePath(routes.dashboard.meetups.id(meetupId).attendance.root);
+
   return true;
 };
 
