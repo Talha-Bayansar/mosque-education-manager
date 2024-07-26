@@ -83,5 +83,6 @@
   "addTeamMemberSuccess": "Ekip üyesi başarıyla eklendi",
   "add": "Ekle",
   "next": "Sonraki",
-  "previous": "Önceki"
+  "previous": "Önceki",
+  "selectLanguageDescription": "Uygulama için istediğiniz bir dili seçin."
 }

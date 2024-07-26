@@ -83,5 +83,6 @@
   "addTeamMemberSuccess": "Teamlid werd succesvol toegevoegd",
   "add": "Toevoegen",
   "next": "Volgende",
-  "previous": "Vorige"
+  "previous": "Vorige",
+  "selectLanguageDescription": "Selecteer een taal naar keuze voor de applicatie."
 }
