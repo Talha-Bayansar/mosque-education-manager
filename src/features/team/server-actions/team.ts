@@ -3,6 +3,8 @@
 import { requireAuthentication } from "@/features/auth/server-actions/auth";
 import { requireAdmin } from "@/features/auth/server-actions/user";
 import { prisma } from "@/lib/db";
+import { routes } from "@/lib/routes";
+import { revalidatePath } from "next/cache";
 
 export const getMyTeam = async (take?: number, skip?: number) => {
   const user = await requireAuthentication();
@@ -57,6 +59,8 @@ export const addTeamMember = async (email: string) => {
     },
   });
 
+  revalidatePath(routes.dashboard.team.root);
+
   return true;
 };
 
@@ -79,6 +83,8 @@ export const deleteTeamMember = async (userId: string) => {
       },
     },
   });
+
+  revalidatePath(routes.dashboard.team.root);
 
   return true;
 };

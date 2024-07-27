@@ -12,13 +12,11 @@ import {
 } from "@/shared/components/ui/form";
 import { Input } from "@/shared/components/ui/input";
 import { AppForm } from "@/shared/components/app-form";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { routes } from "@/lib/routes";
 import { useTranslations } from "next-intl";
 import { LoadingButton } from "@/shared/components/loading-button";
 import { addTeamMember } from "../server-actions/team";
-import { getUseMyTeamQueryKey } from "../hooks/use-my-team";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -26,14 +24,10 @@ const formSchema = z.object({
 
 export const AddTeamMemberForm = () => {
   const t = useTranslations();
-  const queryClient = useQueryClient();
   const addTeamMemberMutation = useMutation({
     mutationFn: (email: string) => addTeamMember(email),
     onSuccess: () => {
       toast.success(t("addTeamMemberSuccess"));
-      queryClient.refetchQueries({
-        queryKey: getUseMyTeamQueryKey(),
-      });
     },
     onError: () => {
       toast.error(t("somethingWentWrong"));

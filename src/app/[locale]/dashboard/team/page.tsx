@@ -18,9 +18,16 @@ import {
 import { UserRole } from "@prisma/client";
 import { getTranslations } from "next-intl/server";
 
-const TeamPage = async () => {
+type Props = {
+  searchParams: {
+    page?: string;
+  };
+};
+
+const TeamPage = async ({ searchParams: { page } }: Props) => {
   const t = await getTranslations();
-  const team = await getMyTeam();
+  const pageNumber = Number(page ?? 1);
+  const team = await getMyTeam(10, (pageNumber - 1) * 10);
 
   return (
     <Main>
@@ -43,7 +50,7 @@ const TeamPage = async () => {
           </div>
         </RequireRole>
       </Header>
-      <TeamTable teamServer={team} />
+      <TeamTable team={team} />
     </Main>
   );
 };

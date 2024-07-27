@@ -2,12 +2,10 @@
 
 import { AppTable } from "@/shared/components/app-table";
 import type { Team, User } from "@prisma/client";
-import { useMyTeam } from "../hooks/use-my-team";
 import { useTeamTableColumns } from "../hooks/use-team-table-columns";
-import { useSearchParams } from "next/navigation";
 
 type Props = {
-  teamServer: Team & {
+  team: Team & {
     members: User[];
     _count: {
       members: number;
@@ -15,22 +13,14 @@ type Props = {
   };
 };
 
-export const TeamTable = ({ teamServer }: Props) => {
-  const searchParams = useSearchParams();
-  const page = searchParams.get("page");
-  const pageNumber = Number(page ?? 1);
-  const { data } = useMyTeam({
-    initialData: teamServer,
-    page: pageNumber,
-  });
-
+export const TeamTable = ({ team }: Props) => {
   const columns = useTeamTableColumns();
 
   return (
     <AppTable
-      data={data!.members}
+      data={team.members}
       columns={columns}
-      totalCount={data!._count.members}
+      totalCount={team._count.members}
     />
   );
 };
