@@ -17,6 +17,9 @@ import {
 } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
 import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { updateTask } from "@/features/task/server-actions/task";
 
 type Props = {
   tasks: (Task & {
@@ -35,6 +38,15 @@ type Column = {
 export const Kanban = ({ tasks: data }: Props) => {
   const t = useTranslations();
   const [tasks, setTasks] = useState(data);
+  const updateTaskStatusMutation = useMutation({
+    mutationFn: async (values: { id: string; status: TaskStatus }) =>
+      await updateTask(values.id, {
+        status: values.status,
+      }),
+    onError: () => {
+      toast.error(t("somethingWentWrong"));
+    },
+  });
 
   const columns: Column[] = [
     {
@@ -62,13 +74,16 @@ export const Kanban = ({ tasks: data }: Props) => {
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     if (over?.id) {
+      updateTaskStatusMutation.mutate({
+        id: active.id as string,
+        status: over!.id as TaskStatus,
+      });
       setTasks((tasks) =>
         tasks.map((task) =>
           task.id === active.id ? ({ ...task, status: over?.id } as Task) : task
         )
       );
     }
-    console.log(tasks);
   };
 
   return (

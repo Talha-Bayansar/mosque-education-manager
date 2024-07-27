@@ -1,8 +1,12 @@
+"use server";
+
 import { requireAuthentication } from "@/features/auth/server-actions/auth";
 import { requireAdmin } from "@/features/auth/server-actions/user";
 import { prisma } from "@/lib/db";
+import { routes } from "@/lib/routes";
 import { type Nullable } from "@/lib/utils";
 import { Prisma } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 
 export const getTasks = async () => {
   const user = await requireAuthentication();
@@ -55,6 +59,8 @@ export const updateTask = async (
       },
     },
   });
+
+  revalidatePath(routes.dashboard.tasks.root);
 
   return task;
 };
