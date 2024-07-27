@@ -1,20 +1,10 @@
-import { Header } from "@/shared/components/layout/header";
-import { Main } from "@/shared/components/layout/main";
-import { Title } from "@/shared/components/layout/title";
-import { NavigationDrawer } from "@/shared/components/navigation-drawer";
-import { getTranslations } from "next-intl/server";
+import { TasksBoard } from "@/features/task/components/tasks-board";
+import { getTasks } from "@/features/task/server-actions/task";
 
 const TasksPage = async () => {
-  const t = await getTranslations();
+  const tasks = await getTasks();
 
-  return (
-    <Main>
-      <Header>
-        <NavigationDrawer />
-        <Title>{t("tasks")}</Title>
-      </Header>
-    </Main>
-  );
+  return <TasksBoard tasks={tasks} />;
 };
 
 export default TasksPage;

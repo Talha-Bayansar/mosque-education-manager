@@ -85,5 +85,9 @@
   "next": "Volgende",
   "previous": "Vorige",
   "selectLanguageDescription": "Selecteer een taal naar keuze voor de applicatie.",
-  "authenticating": "Authenticeren"
+  "authenticating": "Authenticeren",
+  "backlog": "Achterstand",
+  "todo": "Te doen",
+  "inProgress": "Bezig",
+  "done": "Klaar"
 }

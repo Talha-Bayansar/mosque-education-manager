@@ -85,5 +85,9 @@
   "next": "Sonraki",
   "previous": "Önceki",
   "selectLanguageDescription": "Uygulama için istediğiniz bir dili seçin.",
-  "authenticating": "Kimlik doğrulaması"
+  "authenticating": "Kimlik doğrulaması",
+  "backlog": "Beklemede",
+  "todo": "Yapılacak",
+  "inProgress": "Devam eden",
+  "done": "Tamamlandı"
 }
