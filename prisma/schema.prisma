@@ -18,6 +18,7 @@ model User {
   updatedAt DateTime  @updatedAt
   sessions  Session[]
   team      Team?     @relation(fields: [teamId], references: [id])
+  tasks     Task[]
 }
 
 model Session {
@@ -45,6 +46,7 @@ model Team {
   members   User[]
   groups    Group[]
   meetups   Meetup[]
+  tasks     Task[]
 }
 
 model Person {
@@ -93,7 +95,28 @@ model Meetup {
   groupId    String?
 }
 
+model Task {
+  id           String     @id @default(cuid())
+  title        String
+  description  String?
+  dueDate      DateTime?
+  assignedUser User?      @relation(fields: [userId], references: [id])
+  team         Team       @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  status       TaskStatus @default(BACKLOG)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  userId       String?
+  teamId       String
+}
+
 enum UserRole {
   ADMIN
   TEAM_MEMBER
+}
+
+enum TaskStatus {
+  BACKLOG
+  TODO
+  IN_PROGRESS
+  DONE
 }
