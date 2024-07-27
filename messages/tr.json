@@ -84,5 +84,6 @@
   "add": "Ekle",
   "next": "Sonraki",
   "previous": "Önceki",
-  "selectLanguageDescription": "Uygulama için istediğiniz bir dili seçin."
+  "selectLanguageDescription": "Uygulama için istediğiniz bir dili seçin.",
+  "authenticating": "Kimlik doğrulaması"
 }

@@ -84,5 +84,6 @@
   "add": "Toevoegen",
   "next": "Volgende",
   "previous": "Vorige",
-  "selectLanguageDescription": "Selecteer een taal naar keuze voor de applicatie."
+  "selectLanguageDescription": "Selecteer een taal naar keuze voor de applicatie.",
+  "authenticating": "Authenticeren"
 }

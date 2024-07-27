@@ -27,6 +27,7 @@ import { View } from "./layout/view";
 import { usePathname } from "@/navigation";
 import { useSearchParams } from "next/navigation";
 import { generateArray } from "@/lib/utils";
+import { Skeleton } from "./ui/skeleton";
 
 type Props = {
   columns: ColumnDef<any, any>[];
@@ -142,5 +143,38 @@ export const AppTable = ({ columns, data, totalCount = 10 }: Props) => {
         </PaginationContent>
       </Pagination>
     </View>
+  );
+};
+
+export const AppTableSkeleton = () => {
+  return (
+    <div className="rounded-md border w-full">
+      <Table>
+        <TableHeader>
+          {generateArray(2).map((headerGroup) => (
+            <TableRow key={`headerGroup_${headerGroup}`}>
+              {generateArray(2).map((header) => {
+                return (
+                  <TableHead key={`header_${header}`}>
+                    <Skeleton className="w-full h-4" />
+                  </TableHead>
+                );
+              })}
+            </TableRow>
+          ))}
+        </TableHeader>
+        <TableBody>
+          {generateArray().map((row) => (
+            <TableRow key={`row_${row}`}>
+              {generateArray(2).map((cell) => (
+                <TableCell key={`cell_${cell}`}>
+                  <Skeleton className="w-full h-4" />
+                </TableCell>
+              ))}
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
   );
 };
