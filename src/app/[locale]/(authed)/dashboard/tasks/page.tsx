@@ -37,7 +37,7 @@ const TasksPage = async () => {
           </Drawer>
         </div>
       </Header>
-      <TasksBoard tasks={tasks} />
+      <TasksBoard tasks={tasks} users={team.members} />
     </Main>
   );
 };

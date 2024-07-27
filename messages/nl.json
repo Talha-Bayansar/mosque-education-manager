@@ -96,6 +96,8 @@
   "description": "Beschrijving",
   "createTask": "Taak aanmaken",
   "updateTask": "Taak bijwerken",
+  "deleteTask": "Taak verwijderen",
   "createTaskSuccess": "Taak werd succesvol aangemaakt",
-  "updateTaskSuccess": "Taak werd succesvol bijgewerkt"
+  "updateTaskSuccess": "Taak werd succesvol bijgewerkt",
+  "deleteTaskSuccess": "Taak werd succesvol verwijderd"
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { TaskStatus, type User, type Task } from "@prisma/client";
-import { UserIcon } from "lucide-react";
+import { CalendarCheck, Grip, UserIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Card, CardHeader, CardTitle, CardContent } from "./ui/card";
 import { cn, generateArray } from "@/lib/utils";
@@ -25,11 +25,17 @@ import { useEffect, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { updateTask } from "@/features/task/server-actions/task";
+import { format } from "date-fns";
 
 type Props = {
   tasks: (Task & {
     assignedUser?: User;
   })[];
+  onClickTask?: (
+    task: Task & {
+      assignedUser?: User;
+    }
+  ) => unknown;
 };
 
 type Column = {
@@ -40,7 +46,7 @@ type Column = {
   })[];
 };
 
-export const Kanban = ({ tasks: data }: Props) => {
+export const Kanban = ({ tasks: data, onClickTask }: Props) => {
   const t = useTranslations();
   const [tasks, setTasks] = useState(data);
   const updateTaskStatusMutation = useMutation({
@@ -106,7 +112,11 @@ export const Kanban = ({ tasks: data }: Props) => {
       <div className="flex xl:grid xl:grid-cols-4 gap-6 w-full">
         <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
           {columns.map((column) => (
-            <KanbanColumn key={column.title} column={column} />
+            <KanbanColumn
+              key={column.title}
+              column={column}
+              onClickItem={onClickTask}
+            />
           ))}
         </DndContext>
       </div>
@@ -115,7 +125,17 @@ export const Kanban = ({ tasks: data }: Props) => {
   );
 };
 
-const KanbanColumn = ({ column }: { column: Column }) => {
+const KanbanColumn = ({
+  column,
+  onClickItem,
+}: {
+  column: Column;
+  onClickItem?: (
+    task: Task & {
+      assignedUser?: User;
+    }
+  ) => unknown;
+}) => {
   const { isOver, setNodeRef } = useDroppable({
     id: column.value,
   });
@@ -136,7 +156,7 @@ const KanbanColumn = ({ column }: { column: Column }) => {
           {column.tasks
             .filter((task) => task.status === column.value)
             .map((task) => (
-              <KanbanItem key={task.id} task={task} />
+              <KanbanItem key={task.id} task={task} onClick={onClickItem} />
             ))}
         </View>
       </CardContent>
@@ -144,7 +164,17 @@ const KanbanColumn = ({ column }: { column: Column }) => {
   );
 };
 
-const KanbanItem = ({ task }: { task: Task & { assignedUser?: User } }) => {
+const KanbanItem = ({
+  task,
+  onClick,
+}: {
+  task: Task & { assignedUser?: User };
+  onClick?: (
+    task: Task & {
+      assignedUser?: User;
+    }
+  ) => unknown;
+}) => {
   const t = useTranslations();
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: task.id,
@@ -155,21 +185,33 @@ const KanbanItem = ({ task }: { task: Task & { assignedUser?: User } }) => {
 
   return (
     <Card
-      className="touch-manipulation"
+      onClick={() => {
+        if (onClick) {
+          onClick(task);
+        }
+      }}
+      className="touch-manipulation flex items-center justify-between cursor-pointer p-4"
       ref={setNodeRef}
       style={style}
-      {...listeners}
-      {...attributes}
     >
-      <CardHeader>
-        <CardTitle>{task.title}</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="flex items-center gap-2 text-sm">
-          <UserIcon className="w-4 h-4" />
-          <span>{task.assignedUser?.name ?? t("notSpecified")}</span>
-        </div>
-      </CardContent>
+      <View>
+        <CardHeader className="p-0">
+          <CardTitle>{task.title}</CardTitle>
+        </CardHeader>
+        <CardContent className="p-0 space-y-2">
+          <span className="flex items-center gap-2 text-sm">
+            <CalendarCheck className="w-4 h-4" />
+            {task.dueDate
+              ? format(task.dueDate, "dd/MM/yyyy")
+              : t("notSpecified")}
+          </span>
+          <div className="flex items-center gap-2 text-sm">
+            <UserIcon className="w-4 h-4" />
+            <span>{task.assignedUser?.name ?? t("notSpecified")}</span>
+          </div>
+        </CardContent>
+      </View>
+      <Grip className="cursor-grab shrink-0" {...listeners} {...attributes} />
     </Card>
   );
 };

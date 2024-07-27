@@ -96,6 +96,8 @@
   "description": "Açıklama",
   "createTask": "Görev oluştur",
   "updateTask": "Görev güncelleme",
+  "deleteTask": "Görevi sil",
   "createTaskSuccess": "Görev başarıyla oluşturuldu",
-  "updateTaskSuccess": "Görev başarıyla güncellendi"
+  "updateTaskSuccess": "Görev başarıyla güncellendi",
+  "deleteTaskSuccess": "Görev başarıyla silindi"
 }

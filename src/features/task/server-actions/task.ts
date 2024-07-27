@@ -79,5 +79,7 @@ export const deleteTask = async (id: string) => {
     where: { id, teamId: user.teamId },
   });
 
+  revalidatePath(routes.dashboard.tasks.root);
+
   return true;
 };
