@@ -89,5 +89,13 @@
   "backlog": "Beklemede",
   "todo": "Yapılacak",
   "inProgress": "Devam eden",
-  "done": "Tamamlandı"
+  "done": "Tamamlandı",
+  "user": "Kullanıcı",
+  "selectUser": "Kullanıcı seçin",
+  "title": "Başlık",
+  "description": "Açıklama",
+  "createTask": "Görev oluştur",
+  "updateTask": "Görev güncelleme",
+  "createTaskSuccess": "Görev başarıyla oluşturuldu",
+  "updateTaskSuccess": "Görev başarıyla güncellendi"
 }

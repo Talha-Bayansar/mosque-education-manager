@@ -89,5 +89,13 @@
   "backlog": "Achterstand",
   "todo": "Te doen",
   "inProgress": "Bezig",
-  "done": "Klaar"
+  "done": "Klaar",
+  "user": "Gebruiker",
+  "selectUser": "Selecteer gebruiker",
+  "title": "Titel",
+  "description": "Beschrijving",
+  "createTask": "Taak aanmaken",
+  "updateTask": "Taak bijwerken",
+  "createTaskSuccess": "Taak werd succesvol aangemaakt",
+  "updateTaskSuccess": "Taak werd succesvol bijgewerkt"
 }

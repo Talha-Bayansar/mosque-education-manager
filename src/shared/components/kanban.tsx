@@ -12,11 +12,16 @@ import { Separator } from "./ui/separator";
 import {
   DndContext,
   type DragEndEvent,
+  KeyboardSensor,
+  MouseSensor,
+  TouchSensor,
   useDraggable,
   useDroppable,
+  useSensor,
+  useSensors,
 } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { updateTask } from "@/features/task/server-actions/task";
@@ -47,6 +52,16 @@ export const Kanban = ({ tasks: data }: Props) => {
       toast.error(t("somethingWentWrong"));
     },
   });
+
+  useEffect(() => {
+    setTasks(data);
+  }, [data]);
+
+  const mouseSensor = useSensor(MouseSensor);
+  const touchSensor = useSensor(TouchSensor);
+  const keyboardSensor = useSensor(KeyboardSensor);
+
+  const sensors = useSensors(mouseSensor, touchSensor, keyboardSensor);
 
   const columns: Column[] = [
     {
@@ -89,7 +104,7 @@ export const Kanban = ({ tasks: data }: Props) => {
   return (
     <ScrollArea className="w-full">
       <div className="flex xl:grid xl:grid-cols-4 gap-6 w-full">
-        <DndContext onDragEnd={handleDragEnd}>
+        <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
           {columns.map((column) => (
             <KanbanColumn key={column.title} column={column} />
           ))}
@@ -139,7 +154,13 @@ const KanbanItem = ({ task }: { task: Task & { assignedUser?: User } }) => {
   };
 
   return (
-    <Card ref={setNodeRef} style={style} {...listeners} {...attributes}>
+    <Card
+      className="touch-manipulation"
+      ref={setNodeRef}
+      style={style}
+      {...listeners}
+      {...attributes}
+    >
       <CardHeader>
         <CardTitle>{task.title}</CardTitle>
       </CardHeader>

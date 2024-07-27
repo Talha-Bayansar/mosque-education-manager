@@ -15,9 +15,14 @@ export const getTasks = async () => {
     where: {
       teamId: user.teamId,
     },
-    orderBy: {
-      dueDate: "desc",
-    },
+    orderBy: [
+      {
+        dueDate: "asc",
+      },
+      {
+        title: "asc",
+      },
+    ],
   });
 
   return tasks;
@@ -38,6 +43,8 @@ export const createTask = async (
       },
     },
   });
+
+  revalidatePath(routes.dashboard.tasks.root);
 
   return task;
 };
