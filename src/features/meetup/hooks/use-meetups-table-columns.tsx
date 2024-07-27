@@ -96,7 +96,7 @@ export const useMeetupsTableColumns = () => {
                 <Link
                   href={routes.dashboard.meetups.id(meetup.id).attendance.root}
                 >
-                  {t("attendance")}
+                  {t("updateAttendance")}
                 </Link>
               </DropdownMenuItem>
               <AlertModal

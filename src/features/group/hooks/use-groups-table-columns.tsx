@@ -44,7 +44,7 @@ export const useGroupsTableColumns = () => {
     },
     {
       accessorKey: "members",
-      header: t("count"),
+      header: t("members"),
       cell: ({ row }) => {
         const group = row.original;
 
@@ -83,7 +83,7 @@ export const useGroupsTableColumns = () => {
                 <Link
                   href={routes.dashboard.groups.id(group.id).updateMembers.root}
                 >
-                  {t("members")}
+                  {t("updateMembers")}
                 </Link>
               </DropdownMenuItem>
               <AlertModal

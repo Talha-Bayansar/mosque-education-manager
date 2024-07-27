@@ -25,6 +25,7 @@ export const SaveAttendanceButton = () => {
 
   return (
     <LoadingButton
+      className="ml-4"
       onClick={() => updateAttendanceMutation.mutate()}
       isLoading={updateAttendanceMutation.isPending}
     >

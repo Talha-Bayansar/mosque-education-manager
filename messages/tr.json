@@ -71,6 +71,7 @@
   "host": "Ev sahibi",
   "date": "Tarih",
   "attendance": "Katılım",
+  "updateAttendance": "Katılım güncelleme",
   "selectSpeaker": "Hatip seçin",
   "search": "Ara",
   "group": "Grup",
