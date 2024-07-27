@@ -11,6 +11,9 @@ export const getTasks = async () => {
     where: {
       teamId: user.teamId,
     },
+    orderBy: {
+      dueDate: "desc",
+    },
   });
 
   return tasks;
