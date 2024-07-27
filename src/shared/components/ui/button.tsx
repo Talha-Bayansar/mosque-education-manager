@@ -57,8 +57,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 );
 Button.displayName = "Button";
 
-export const ButtonSkeleton = () => {
-  return <Skeleton className="w-full md:w-32 h-10" />;
+export const ButtonSkeleton = ({}) => {
+  return <Skeleton className="w-full md:min-w-32 h-10" />;
 };
 
 export { Button, buttonVariants };

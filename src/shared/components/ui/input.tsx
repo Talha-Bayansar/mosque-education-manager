@@ -1,6 +1,8 @@
-import * as React from "react"
+import * as React from "react";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
+import { View } from "../layout/view";
+import { Skeleton } from "./skeleton";
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {}
@@ -17,9 +19,18 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         ref={ref}
         {...props}
       />
-    )
+    );
   }
-)
-Input.displayName = "Input"
+);
+Input.displayName = "Input";
 
-export { Input }
+export const InputSkeleton = () => {
+  return (
+    <View className="gap-2">
+      <Skeleton className="w-16 h-4" />
+      <Skeleton className="w-full h-10" />
+    </View>
+  );
+};
+
+export { Input };
