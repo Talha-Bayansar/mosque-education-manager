@@ -23,6 +23,9 @@ export const getTasks = async () => {
         title: "asc",
       },
     ],
+    include: {
+      assignedUser: true,
+    },
   });
 
   return tasks;

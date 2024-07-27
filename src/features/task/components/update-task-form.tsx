@@ -132,9 +132,15 @@ export const UpdateTaskForm = ({ users, task }: Props) => {
               <FormControl>
                 <SearchSelect
                   items={users.map((user) => ({
-                    label: user.name ?? t("notSpecified"),
+                    label: user.email ?? t("notSpecified"),
                     value: user.id,
                   }))}
+                  selectedItem={
+                    task.assignedUser && {
+                      label: task.assignedUser.email,
+                      value: task.assignedUser.id,
+                    }
+                  }
                   placeholder={t("selectUser")}
                   onSelect={(value) => form.setValue("assignedUserId", value)}
                 />

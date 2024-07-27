@@ -207,7 +207,7 @@ const KanbanItem = ({
           </span>
           <div className="flex items-center gap-2 text-sm">
             <UserIcon className="w-4 h-4" />
-            <span>{task.assignedUser?.name ?? t("notSpecified")}</span>
+            <span>{task.assignedUser?.email ?? t("notSpecified")}</span>
           </div>
         </CardContent>
       </View>

@@ -129,7 +129,7 @@ export const CreateTaskForm = ({ users }: Props) => {
               <FormControl>
                 <SearchSelect
                   items={users.map((user) => ({
-                    label: user.name ?? t("notSpecified"),
+                    label: user.email ?? t("notSpecified"),
                     value: user.id,
                   }))}
                   placeholder={t("selectUser")}
