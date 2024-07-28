@@ -44,6 +44,9 @@ export const routes = {
     },
     posters: {
       root: "/dashboard/posters",
+      templates: {
+        root: "/dashboard/posters/templates",
+      },
     },
     settings: {
       root: "/dashboard/settings",

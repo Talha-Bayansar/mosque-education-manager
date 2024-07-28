@@ -9,6 +9,7 @@ import { deletePosterTemplate } from "../server-actions/poster";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
 import { AlertModal } from "@/shared/components/alert-modal";
+import { Skeleton } from "@/shared/components/ui/skeleton";
 
 type Props = {
   posterTemplate: PosterTemplate;
@@ -29,10 +30,7 @@ export const PosterTemplateCard = ({ posterTemplate }: Props) => {
     <Card className="overflow-clip group relative h-min">
       <AlertModal
         trigger={
-          <button
-            onClick={() => console.log("delete")}
-            className="hidden group-hover:block absolute top-2 right-2 z-10"
-          >
+          <button className="hidden group-hover:block absolute top-2 right-2 z-10">
             <Trash2 className="text-destructive" />
           </button>
         }
@@ -50,6 +48,14 @@ export const PosterTemplateCard = ({ posterTemplate }: Props) => {
           height={500}
         />
       </div>
+    </Card>
+  );
+};
+
+export const PosterTemplateCardSkeleton = () => {
+  return (
+    <Card className="w-full h-80">
+      <Skeleton className="h-full w-full" />
     </Card>
   );
 };

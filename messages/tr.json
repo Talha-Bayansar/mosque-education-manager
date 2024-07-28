@@ -101,6 +101,7 @@
   "createTaskSuccess": "Görev başarıyla oluşturuldu",
   "updateTaskSuccess": "Görev başarıyla güncellendi",
   "deleteTaskSuccess": "Görev başarıyla silindi",
+  "posterTemplates": "Poster şablonları",
   "uploadFileSuccess": "Dosya başarıyla yüklendi",
   "createPosterTemplateSuccess": "Afiş şablonu başarıyla oluşturuldu",
   "deletePosterTemplate": "Afiş şablonu sil",

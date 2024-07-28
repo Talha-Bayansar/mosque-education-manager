@@ -101,6 +101,7 @@
   "createTaskSuccess": "Taak werd succesvol aangemaakt",
   "updateTaskSuccess": "Taak werd succesvol bijgewerkt",
   "deleteTaskSuccess": "Taak werd succesvol verwijderd",
+  "posterTemplates": "Postersjablonen",
   "uploadFileSuccess": "Bestand werd succesvol opgeladen",
   "createPosterTemplateSuccess": "Postersjabloon werd succesvol aangemaakt",
   "deletePosterTemplate": "Postersjabloon verwijderen",

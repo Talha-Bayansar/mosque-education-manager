@@ -7,7 +7,11 @@ import type { UploadedFileData } from "uploadthing/types";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
 
-export const UploadPosterTemplate = () => {
+type Props = {
+  disabled?: boolean;
+};
+
+export const UploadPosterTemplate = ({ disabled }: Props) => {
   const t = useTranslations();
   const createPosterTemplateMutation = useMutation({
     mutationFn: async (values: UploadedFileData) =>
@@ -27,6 +31,7 @@ export const UploadPosterTemplate = () => {
   return (
     <UploadDropzone
       endpoint="imageUploader"
+      disabled={disabled}
       onClientUploadComplete={(res) => {
         t("uploadFileSuccess");
         for (const file of res) {
