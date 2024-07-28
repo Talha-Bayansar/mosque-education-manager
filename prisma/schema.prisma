@@ -38,15 +38,16 @@ model VerificationCode {
 }
 
 model Team {
-  id        String   @id @default(cuid())
-  name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  people    Person[]
-  members   User[]
-  groups    Group[]
-  meetups   Meetup[]
-  tasks     Task[]
+  id              String           @id @default(cuid())
+  name            String
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  people          Person[]
+  members         User[]
+  groups          Group[]
+  meetups         Meetup[]
+  tasks           Task[]
+  posterTemplates PosterTemplate[]
 }
 
 model Person {
@@ -107,6 +108,17 @@ model Task {
   updatedAt    DateTime   @updatedAt
   userId       String?
   teamId       String
+}
+
+model PosterTemplate {
+  id        String   @id @default(cuid())
+  utKey     String   @unique
+  utUrl     String   @unique
+  utName    String
+  team      Team?    @relation(fields: [teamId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  teamId    String?
 }
 
 enum UserRole {

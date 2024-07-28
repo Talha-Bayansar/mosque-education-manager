@@ -1,3 +1,4 @@
+import { UploadPosterTemplate } from "@/features/poster/components/upload-poster-template";
 import { Header } from "@/shared/components/layout/header";
 import { Main } from "@/shared/components/layout/main";
 import { Title } from "@/shared/components/layout/title";
@@ -13,6 +14,7 @@ const PostersPage = async () => {
         <NavigationDrawer />
         <Title>{t("posters")}</Title>
       </Header>
+      <UploadPosterTemplate />
     </Main>
   );
 };
