@@ -100,5 +100,9 @@
   "deleteTask": "Görevi sil",
   "createTaskSuccess": "Görev başarıyla oluşturuldu",
   "updateTaskSuccess": "Görev başarıyla güncellendi",
-  "deleteTaskSuccess": "Görev başarıyla silindi"
+  "deleteTaskSuccess": "Görev başarıyla silindi",
+  "uploadFileSuccess": "Dosya başarıyla yüklendi",
+  "createPosterTemplateSuccess": "Afiş şablonu başarıyla oluşturuldu",
+  "deletePosterTemplate": "Afiş şablonu sil",
+  "deletePosterTemplateSuccess": "Afiş şablonu başarıyla silindi"
 }

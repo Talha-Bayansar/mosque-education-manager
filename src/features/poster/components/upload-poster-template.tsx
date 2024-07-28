@@ -1,26 +1,40 @@
 "use client";
 
 import { UploadDropzone } from "@/lib/uploadthing";
+import { useMutation } from "@tanstack/react-query";
+import { createPosterTemplate } from "../server-actions/poster";
+import type { UploadedFileData } from "uploadthing/types";
+import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 export const UploadPosterTemplate = () => {
+  const t = useTranslations();
+  const createPosterTemplateMutation = useMutation({
+    mutationFn: async (values: UploadedFileData) =>
+      await createPosterTemplate({
+        utKey: values.key,
+        utName: values.name,
+        utUrl: values.url,
+      }),
+    onSuccess: () => {
+      toast.success(t("createPosterTemplateSuccess"));
+    },
+    onError: () => {
+      toast.error(t("somethingWentWrong"));
+    },
+  });
+
   return (
     <UploadDropzone
       endpoint="imageUploader"
-      onDrop={(files) => {
-        console.log(files);
-      }}
-      onBeforeUploadBegin={async (files) => {
-        console.log(files);
-        return files;
-      }}
       onClientUploadComplete={(res) => {
-        // Do something with the response
-        console.log("Files: ", res);
-        alert("Upload Completed");
+        t("uploadFileSuccess");
+        for (const file of res) {
+          createPosterTemplateMutation.mutate(file);
+        }
       }}
       onUploadError={(error: Error) => {
-        // Do something with the error.
-        alert(`ERROR! ${error.message}`);
+        toast.error(t("somethingWentWrong"));
       }}
     />
   );
