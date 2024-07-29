@@ -18,7 +18,7 @@ const SignInPage = async ({ searchParams: { email } }: Props) => {
   return (
     <PageContainer className="md:grid md:place-items-center">
       <Main className="md:max-w-[500px] md:items-stretch">
-        <header className="flex justify-between items-center">
+        <header className="flex justify-between items-center mb-4">
           <Title>{t("signIn")}</Title>
           <LanguageSelect className="w-min" />
         </header>
