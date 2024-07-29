@@ -3,7 +3,6 @@ import { AddButton } from "@/shared/components/add-button";
 import { AppTableSkeleton } from "@/shared/components/app-table";
 import { Header } from "@/shared/components/layout/header";
 import { Main } from "@/shared/components/layout/main";
-import { Title } from "@/shared/components/layout/title";
 import { NavigationDrawer } from "@/shared/components/navigation-drawer";
 import {
   DrawerTrigger,
@@ -17,10 +16,10 @@ const GroupsLoading = async () => {
   const t = await getTranslations();
   return (
     <Main>
-      <Header>
-        <NavigationDrawer />
-        <Title>{t("groups")}</Title>
-        <div className="flex flex-grow justify-end">
+      <Header
+        leading={<NavigationDrawer />}
+        title={t("groups")}
+        trailing={
           <Drawer>
             <DrawerTrigger asChild>
               <AddButton />
@@ -30,8 +29,8 @@ const GroupsLoading = async () => {
               <CreateGroupForm />
             </DrawerContent>
           </Drawer>
-        </div>
-      </Header>
+        }
+      />
       <AppTableSkeleton />
     </Main>
   );

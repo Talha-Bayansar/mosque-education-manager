@@ -5,7 +5,6 @@ import { AddTeamMemberForm } from "@/features/team/components/add-team-member-fo
 import { AddButton } from "@/shared/components/add-button";
 import { Header } from "@/shared/components/layout/header";
 import { Main } from "@/shared/components/layout/main";
-import { Title } from "@/shared/components/layout/title";
 import { NavigationDrawer } from "@/shared/components/navigation-drawer";
 import {
   Drawer,
@@ -25,11 +24,11 @@ const TeamLayout = async ({ children }: Props) => {
 
   return (
     <Main>
-      <Header>
-        <NavigationDrawer />
-        <Title>{t("team")}</Title>
-        <RequireRole roles={[UserRole.ADMIN]}>
-          <div className="flex flex-grow justify-end">
+      <Header
+        leading={<NavigationDrawer />}
+        title={t("team")}
+        trailing={
+          <RequireRole roles={[UserRole.ADMIN]}>
             <Drawer>
               <DrawerTrigger asChild>
                 <AddButton />
@@ -41,9 +40,9 @@ const TeamLayout = async ({ children }: Props) => {
                 <AddTeamMemberForm />
               </DrawerContent>
             </Drawer>
-          </div>
-        </RequireRole>
-      </Header>
+          </RequireRole>
+        }
+      />
       {children}
     </Main>
   );

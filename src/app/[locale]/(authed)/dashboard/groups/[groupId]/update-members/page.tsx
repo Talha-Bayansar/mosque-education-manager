@@ -9,7 +9,6 @@ import {
 import { routes } from "@/lib/routes";
 import { Header } from "@/shared/components/layout/header";
 import { Main } from "@/shared/components/layout/main";
-import { Title } from "@/shared/components/layout/title";
 import { NavigationDrawer } from "@/shared/components/navigation-drawer";
 import {
   NavigationHistory,
@@ -54,13 +53,11 @@ const UpdateGroupPage = async ({
   return (
     <GroupMembersContextProvider peopleByGroupIds={peopleIds}>
       <Main>
-        <Header>
-          <NavigationDrawer />
-          <Title>{t("updateMembers")}</Title>
-          <div className="flex flex-grow justify-end">
-            <SaveMembersButton />
-          </div>
-        </Header>
+        <Header
+          leading={<NavigationDrawer />}
+          title={t("updateMembers")}
+          trailing={<SaveMembersButton />}
+        />
         <NavigationHistory items={history} />
         <UpdateGroupMembersTable people={people} peopleCount={peopleCount} />
       </Main>

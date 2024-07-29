@@ -4,7 +4,6 @@ import { CreatePersonForm } from "@/features/person/components/create-person-for
 import { routes } from "@/lib/routes";
 import { Header } from "@/shared/components/layout/header";
 import { Main } from "@/shared/components/layout/main";
-import { Title } from "@/shared/components/layout/title";
 import { NavigationDrawer } from "@/shared/components/navigation-drawer";
 import {
   NavigationHistory,
@@ -26,10 +25,7 @@ const CreatePersonPage = async () => {
 
   return (
     <Main>
-      <Header>
-        <NavigationDrawer />
-        <Title>{t("createPerson")}</Title>
-      </Header>
+      <Header leading={<NavigationDrawer />} title={t("createPerson")} />
       <NavigationHistory items={history} />
       <CreatePersonForm />
     </Main>

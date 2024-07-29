@@ -4,7 +4,6 @@ import { LanguageSelect } from "@/shared/components/language-select";
 import { Header } from "@/shared/components/layout/header";
 import { Main } from "@/shared/components/layout/main";
 import { PageContainer } from "@/shared/components/layout/page-container";
-import { Title } from "@/shared/components/layout/title";
 import { getTranslations } from "next-intl/server";
 
 type Props = {
@@ -19,10 +18,10 @@ const SignInPage = async ({ searchParams: { email } }: Props) => {
   return (
     <PageContainer className="md:grid md:place-items-center">
       <Main className="md:max-w-[500px] md:items-stretch">
-        <Header className="justify-between">
-          <Title>{t("signIn")}</Title>
-          <LanguageSelect className="w-min" />
-        </Header>
+        <Header
+          title={t("signIn")}
+          trailing={<LanguageSelect className="w-min" />}
+        />
         <div className="flex-grow flex">
           {email ? (
             <VerifyCodeForm email={email} />

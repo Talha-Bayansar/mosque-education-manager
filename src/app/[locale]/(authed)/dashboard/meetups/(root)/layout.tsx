@@ -5,7 +5,6 @@ import { Link } from "@/navigation";
 import { AddButton } from "@/shared/components/add-button";
 import { Header } from "@/shared/components/layout/header";
 import { Main } from "@/shared/components/layout/main";
-import { Title } from "@/shared/components/layout/title";
 import { NavigationDrawer } from "@/shared/components/navigation-drawer";
 import { getTranslations } from "next-intl/server";
 
@@ -18,15 +17,15 @@ const MeetupsLayout = async ({ children }: Props) => {
 
   return (
     <Main>
-      <Header>
-        <NavigationDrawer />
-        <Title>{t("meetups")}</Title>
-        <div className="flex flex-grow justify-end">
+      <Header
+        leading={<NavigationDrawer />}
+        title={t("meetups")}
+        trailing={
           <Link href={routes.dashboard.meetups.create.root}>
             <AddButton />
           </Link>
-        </div>
-      </Header>
+        }
+      />
       {children}
     </Main>
   );
