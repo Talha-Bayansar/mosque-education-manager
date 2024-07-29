@@ -27,7 +27,7 @@ export const SaveMembersButton = () => {
 
   return (
     <LoadingButton
-      className="ml-4"
+      className="w-auto"
       onClick={() => updateGroupMembersMutation.mutate()}
       isLoading={updateGroupMembersMutation.isPending}
     >

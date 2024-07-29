@@ -8,7 +8,6 @@ import {
 } from "@/shared/components/navigation-history";
 import { getTranslations } from "next-intl/server";
 import { Main } from "@/shared/components/layout/main";
-import { Title } from "@/shared/components/layout/title";
 import { ButtonSkeleton } from "@/shared/components/ui/button";
 
 const UpdateMembersLoading = async () => {
@@ -26,13 +25,11 @@ const UpdateMembersLoading = async () => {
 
   return (
     <Main>
-      <Header>
-        <NavigationDrawer />
-        <Title>{t("updateMembers")}</Title>
-        <div className="flex flex-grow justify-end">
-          <ButtonSkeleton />
-        </div>
-      </Header>
+      <Header
+        leading={<NavigationDrawer />}
+        title={t("updateMembers")}
+        trailing={<ButtonSkeleton />}
+      />
       <NavigationHistory items={history} />
       <AppTableSkeleton />
     </Main>

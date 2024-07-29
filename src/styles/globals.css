@@ -71,3 +71,7 @@
 .rdp-vhidden {
   display: none;
 }
+
+a {
+  display: flex;
+}

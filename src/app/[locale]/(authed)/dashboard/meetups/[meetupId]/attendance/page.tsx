@@ -3,7 +3,6 @@
 import { routes } from "@/lib/routes";
 import { Header } from "@/shared/components/layout/header";
 import { Main } from "@/shared/components/layout/main";
-import { Title } from "@/shared/components/layout/title";
 import { NavigationDrawer } from "@/shared/components/navigation-drawer";
 import {
   NavigationHistory,
@@ -52,13 +51,11 @@ const MeetupAttendancePage = async ({ params: { meetupId } }: Props) => {
   return (
     <MeetupAttendanceContextProvider attendanceIds={attendanceIds}>
       <Main>
-        <Header>
-          <NavigationDrawer />
-          <Title>{t("attendance")}</Title>
-          <div className="flex flex-grow justify-end">
-            <SaveAttendanceButton />
-          </div>
-        </Header>
+        <Header
+          leading={<NavigationDrawer />}
+          title={t("attendance")}
+          trailing={<SaveAttendanceButton />}
+        />
         <NavigationHistory items={history} />
         <MeetupAttendanceTable
           peopleByGroup={people}

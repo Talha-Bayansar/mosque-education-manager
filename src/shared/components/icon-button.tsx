@@ -10,7 +10,7 @@ export const IconButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <Button
         variant={"ghost"}
-        className={cn("w-auto h-auto rounded-full p-3", className)}
+        className={cn("w-auto h-auto rounded-full p-0 md:p-3", className)}
         ref={ref}
         {...rest}
       >

@@ -1,7 +1,6 @@
 "use client";
 
 import { Link, usePathname } from "@/navigation";
-import { Button } from "./ui/button";
 import {
   Sheet,
   SheetContent,
@@ -25,6 +24,7 @@ import {
 import { routes } from "@/lib/routes";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
+import { IconButton } from "./icon-button";
 
 type NavItem = {
   label: string;
@@ -77,10 +77,10 @@ export const NavigationDrawer = () => {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button size="icon" variant="outline" className="sm:hidden mr-2">
-          <Menu className="h-5 w-5" />
+        <IconButton className="sm:hidden mr-2">
+          <Menu />
           <span className="sr-only">{t("toggleMenu")}</span>
-        </Button>
+        </IconButton>
       </SheetTrigger>
       <SheetContent aria-describedby="" side="left" className="sm:max-w-xs">
         <SheetHeader className="sr-only">

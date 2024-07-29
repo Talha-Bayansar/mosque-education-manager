@@ -8,7 +8,6 @@ import { Link } from "@/navigation";
 import { AddButton } from "@/shared/components/add-button";
 import { Header } from "@/shared/components/layout/header";
 import { Main } from "@/shared/components/layout/main";
-import { Title } from "@/shared/components/layout/title";
 import { NavigationDrawer } from "@/shared/components/navigation-drawer";
 import { getTranslations } from "next-intl/server";
 
@@ -26,15 +25,15 @@ const PeoplePage = async ({ searchParams: { page } }: Props) => {
 
   return (
     <Main>
-      <Header>
-        <NavigationDrawer />
-        <Title>{t("people")}</Title>
-        <div className="flex flex-grow items-center justify-end">
+      <Header
+        leading={<NavigationDrawer />}
+        title={t("people")}
+        trailing={
           <Link href={routes.dashboard.people.create.root}>
             <AddButton />
           </Link>
-        </div>
-      </Header>
+        }
+      />
       <PeopleTable people={people} peopleCount={peopleCount} />
     </Main>
   );

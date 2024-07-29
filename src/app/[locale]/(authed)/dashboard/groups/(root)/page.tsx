@@ -7,7 +7,6 @@ import {
 import { AddButton } from "@/shared/components/add-button";
 import { Header } from "@/shared/components/layout/header";
 import { Main } from "@/shared/components/layout/main";
-import { Title } from "@/shared/components/layout/title";
 import { NavigationDrawer } from "@/shared/components/navigation-drawer";
 import {
   Drawer,
@@ -31,10 +30,10 @@ const GroupsPage = async ({ searchParams: { page } }: Props) => {
 
   return (
     <Main>
-      <Header>
-        <NavigationDrawer />
-        <Title>{t("groups")}</Title>
-        <div className="flex flex-grow justify-end">
+      <Header
+        title={t("groups")}
+        leading={<NavigationDrawer />}
+        trailing={
           <Drawer>
             <DrawerTrigger asChild>
               <AddButton />
@@ -44,8 +43,8 @@ const GroupsPage = async ({ searchParams: { page } }: Props) => {
               <CreateGroupForm />
             </DrawerContent>
           </Drawer>
-        </div>
-      </Header>
+        }
+      ></Header>
       <GroupsTable groups={groups} groupsCount={groupsCount} />
     </Main>
   );

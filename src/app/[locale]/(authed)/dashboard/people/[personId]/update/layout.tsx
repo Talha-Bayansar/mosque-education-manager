@@ -1,7 +1,7 @@
 import { routes } from "@/lib/routes";
 import { Header } from "@/shared/components/layout/header";
 import { Main } from "@/shared/components/layout/main";
-import { Title } from "@/shared/components/layout/title";
+import { NavigationDrawer } from "@/shared/components/navigation-drawer";
 import {
   NavigationHistory,
   type NavigationHistoryItem,
@@ -26,9 +26,7 @@ const UpdatePersonLayout = async ({ children }: Props) => {
 
   return (
     <Main>
-      <Header>
-        <Title>{t("updatePerson")}</Title>
-      </Header>
+      <Header leading={<NavigationDrawer />} title={t("updatePerson")} />
       <NavigationHistory items={history} />
       {children}
     </Main>

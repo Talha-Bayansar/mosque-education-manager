@@ -4,7 +4,6 @@ import { CreateTaskForm } from "@/features/task/components/create-task-form";
 import { AddButton } from "@/shared/components/add-button";
 import { Header } from "@/shared/components/layout/header";
 import { Main } from "@/shared/components/layout/main";
-import { Title } from "@/shared/components/layout/title";
 import { NavigationDrawer } from "@/shared/components/navigation-drawer";
 import {
   Drawer,
@@ -22,10 +21,10 @@ const TasksPage = async () => {
 
   return (
     <Main>
-      <Header>
-        <NavigationDrawer />
-        <Title>{t("tasks")}</Title>
-        <div className="flex justify-end flex-grow">
+      <Header
+        leading={<NavigationDrawer />}
+        title={t("tasks")}
+        trailing={
           <Drawer>
             <DrawerTrigger asChild>
               <AddButton />
@@ -35,8 +34,8 @@ const TasksPage = async () => {
               <CreateTaskForm users={team.members} />
             </DrawerContent>
           </Drawer>
-        </div>
-      </Header>
+        }
+      />
       <TasksBoard tasks={tasks} users={team.members} />
     </Main>
   );
