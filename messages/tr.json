@@ -105,5 +105,7 @@
   "uploadFileSuccess": "Dosya başarıyla yüklendi",
   "createPosterTemplateSuccess": "Afiş şablonu başarıyla oluşturuldu",
   "deletePosterTemplate": "Afiş şablonu sil",
-  "deletePosterTemplateSuccess": "Afiş şablonu başarıyla silindi"
+  "deletePosterTemplateSuccess": "Afiş şablonu başarıyla silindi",
+  "createPoster": "Afiş oluştur",
+  "selectPosterTemplate": "Afiş şablonu seçin"
 }

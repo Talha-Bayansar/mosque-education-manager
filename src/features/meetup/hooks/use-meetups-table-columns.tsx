@@ -99,6 +99,15 @@ export const useMeetupsTableColumns = () => {
                   {t("updateAttendance")}
                 </Link>
               </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link
+                  href={
+                    routes.dashboard.meetups.id(meetup.id).createPoster.root
+                  }
+                >
+                  {t("createPoster")}
+                </Link>
+              </DropdownMenuItem>
               <AlertModal
                 title={t("deleteMeetup")}
                 trigger={

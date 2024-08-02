@@ -69,7 +69,7 @@ export const NavigationDrawer = () => {
     },
     {
       label: t("posters"),
-      href: routes.dashboard.posters.root,
+      href: routes.dashboard.posterTemplates.root,
       Icon: FileImage,
     },
   ];

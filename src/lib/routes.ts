@@ -28,6 +28,9 @@ export const routes = {
         attendance: {
           root: `/dashboard/meetups/${id}/attendance`,
         },
+        createPoster: {
+          root: `/dashboard/meetups/${id}/create-poster`,
+        },
       }),
     },
     people: {
@@ -42,11 +45,8 @@ export const routes = {
         },
       }),
     },
-    posters: {
-      root: "/dashboard/posters",
-      templates: {
-        root: "/dashboard/posters/templates",
-      },
+    posterTemplates: {
+      root: "/dashboard/poster-templates",
     },
     settings: {
       root: "/dashboard/settings",

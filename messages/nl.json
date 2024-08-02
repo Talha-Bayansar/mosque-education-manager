@@ -105,5 +105,7 @@
   "uploadFileSuccess": "Bestand werd succesvol opgeladen",
   "createPosterTemplateSuccess": "Postersjabloon werd succesvol aangemaakt",
   "deletePosterTemplate": "Postersjabloon verwijderen",
-  "deletePosterTemplateSuccess": "Postersjabloon werd succesvol verwijderd"
+  "deletePosterTemplateSuccess": "Postersjabloon werd succesvol verwijderd",
+  "createPoster": "Poster aanmaken",
+  "selectPosterTemplate": "Selecteer postersjabloon"
 }

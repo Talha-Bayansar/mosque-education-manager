@@ -42,7 +42,7 @@ export const createPosterTemplate = async (
     },
   });
 
-  revalidatePath(routes.dashboard.posters.root);
+  revalidatePath(routes.dashboard.posterTemplates.root);
 
   return posterTemplate;
 };
@@ -56,7 +56,7 @@ export const deletePosterTemplate = async (id: string) => {
 
   await utapi.deleteFiles(deletedPosterTemplates.utKey);
 
-  revalidatePath(routes.dashboard.posters.root);
+  revalidatePath(routes.dashboard.posterTemplates.root);
 
   return true;
 };
