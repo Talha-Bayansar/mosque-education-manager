@@ -1,18 +1,20 @@
 "use client";
 
-import { Link, usePathname } from "@/navigation";
+import { routes } from "@/lib/routes";
+import { Link } from "@/navigation";
 import { View } from "@/shared/components/layout/view";
 import { Card } from "@/shared/components/ui/card";
 import type { PosterTemplate } from "@prisma/client";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import { useParams } from "next/navigation";
 
 type Props = {
   posterTemplates: PosterTemplate[];
 };
 
 export const PosterSelection = ({ posterTemplates }: Props) => {
-  const path = usePathname();
+  const { meetupId } = useParams<{ meetupId: string }>();
   const t = useTranslations();
 
   return (
@@ -23,7 +25,10 @@ export const PosterSelection = ({ posterTemplates }: Props) => {
           const params = new URLSearchParams([["image", posterTemplate.utUrl]]);
 
           return (
-            <Link key={posterTemplate.id} href={`${path}?${params}`}>
+            <Link
+              key={posterTemplate.id}
+              href={`${routes.canvas.meetupId(meetupId).root}?${params}`}
+            >
               <Card className="overflow-clip group relative h-min">
                 <div className="group-hover:opacity-30">
                   <Image

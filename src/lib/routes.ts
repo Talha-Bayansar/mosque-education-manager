@@ -1,6 +1,11 @@
 export const routes = {
   root: "/",
   signin: { root: "/sign-in" },
+  canvas: {
+    meetupId: (id: string) => ({
+      root: `/${id}/canvas`,
+    }),
+  },
   dashboard: {
     root: "/dashboard",
     groups: {
