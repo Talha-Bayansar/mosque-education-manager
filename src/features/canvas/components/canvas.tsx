@@ -44,7 +44,7 @@ export const Canvas = ({ imageUrl }: Props) => {
     }
 
     return layerIdsToColorSelection;
-  }, []);
+  }, [selection]);
 
   const [camera, setCamera] = useState<Camera>({ x: 0, y: 0 });
   const [lastUsedColor, setLastUsedColor] = useState<Color>({
@@ -121,7 +121,7 @@ export const Canvas = ({ imageUrl }: Props) => {
     if (selection.length > 0) {
       setSelection([]);
     }
-  }, []);
+  }, [selection]);
 
   const updateSelectionNet = useCallback(
     (current: Point, origin: Point) => {

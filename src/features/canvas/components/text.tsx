@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-import { Kalam } from "next/font/google";
 import { useCallback, useState } from "react";
 import ContentEditable, { ContentEditableEvent } from "react-contenteditable";
 import { TextLayer } from "../types";
@@ -19,15 +18,6 @@ interface TextProps {
   onPointerDown: (e: React.PointerEvent, id: string) => void;
   selectionColor?: string;
 }
-
-// const calculateFontSize = (width: number, height: number) => {
-//   const maxFontSize = 96;
-//   const scaleFactor = 0.5;
-//   const fontSizeBasedOnHeight = height * scaleFactor;
-//   const fontSizeBasedOnWidth = width * scaleFactor;
-
-//   return Math.min(maxFontSize, fontSizeBasedOnHeight, fontSizeBasedOnWidth);
-// };
 
 export const Text = ({
   id,
@@ -55,7 +45,7 @@ export const Text = ({
   };
 
   return (
-    <Popover open={selection.includes(id)}>
+    <Popover open={selection.includes(id) && selection.length < 2}>
       <PopoverTrigger asChild>
         <foreignObject
           x={x}
@@ -81,7 +71,10 @@ export const Text = ({
           />
         </foreignObject>
       </PopoverTrigger>
-      <PopoverContent className="flex flex-col gap-4">
+      <PopoverContent
+        onPointerDown={(e) => onPointerDown(e, id)}
+        className="flex flex-col gap-4"
+      >
         <div className="flex flex-col gap-2">
           <Label htmlFor="fontSize">Font size</Label>
           <Input
