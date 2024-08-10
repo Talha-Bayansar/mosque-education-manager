@@ -11,7 +11,7 @@ type Props = {
   };
 };
 
-export const CanvasPage = async ({
+const CanvasPage = async ({
   searchParams: { image },
   params: { meetupId },
 }: Props) => {

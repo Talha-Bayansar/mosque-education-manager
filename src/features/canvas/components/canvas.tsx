@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import {
   Camera,
   CanvasMode,
@@ -24,6 +24,7 @@ import { nanoid } from "nanoid";
 // import { useDeleteLayers } from "../hooks/use-delete-layers";
 import { LayerPreview } from "./layer-preview";
 import { Toolbar } from "./toolbar";
+import { cn } from "@/lib/utils";
 
 const MAX_LAYERS = 100;
 
@@ -45,6 +46,7 @@ export const Canvas = ({ imageUrl }: Props) => {
 
     return layerIdsToColorSelection;
   }, [selection]);
+  const posterRef = useRef<SVGGElement>(null);
 
   const [camera, setCamera] = useState<Camera>({ x: 0, y: 0 });
   const [lastUsedColor, setLastUsedColor] = useState<Color>({
@@ -52,6 +54,22 @@ export const Canvas = ({ imageUrl }: Props) => {
     g: 255,
     b: 255,
   });
+
+  // useEffect(() => {
+  //   if (posterRef.current) {
+  //     console.log(posterRef.current.getBoundingClientRect());
+  //     setPosterSize({
+  //       height:
+  //         window.innerHeight > window.innerWidth
+  //           ? posterRef.current.getBoundingClientRect().height
+  //           : undefined,
+  //       width:
+  //         window.innerHeight < window.innerWidth
+  //           ? posterRef.current.getBoundingClientRect().width
+  //           : undefined,
+  //     });
+  //   }
+  // }, []);
 
   const insertLayer = useCallback(
     (
@@ -289,13 +307,17 @@ export const Canvas = ({ imageUrl }: Props) => {
   // const deleteLayers = useDeleteLayers();
 
   return (
-    <main className="h-full w-full relative bg-neutral-100 touch-none">
+    <main className="h-full w-full relative bg-neutral-100 touch-none grid place-items-center">
       {/* <Info boardId={boardId} />
       <Participants /> */}
-      <Toolbar canvasState={canvasState} setCanvasState={setCanvasState} />
+      <Toolbar
+        canvasState={canvasState}
+        setCanvasState={setCanvasState}
+        posterRef={posterRef}
+      />
       {/* <SelectionTools camera={camera} setLastUsedColor={setLastUsedColor} /> */}
       <svg
-        className="h-[100vh] w-[100vw]"
+        className="w-[100vw] h-[100vh]"
         onWheel={handleWheel}
         onPointerMove={handlePointerMove}
         // onPointerLeave={handlePointerLeave}
@@ -307,20 +329,23 @@ export const Canvas = ({ imageUrl }: Props) => {
             transform: `translate(${camera.x}px, ${camera.y}px)`,
           }}
         >
-          <image
-            href={imageUrl}
-            preserveAspectRatio="xMidYMid meet"
-            width="100%"
-            height="100%"
-          />
-          {layers.map((layer) => (
-            <LayerPreview
-              key={layer.id}
-              id={layer.id}
-              onLayerPointerDown={handleLayerPointerDown}
-              selectionColor={layerIdsToColorSelection[layer.id]}
+          <g ref={posterRef}>
+            <image
+              href={imageUrl}
+              className={cn({
+                "h-full": window.innerHeight < window.innerWidth,
+                "w-full": window.innerHeight > window.innerWidth,
+              })}
             />
-          ))}
+            {layers.map((layer) => (
+              <LayerPreview
+                key={layer.id}
+                id={layer.id}
+                onLayerPointerDown={handleLayerPointerDown}
+                selectionColor={layerIdsToColorSelection[layer.id]}
+              />
+            ))}
+          </g>
           <SelectionBox
             onResizeHandlePointerDown={handleResizeHandlePointerDown}
           />

@@ -3,7 +3,6 @@ import { useCallback, useState } from "react";
 import ContentEditable, { ContentEditableEvent } from "react-contenteditable";
 import { TextLayer } from "../types";
 import { useCanvasContext } from "../hooks/use-canvas-context";
-import { colorToCss } from "../lib/utils";
 import {
   Popover,
   PopoverContent,
@@ -30,6 +29,7 @@ export const Text = ({
   const [fontStyle, setFontStyle] = useState({
     fontSize: 16,
     fontWeight: 400,
+    color: "#FFFFFF",
   });
 
   const updateValue = useCallback((newValue: string) => {
@@ -64,7 +64,7 @@ export const Text = ({
               "h-full w-full flex items-center justify-center drop-shadow-md outline-none"
             )}
             style={{
-              color: fill ? colorToCss(fill) : "#000",
+              color: fontStyle.color,
               fontSize: fontStyle.fontSize,
               fontWeight: fontStyle.fontWeight,
             }}
@@ -108,6 +108,19 @@ export const Text = ({
               }))
             }
           />
+        </div>
+        <div className="flex flex-col gap-2">
+          <Label htmlFor="fontWeight">Color</Label>
+          <div className="flex gap-2 flex-wrap">
+            {["#FFFFFF", "#000000"].map((color) => (
+              <button
+                key={color}
+                className="h-6 w-6 cursor-pointer border rounded-sm"
+                style={{ backgroundColor: color }}
+                onClick={() => setFontStyle((style) => ({ ...style, color }))}
+              />
+            ))}
+          </div>
         </div>
       </PopoverContent>
     </Popover>
