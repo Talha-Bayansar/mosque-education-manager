@@ -2,6 +2,7 @@ import { CanvasMode, CanvasState, LayerType } from "@/features/canvas/types";
 import { Download, MousePointer2, Type } from "lucide-react";
 import { ToolButton } from "./tool-button";
 import { RefObject } from "react";
+import { useTranslations } from "next-intl";
 
 interface ToolbarProps {
   canvasState: CanvasState;
@@ -14,11 +15,15 @@ export const Toolbar = ({
   setCanvasState,
   posterRef,
 }: ToolbarProps) => {
+  const t = useTranslations();
+
+  const handleDownload = async () => {};
+
   return (
     <div className="absolute top-[50%] -translate-y-[50%] left-2 flex flex-col gap-y-4">
       <div className="bg-white rounded-md p-1.5 flex gap-1 flex-col items-center shadow-md">
         <ToolButton
-          label="Select"
+          label={t("select")}
           icon={MousePointer2}
           onClick={() => setCanvasState({ mode: CanvasMode.None })}
           isActive={
@@ -30,7 +35,7 @@ export const Toolbar = ({
           }
         />
         <ToolButton
-          label="Text"
+          label={t("text")}
           icon={Type}
           onClick={() =>
             setCanvasState({
@@ -44,9 +49,9 @@ export const Toolbar = ({
           }
         />
         <ToolButton
-          label="Download"
+          label={t("download")}
           icon={Download}
-          onClick={() => console.log(posterRef)}
+          onClick={() => handleDownload()}
           isActive={false}
         />
       </div>

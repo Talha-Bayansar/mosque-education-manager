@@ -107,5 +107,11 @@
   "deletePosterTemplate": "Afiş şablonu sil",
   "deletePosterTemplateSuccess": "Afiş şablonu başarıyla silindi",
   "createPoster": "Afiş oluştur",
-  "selectPosterTemplate": "Afiş şablonu seçin"
+  "selectPosterTemplate": "Afiş şablonu seçin",
+  "fontSize": "Yazı boyutu",
+  "fontWeight": "Yazı tipi ağırlığı",
+  "color": "Renk",
+  "select": "Seçin",
+  "text": "Mesaj",
+  "download": "İndir"
 }

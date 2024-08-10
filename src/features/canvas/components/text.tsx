@@ -10,6 +10,7 @@ import {
 } from "@/shared/components/ui/popover";
 import { Input } from "@/shared/components/ui/input";
 import { Label } from "@/shared/components/ui/label";
+import { useTranslations } from "next-intl";
 
 interface TextProps {
   id: string;
@@ -24,6 +25,7 @@ export const Text = ({
   onPointerDown,
   selectionColor,
 }: TextProps) => {
+  const t = useTranslations();
   const { setLayers, selection } = useCanvasContext()!;
   const { x, y, width, height, fill, value } = layer;
   const [fontStyle, setFontStyle] = useState({
@@ -58,7 +60,7 @@ export const Text = ({
           }}
         >
           <ContentEditable
-            html={value || "Text"}
+            html={value ?? "Text"}
             onChange={hanldeContentChange}
             className={cn(
               "h-full w-full flex items-center justify-center drop-shadow-md outline-none"
@@ -76,7 +78,7 @@ export const Text = ({
         className="flex flex-col gap-4"
       >
         <div className="flex flex-col gap-2">
-          <Label htmlFor="fontSize">Font size</Label>
+          <Label htmlFor="fontSize">{t("fontSize")}</Label>
           <Input
             name="fontSize"
             type="number"
@@ -92,7 +94,7 @@ export const Text = ({
           />
         </div>
         <div className="flex flex-col gap-2">
-          <Label htmlFor="fontWeight">Font weight</Label>
+          <Label htmlFor="fontWeight">{t("fontWeight")}</Label>
           <Input
             name="fontWeight"
             type="number"
@@ -110,7 +112,7 @@ export const Text = ({
           />
         </div>
         <div className="flex flex-col gap-2">
-          <Label htmlFor="fontWeight">Color</Label>
+          <Label htmlFor="fontWeight">{t("color")}</Label>
           <div className="flex gap-2 flex-wrap">
             {["#FFFFFF", "#000000"].map((color) => (
               <button

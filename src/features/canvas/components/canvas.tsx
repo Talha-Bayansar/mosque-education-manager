@@ -55,22 +55,6 @@ export const Canvas = ({ imageUrl }: Props) => {
     b: 255,
   });
 
-  // useEffect(() => {
-  //   if (posterRef.current) {
-  //     console.log(posterRef.current.getBoundingClientRect());
-  //     setPosterSize({
-  //       height:
-  //         window.innerHeight > window.innerWidth
-  //           ? posterRef.current.getBoundingClientRect().height
-  //           : undefined,
-  //       width:
-  //         window.innerHeight < window.innerWidth
-  //           ? posterRef.current.getBoundingClientRect().width
-  //           : undefined,
-  //     });
-  //   }
-  // }, []);
-
   const insertLayer = useCallback(
     (
       layerType:
