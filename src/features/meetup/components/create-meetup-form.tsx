@@ -29,6 +29,7 @@ const formSchema = z.object({
   subject: z.string().min(1).max(50),
   date: z.date(),
   speakerId: z.string().min(1).max(50),
+  hostId: z.string().min(1).max(50),
   groupId: z.string().min(1).max(50),
 });
 
@@ -47,6 +48,11 @@ export const CreateMeetupForm = ({ groups }: Props) => {
         speaker: {
           connect: {
             id: values.speakerId,
+          },
+        },
+        host: {
+          connect: {
+            id: values.hostId,
           },
         },
         group: {
@@ -69,6 +75,7 @@ export const CreateMeetupForm = ({ groups }: Props) => {
     defaultValues: {
       subject: "",
       speakerId: "",
+      hostId: "",
       groupId: "",
       date: new Date(),
     },
@@ -113,6 +120,21 @@ export const CreateMeetupForm = ({ groups }: Props) => {
               <FormControl>
                 <SearchPeopleSelect
                   onSelect={(value) => form.setValue("speakerId", value)}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="hostId"
+          render={() => (
+            <FormItem className="flex flex-col">
+              <FormLabel>{t("host")}*</FormLabel>
+              <FormControl>
+                <SearchPeopleSelect
+                  onSelect={(value) => form.setValue("hostId", value)}
                 />
               </FormControl>
               <FormMessage />

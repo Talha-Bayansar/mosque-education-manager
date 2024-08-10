@@ -65,7 +65,8 @@ model Person {
   groups            Group[]
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt
-  speakerMeetups    Meetup[]
+  speakerMeetups    Meetup[]  @relation(name: "meetup_speaker")
+  hostMeetups       Meetup[]  @relation(name: "meetup_host")
   attendanceMeetups Meetup[]  @relation(name: "attendance_meetup")
 }
 
@@ -84,13 +85,15 @@ model Meetup {
   id         String   @id @default(cuid())
   subject    String
   date       DateTime
-  speaker    Person?  @relation(fields: [speakerId], references: [id])
+  speaker    Person?  @relation(name: "meetup_speaker", fields: [speakerId], references: [id])
+  host       Person?  @relation(name: "meetup_host", fields: [hostId], references: [id])
   attendance Person[] @relation(name: "attendance_meetup")
   team       Team     @relation(fields: [teamId], references: [id])
   group      Group?   @relation(fields: [groupId], references: [id])
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
   speakerId  String?
+  hostId     String?
   teamId     String
   groupId    String?
 }

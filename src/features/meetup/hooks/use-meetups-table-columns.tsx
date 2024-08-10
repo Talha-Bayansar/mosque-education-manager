@@ -33,7 +33,12 @@ export const useMeetupsTableColumns = () => {
   });
 
   const columns: ColumnDef<
-    Meetup & { speaker?: Person; group?: Group; _count: { attendance: number } }
+    Meetup & {
+      speaker?: Person;
+      host?: Person;
+      group?: Group;
+      _count: { attendance: number };
+    }
   >[] = [
     {
       accessorKey: "subject",
@@ -45,6 +50,14 @@ export const useMeetupsTableColumns = () => {
         const speaker = row.original.speaker;
         if (!speaker) return t("notSpecified");
         return `${speaker.firstName} ${speaker.lastName}`;
+      },
+    },
+    {
+      header: t("host"),
+      cell: ({ row }) => {
+        const host = row.original.host;
+        if (!host) return t("notSpecified");
+        return `${host.firstName} ${host.lastName}`;
       },
     },
     {

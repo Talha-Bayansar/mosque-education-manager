@@ -29,6 +29,7 @@ const formSchema = z.object({
   subject: z.string().min(1).max(50),
   date: z.date(),
   speakerId: z.string().min(1).max(50),
+  hostId: z.string().min(1).max(50),
   groupId: z.string().min(1).max(50),
 });
 
@@ -36,6 +37,7 @@ type Props = {
   meetup: Meetup & {
     speaker?: Person;
     group?: Group;
+    host?: Person;
   };
   groups: Group[];
 };
@@ -51,6 +53,11 @@ export const UpdateMeetupForm = ({ meetup, groups }: Props) => {
         speaker: {
           connect: {
             id: values.speakerId,
+          },
+        },
+        host: {
+          connect: {
+            id: values.hostId,
           },
         },
         group: {
@@ -73,6 +80,7 @@ export const UpdateMeetupForm = ({ meetup, groups }: Props) => {
     defaultValues: {
       subject: meetup.subject,
       speakerId: meetup.speakerId ?? undefined,
+      hostId: meetup.hostId ?? undefined,
       groupId: meetup.groupId ?? undefined,
       date: meetup.date,
     },
@@ -123,6 +131,27 @@ export const UpdateMeetupForm = ({ meetup, groups }: Props) => {
                     }
                   }
                   onSelect={(value) => form.setValue("speakerId", value)}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="hostId"
+          render={() => (
+            <FormItem className="flex flex-col">
+              <FormLabel>{t("host")}*</FormLabel>
+              <FormControl>
+                <SearchPeopleSelect
+                  selectedItem={
+                    meetup.host && {
+                      label: `${meetup.host.firstName} ${meetup.host.lastName}`,
+                      value: meetup.host.id,
+                    }
+                  }
+                  onSelect={(value) => form.setValue("hostId", value)}
                 />
               </FormControl>
               <FormMessage />

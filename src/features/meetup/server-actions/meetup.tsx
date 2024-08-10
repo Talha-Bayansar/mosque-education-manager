@@ -25,6 +25,7 @@ export const getMeetups = async (take?: number, skip?: number) => {
       },
       group: true,
       speaker: true,
+      host: true,
     },
     take,
     skip,
@@ -56,6 +57,7 @@ export const getMeetupById = async (id: string) => {
     include: {
       speaker: true,
       group: true,
+      host: true,
     },
   });
 
