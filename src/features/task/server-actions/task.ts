@@ -65,7 +65,11 @@ export const updateTask = async (
   id: string,
   taskInput: Nullable<Prisma.TaskUpdateInput, "team">
 ) => {
-  const user = await requireAdmin();
+  const user = await requireAuthentication();
+
+  if (!taskInput.status) {
+    await requireAdmin();
+  }
 
   const task = await prisma.task.update({
     where: { id, teamId: user.teamId },

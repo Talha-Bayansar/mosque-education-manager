@@ -6,7 +6,7 @@ import {
   DrawerContent,
   DrawerTitle,
 } from "@/shared/components/ui/drawer";
-import type { Task, User } from "@prisma/client";
+import { UserRole, type Task, type User } from "@prisma/client";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { UpdateTaskForm } from "./update-task-form";
@@ -16,6 +16,7 @@ import { deleteTask } from "../server-actions/task";
 import { AlertModal } from "@/shared/components/alert-modal";
 import { Button } from "@/shared/components/ui/button";
 import { View } from "@/shared/components/layout/view";
+import { RequireRole } from "@/features/auth/components/require-role";
 
 type Props = {
   tasks: Task[];
@@ -55,11 +56,15 @@ export const TasksBoard = ({ tasks, users }: Props) => {
               <UpdateTaskForm task={selectedTask} users={users} />
             )}
             {selectedTask && (
-              <AlertModal
-                title={t("deleteTask")}
-                trigger={<Button variant={"destructive"}>{t("delete")}</Button>}
-                onContinue={() => deleteTaskMutation.mutate(selectedTask.id)}
-              />
+              <RequireRole roles={[UserRole.ADMIN]}>
+                <AlertModal
+                  title={t("deleteTask")}
+                  trigger={
+                    <Button variant={"destructive"}>{t("delete")}</Button>
+                  }
+                  onContinue={() => deleteTaskMutation.mutate(selectedTask.id)}
+                />
+              </RequireRole>
             )}
           </View>
         </DrawerContent>

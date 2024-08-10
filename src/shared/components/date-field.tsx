@@ -16,6 +16,7 @@ import { useTranslations } from "next-intl";
 type Props = {
   field: ControllerRenderProps<any>;
   enableFutureSelection?: boolean;
+  disabled?: boolean;
 };
 
 const locales: Record<string, Locale> = {
@@ -23,7 +24,11 @@ const locales: Record<string, Locale> = {
   tr: tr,
 };
 
-export const DateField = ({ field, enableFutureSelection = false }: Props) => {
+export const DateField = ({
+  field,
+  enableFutureSelection = false,
+  disabled = false,
+}: Props) => {
   const t = useTranslations();
   const { locale } = useParams<{
     locale: string;
@@ -35,6 +40,7 @@ export const DateField = ({ field, enableFutureSelection = false }: Props) => {
         <FormControl>
           <Button
             variant={"outline"}
+            disabled={disabled}
             className={cn(
               "pl-3 text-left font-normal",
               !field.value && "text-muted-foreground"

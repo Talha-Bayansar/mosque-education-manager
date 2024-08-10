@@ -10,7 +10,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/shared/components/ui/form";
-import type { Task, User } from "@prisma/client";
+import { UserRole, type Task, type User } from "@prisma/client";
 import { useTranslations } from "next-intl";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -21,6 +21,8 @@ import { SearchSelect } from "@/shared/components/search-select";
 import { DateField } from "@/shared/components/date-field";
 import { Textarea } from "@/shared/components/ui/textarea";
 import { updateTask } from "../server-actions/task";
+import { useSession } from "@/features/auth/hooks/use-session";
+import { RequireRole } from "@/features/auth/components/require-role";
 
 type Props = {
   users: User[];
@@ -38,6 +40,8 @@ const formSchema = z.object({
 
 export const UpdateTaskForm = ({ users, task }: Props) => {
   const t = useTranslations();
+  const { data: session } = useSession({});
+
   const updateTaskMutation = useMutation({
     mutationFn: async (values: z.infer<typeof formSchema>) =>
       await updateTask(task.id, {
@@ -79,14 +83,20 @@ export const UpdateTaskForm = ({ users, task }: Props) => {
       <AppForm
         onSubmit={form.handleSubmit(onSubmit)}
         submitButton={
-          <LoadingButton isLoading={updateTaskMutation.isPending} type="submit">
-            {t("update")}
-          </LoadingButton>
+          <RequireRole roles={[UserRole.ADMIN]}>
+            <LoadingButton
+              isLoading={updateTaskMutation.isPending}
+              type="submit"
+            >
+              {t("update")}
+            </LoadingButton>
+          </RequireRole>
         }
       >
         <FormField
           control={form.control}
           name="title"
+          disabled={session?.user?.role !== UserRole.ADMIN}
           render={({ field }) => (
             <FormItem>
               <FormLabel>{t("title")}*</FormLabel>
@@ -100,6 +110,7 @@ export const UpdateTaskForm = ({ users, task }: Props) => {
         <FormField
           control={form.control}
           name="description"
+          disabled={session?.user?.role !== UserRole.ADMIN}
           render={({ field }) => (
             <FormItem className="flex flex-col">
               <FormLabel>{t("description")}</FormLabel>
@@ -117,7 +128,11 @@ export const UpdateTaskForm = ({ users, task }: Props) => {
             <FormItem className="flex flex-col">
               <FormLabel>{t("date")}</FormLabel>
               <FormControl>
-                <DateField field={field} enableFutureSelection />
+                <DateField
+                  field={field}
+                  enableFutureSelection
+                  disabled={session?.user?.role !== UserRole.ADMIN}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -131,6 +146,7 @@ export const UpdateTaskForm = ({ users, task }: Props) => {
               <FormLabel>{t("user")}</FormLabel>
               <FormControl>
                 <SearchSelect
+                  disabled={session?.user?.role !== UserRole.ADMIN}
                   items={users.map((user) => ({
                     label: user.email ?? t("notSpecified"),
                     value: user.id,

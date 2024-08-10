@@ -13,6 +13,8 @@ import {
 } from "@/shared/components/ui/drawer";
 import { getTranslations } from "next-intl/server";
 import { getMyTeam } from "@/features/team/server-actions/team";
+import { RequireRole } from "@/features/auth/components/require-role";
+import { UserRole } from "@prisma/client";
 
 const TasksPage = async () => {
   const t = await getTranslations();
@@ -25,15 +27,17 @@ const TasksPage = async () => {
         leading={<NavigationDrawer />}
         title={t("tasks")}
         trailing={
-          <Drawer>
-            <DrawerTrigger asChild>
-              <AddButton />
-            </DrawerTrigger>
-            <DrawerContent aria-describedby="">
-              <DrawerTitle className="sr-only">{t("createTask")}</DrawerTitle>
-              <CreateTaskForm users={team.members} />
-            </DrawerContent>
-          </Drawer>
+          <RequireRole roles={[UserRole.ADMIN]}>
+            <Drawer>
+              <DrawerTrigger asChild>
+                <AddButton />
+              </DrawerTrigger>
+              <DrawerContent aria-describedby="">
+                <DrawerTitle className="sr-only">{t("createTask")}</DrawerTitle>
+                <CreateTaskForm users={team.members} />
+              </DrawerContent>
+            </Drawer>
+          </RequireRole>
         }
       />
       <TasksBoard tasks={tasks} users={team.members} />

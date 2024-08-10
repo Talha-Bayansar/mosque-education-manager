@@ -32,6 +32,7 @@ type Props = {
   hasMore?: boolean;
   onNextPage?: () => unknown;
   isFetchingNextPage?: boolean;
+  disabled?: boolean;
 };
 
 export const SearchSelect = ({
@@ -44,6 +45,7 @@ export const SearchSelect = ({
   hasMore = false,
   onNextPage,
   isFetchingNextPage = false,
+  disabled = false,
 }: Props) => {
   const t = useTranslations();
   const [open, setOpen] = useState(false);
@@ -52,7 +54,12 @@ export const SearchSelect = ({
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button variant="outline" role="combobox" className="justify-between">
+        <Button
+          disabled={disabled}
+          variant="outline"
+          role="combobox"
+          className="justify-between"
+        >
           {value
             ? items.find((item) => item.value === value)?.label ||
               selectedItem?.label
