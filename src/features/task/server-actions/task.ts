@@ -5,7 +5,7 @@ import { requireAdmin } from "@/features/auth/server-actions/user";
 import { prisma } from "@/lib/db";
 import { routes } from "@/lib/routes";
 import { type Nullable } from "@/lib/utils";
-import { Prisma } from "@prisma/client";
+import { Prisma, UserRole } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
 export const getTasks = async () => {
@@ -13,7 +13,16 @@ export const getTasks = async () => {
 
   const tasks = await prisma.task.findMany({
     where: {
-      teamId: user.teamId,
+      AND: [
+        {
+          teamId: user.teamId,
+        },
+        {
+          assignedUser: {
+            id: user.role === UserRole.ADMIN ? undefined : user.id,
+          },
+        },
+      ],
     },
     orderBy: [
       {
