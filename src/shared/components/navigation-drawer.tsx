@@ -13,7 +13,7 @@ import {
 import {
   Boxes,
   CalendarDays,
-  FileImage,
+  // FileImage,
   Home,
   ListTodo,
   type LucideIcon,
@@ -67,11 +67,11 @@ export const NavigationDrawer = () => {
       href: routes.dashboard.groups.root,
       Icon: Users,
     },
-    {
-      label: t("posters"),
-      href: routes.dashboard.posters.root,
-      Icon: FileImage,
-    },
+    // {
+    //   label: t("posters"),
+    //   href: routes.dashboard.posters.root,
+    //   Icon: FileImage,
+    // },
   ];
 
   return (

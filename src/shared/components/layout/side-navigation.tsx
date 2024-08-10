@@ -4,7 +4,7 @@ import { routes } from "@/lib/routes";
 import {
   Boxes,
   CalendarDays,
-  FileImage,
+  // FileImage,
   Home,
   ListTodo,
   LucideIcon,
@@ -64,11 +64,11 @@ export const SideNavigation = () => {
       href: routes.dashboard.groups.root,
       Icon: Users,
     },
-    {
-      label: t("posters"),
-      href: routes.dashboard.posters.root,
-      Icon: FileImage,
-    },
+    // {
+    //   label: t("posters"),
+    //   href: routes.dashboard.posters.root,
+    //   Icon: FileImage,
+    // },
   ];
 
   return (
