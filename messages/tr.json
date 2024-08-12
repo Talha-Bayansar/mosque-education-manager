@@ -100,5 +100,9 @@
   "deleteTask": "Görevi sil",
   "createTaskSuccess": "Görev başarıyla oluşturuldu",
   "updateTaskSuccess": "Görev başarıyla güncellendi",
-  "deleteTaskSuccess": "Görev başarıyla silindi"
+  "deleteTaskSuccess": "Görev başarıyla silindi",
+  "upcomingMeetups": "Yaklaşan sohbetler",
+  "noUpcomingMeetups": "Yaklaşan sohbet yok",
+  "upcomingTasks": "Yaklaşan görevler",
+  "noUpcomingTasks": "Yaklaşan görev yok"
 }

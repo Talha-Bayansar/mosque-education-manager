@@ -100,5 +100,9 @@
   "deleteTask": "Taak verwijderen",
   "createTaskSuccess": "Taak werd succesvol aangemaakt",
   "updateTaskSuccess": "Taak werd succesvol bijgewerkt",
-  "deleteTaskSuccess": "Taak werd succesvol verwijderd"
+  "deleteTaskSuccess": "Taak werd succesvol verwijderd",
+  "upcomingMeetups": "Komende bijeenkomsten",
+  "noUpcomingMeetups": "Geen komende bijeenkomsten",
+  "upcomingTasks": "Komende taken",
+  "noUpcomingTasks": "Geen komende taken"
 }

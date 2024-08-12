@@ -4,7 +4,7 @@ import { requireAuthentication } from "@/features/auth/server-actions/auth";
 import { prisma } from "@/lib/db";
 import { routes } from "@/lib/routes";
 import { Nullable } from "@/lib/utils";
-import type { Prisma } from "@prisma/client";
+import { UserRole, type Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
 export const getMeetups = async (take?: number, skip?: number) => {
@@ -66,6 +66,27 @@ export const getMeetupById = async (id: string) => {
   }
 
   return meetup;
+};
+
+export const getUpcomingMeetups = async (date: Date) => {
+  await requireAuthentication();
+
+  const meetups = await prisma.meetup.findMany({
+    where: {
+      date: {
+        gte: date,
+      },
+    },
+    orderBy: {
+      date: "asc",
+    },
+    include: {
+      host: true,
+      speaker: true,
+    },
+  });
+
+  return meetups;
 };
 
 export const createMeetup = async (
