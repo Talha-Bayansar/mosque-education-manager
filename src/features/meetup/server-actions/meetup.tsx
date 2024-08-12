@@ -69,10 +69,11 @@ export const getMeetupById = async (id: string) => {
 };
 
 export const getUpcomingMeetups = async (date: Date) => {
-  await requireAuthentication();
+  const user = await requireAuthentication();
 
   const meetups = await prisma.meetup.findMany({
     where: {
+      teamId: user.teamId,
       date: {
         gte: date,
       },

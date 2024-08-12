@@ -40,6 +40,43 @@ export const getTasks = async () => {
   return tasks;
 };
 
+export const getUpcomingTasks = async (date: Date) => {
+  const user = await requireAuthentication();
+
+  const tasks = await prisma.task.findMany({
+    where: {
+      AND: [
+        {
+          teamId: user.teamId,
+        },
+        {
+          dueDate: {
+            gte: date,
+          },
+        },
+        {
+          assignedUser: {
+            id: user.role === UserRole.ADMIN ? undefined : user.id,
+          },
+        },
+      ],
+    },
+    orderBy: [
+      {
+        dueDate: "asc",
+      },
+      {
+        title: "asc",
+      },
+    ],
+    include: {
+      assignedUser: true,
+    },
+  });
+
+  return tasks;
+};
+
 export const createTask = async (
   taskInput: Nullable<Prisma.TaskCreateInput, "team">
 ) => {

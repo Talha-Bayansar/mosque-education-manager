@@ -104,5 +104,7 @@
   "upcomingMeetups": "Yaklaşan sohbetler",
   "noUpcomingMeetups": "Yaklaşan sohbet yok",
   "upcomingTasks": "Yaklaşan görevler",
-  "noUpcomingTasks": "Yaklaşan görev yok"
+  "noUpcomingTasks": "Yaklaşan görev yok",
+  "today": "Bugün",
+  "tomorrow": "Yarın"
 }

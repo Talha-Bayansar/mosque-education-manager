@@ -104,5 +104,7 @@
   "upcomingMeetups": "Komende bijeenkomsten",
   "noUpcomingMeetups": "Geen komende bijeenkomsten",
   "upcomingTasks": "Komende taken",
-  "noUpcomingTasks": "Geen komende taken"
+  "noUpcomingTasks": "Geen komende taken",
+  "today": "Vandaag",
+  "tomorrow": "Morgen"
 }
