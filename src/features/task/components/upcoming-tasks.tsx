@@ -13,15 +13,31 @@ import { getTranslations } from "next-intl/server";
 import { format } from "date-fns";
 import { View } from "@/shared/components/layout/view";
 import { getUpcomingTasks } from "../server-actions/task";
+import { TaskStatus } from "@prisma/client";
 
 export const UpcomingTasks = async () => {
   const t = await getTranslations();
   const upcomingTasks = await getUpcomingTasks(startOfToday());
 
+  const getStatusTranslation = (status: TaskStatus) => {
+    switch (status) {
+      case TaskStatus.BACKLOG:
+        return t("backlog");
+      case TaskStatus.TODO:
+        return t("todo");
+      case TaskStatus.IN_PROGRESS:
+        return t("inProgress");
+      case TaskStatus.DONE:
+        return t("done");
+      default:
+        return status;
+    }
+  };
+
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{t("upcomingMeetups")}</CardTitle>
+        <CardTitle>{t("upcomingTasks")}</CardTitle>
       </CardHeader>
       <CardContent>
         <View>
@@ -41,7 +57,7 @@ export const UpcomingTasks = async () => {
                     )}
                     <p className="flex gap-2 items-center">
                       <ListCheckIcon size={16} />
-                      <span>{task.status}</span>
+                      <span>{getStatusTranslation(task.status)}</span>
                     </p>
                     {task.assignedUser && (
                       <p className="flex gap-2 items-center">
