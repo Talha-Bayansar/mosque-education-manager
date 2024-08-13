@@ -44,7 +44,7 @@ export const CreateMeetupForm = ({ groups }: Props) => {
     mutationFn: (values: z.infer<typeof formSchema>) =>
       createMeetup({
         subject: values.subject,
-        date: values.date,
+        date: values.date.toISOString(),
         speaker: {
           connect: {
             id: values.speakerId,

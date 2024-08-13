@@ -4,8 +4,9 @@ import { requireAuthentication } from "@/features/auth/server-actions/auth";
 import { prisma } from "@/lib/db";
 import { routes } from "@/lib/routes";
 import { Nullable } from "@/lib/utils";
-import { UserRole, type Prisma } from "@prisma/client";
+import { type Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
+import { date } from "zod";
 
 export const getMeetups = async (take?: number, skip?: number) => {
   const user = await requireAuthentication();
@@ -31,7 +32,10 @@ export const getMeetups = async (take?: number, skip?: number) => {
     skip,
   });
 
-  return meetups;
+  return meetups.map((meetup) => ({
+    ...meetup,
+    date: meetup.date.toISOString(),
+  }));
 };
 
 export const getMeetupsCount = async () => {
@@ -65,7 +69,7 @@ export const getMeetupById = async (id: string) => {
     throw new Error("Meetup not found");
   }
 
-  return meetup;
+  return { ...meetup, date: meetup.date.toISOString() };
 };
 
 export const getUpcomingMeetups = async (date: Date) => {
@@ -87,17 +91,21 @@ export const getUpcomingMeetups = async (date: Date) => {
     },
   });
 
-  return meetups;
+  return meetups.map((meetup) => ({
+    ...meetup,
+    date: meetup.date.toISOString(),
+  }));
 };
 
 export const createMeetup = async (
-  input: Nullable<Prisma.MeetupCreateInput, "team">
+  input: Nullable<Prisma.MeetupCreateInput, "team"> & { date: string }
 ) => {
   const user = await requireAuthentication();
 
   const meetup = await prisma.meetup.create({
     data: {
       ...input,
+      date: new Date(input.date),
       team: {
         connect: {
           id: user.teamId,
@@ -113,7 +121,9 @@ export const createMeetup = async (
 
 export const updateMeetup = async (
   id: string,
-  input: Prisma.MeetupUpdateInput
+  input: Prisma.MeetupUpdateInput & {
+    date: string;
+  }
 ) => {
   const user = await requireAuthentication();
 
@@ -121,6 +131,7 @@ export const updateMeetup = async (
     where: { id, teamId: user.teamId },
     data: {
       ...input,
+      date: new Date(input.date),
       team: {
         connect: {
           id: user.teamId,

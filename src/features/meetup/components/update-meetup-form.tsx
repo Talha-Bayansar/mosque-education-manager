@@ -49,7 +49,7 @@ export const UpdateMeetupForm = ({ meetup, groups }: Props) => {
     mutationFn: (values: z.infer<typeof formSchema>) =>
       updateMeetup(meetup.id, {
         subject: values.subject,
-        date: values.date,
+        date: values.date.toISOString(),
         speaker: {
           connect: {
             id: values.speakerId,
@@ -82,7 +82,7 @@ export const UpdateMeetupForm = ({ meetup, groups }: Props) => {
       speakerId: meetup.speakerId ?? undefined,
       hostId: meetup.hostId ?? undefined,
       groupId: meetup.groupId ?? undefined,
-      date: meetup.date,
+      date: new Date(meetup.date),
     },
   });
 
