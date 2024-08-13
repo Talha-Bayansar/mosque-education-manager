@@ -21,5 +21,5 @@
   "lang": "nl-NL",
   "name": "Mosque education manager",
   "short_name": "MEM",
-  "start_url": "/dashboard"
+  "start_url": "/nl/dashboard"
 }
