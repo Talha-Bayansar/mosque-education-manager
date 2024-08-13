@@ -37,10 +37,10 @@ export const getTasks = async () => {
     },
   });
 
-  return tasks;
+  return tasks.map((t) => ({ ...t, dueDate: t.dueDate?.toISOString() }));
 };
 
-export const getUpcomingTasks = async (date: Date) => {
+export const getUpcomingTasks = async (date: string) => {
   const user = await requireAuthentication();
 
   const tasks = await prisma.task.findMany({
@@ -51,7 +51,7 @@ export const getUpcomingTasks = async (date: Date) => {
         },
         {
           dueDate: {
-            gte: date,
+            gte: new Date(date),
           },
         },
         {
@@ -74,17 +74,18 @@ export const getUpcomingTasks = async (date: Date) => {
     },
   });
 
-  return tasks;
+  return tasks.map((t) => ({ ...t, dueDate: t.dueDate?.toISOString() }));
 };
 
 export const createTask = async (
-  taskInput: Nullable<Prisma.TaskCreateInput, "team">
+  taskInput: Nullable<Prisma.TaskCreateInput, "team"> & { dueDate: string }
 ) => {
   const user = await requireAdmin();
 
   const task = await prisma.task.create({
     data: {
       ...taskInput,
+      dueDate: new Date(taskInput.dueDate),
       team: {
         connect: {
           id: user.teamId,
@@ -95,12 +96,12 @@ export const createTask = async (
 
   revalidatePath(routes.dashboard.tasks.root);
 
-  return task;
+  return { ...task, dueDate: task.dueDate?.toISOString() };
 };
 
 export const updateTask = async (
   id: string,
-  taskInput: Nullable<Prisma.TaskUpdateInput, "team">
+  taskInput: Nullable<Prisma.TaskUpdateInput, "team"> & { dueDate: string }
 ) => {
   const user = await requireAuthentication();
 
@@ -112,6 +113,7 @@ export const updateTask = async (
     where: { id, teamId: user.teamId },
     data: {
       ...taskInput,
+      dueDate: new Date(taskInput.dueDate),
       team: {
         connect: {
           id: user.teamId,
@@ -122,7 +124,7 @@ export const updateTask = async (
 
   revalidatePath(routes.dashboard.tasks.root);
 
-  return task;
+  return { ...task, dueDate: task.dueDate?.toISOString() };
 };
 
 export const deleteTask = async (id: string) => {

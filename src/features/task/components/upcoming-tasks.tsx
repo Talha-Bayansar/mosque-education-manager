@@ -1,4 +1,4 @@
-"use server";
+"use client";
 
 import { isArrayEmpty } from "@/lib/utils";
 import {
@@ -9,15 +9,18 @@ import {
 } from "@/shared/components/ui/card";
 import { isToday, isTomorrow, startOfToday } from "date-fns";
 import { CalendarIcon, Text, ListCheckIcon, UserIcon } from "lucide-react";
-import { getTranslations } from "next-intl/server";
 import { format } from "date-fns";
 import { View } from "@/shared/components/layout/view";
-import { getUpcomingTasks } from "../server-actions/task";
 import { TaskStatus } from "@prisma/client";
+import { useTranslations } from "next-intl";
+import { getUpcomingTasks } from "../server-actions/task";
 
-export const UpcomingTasks = async () => {
-  const t = await getTranslations();
-  const upcomingTasks = await getUpcomingTasks(startOfToday());
+type Props = {
+  upcomingTasks: Awaited<ReturnType<typeof getUpcomingTasks>>;
+};
+
+export const UpcomingTasks = ({ upcomingTasks }: Props) => {
+  const t = useTranslations();
 
   const getStatusTranslation = (status: TaskStatus) => {
     switch (status) {

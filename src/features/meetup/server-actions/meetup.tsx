@@ -71,14 +71,14 @@ export const getMeetupById = async (id: string) => {
   return { ...meetup, date: meetup.date.toISOString() };
 };
 
-export const getUpcomingMeetups = async (date: Date) => {
+export const getUpcomingMeetups = async (date: string) => {
   const user = await requireAuthentication();
 
   const meetups = await prisma.meetup.findMany({
     where: {
       teamId: user.teamId,
       date: {
-        gte: date,
+        gte: new Date(date),
       },
     },
     orderBy: {

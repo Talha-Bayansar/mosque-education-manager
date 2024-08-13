@@ -40,7 +40,7 @@ export const CreateTaskForm = ({ users }: Props) => {
       await createTask({
         title: values.title,
         description: values.description,
-        dueDate: values.dueDate,
+        dueDate: values.dueDate?.toISOString() ?? "",
         assignedUser: values.assignedUserId
           ? {
               connect: {

@@ -20,15 +20,13 @@ import { Input } from "@/shared/components/ui/input";
 import { SearchSelect } from "@/shared/components/search-select";
 import { DateField } from "@/shared/components/date-field";
 import { Textarea } from "@/shared/components/ui/textarea";
-import { updateTask } from "../server-actions/task";
+import { getTasks, updateTask } from "../server-actions/task";
 import { useSession } from "@/features/auth/hooks/use-session";
 import { RequireRole } from "@/features/auth/components/require-role";
 
 type Props = {
   users: User[];
-  task: Task & {
-    assignedUser?: User;
-  };
+  task: Awaited<ReturnType<typeof getTasks>>[number];
 };
 
 const formSchema = z.object({
@@ -47,7 +45,7 @@ export const UpdateTaskForm = ({ users, task }: Props) => {
       await updateTask(task.id, {
         title: values.title,
         description: values.description,
-        dueDate: values.dueDate,
+        dueDate: values.dueDate?.toISOString() ?? "",
         assignedUser: values.assignedUserId
           ? {
               connect: {
@@ -70,7 +68,7 @@ export const UpdateTaskForm = ({ users, task }: Props) => {
       title: task.title,
       description: task.description ?? "",
       assignedUserId: task.assignedUser?.id ?? "",
-      dueDate: task.dueDate ?? undefined,
+      dueDate: task.dueDate ? new Date(task.dueDate) : undefined,
     },
   });
 
@@ -152,10 +150,12 @@ export const UpdateTaskForm = ({ users, task }: Props) => {
                     value: user.id,
                   }))}
                   selectedItem={
-                    task.assignedUser && {
-                      label: task.assignedUser.email,
-                      value: task.assignedUser.id,
-                    }
+                    task.assignedUser
+                      ? {
+                          label: task.assignedUser.email,
+                          value: task.assignedUser.id,
+                        }
+                      : undefined
                   }
                   placeholder={t("selectUser")}
                   onSelect={(value) => form.setValue("assignedUserId", value)}
