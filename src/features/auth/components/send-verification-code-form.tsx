@@ -70,7 +70,12 @@ export const SendVerificationCodeForm = () => {
             <FormItem>
               <FormLabel>{t("email")}</FormLabel>
               <FormControl>
-                <Input placeholder="example@acme.com" {...field} />
+                <Input
+                  placeholder="example@acme.com"
+                  type="email"
+                  inputMode="email"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
