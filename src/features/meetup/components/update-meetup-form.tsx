@@ -24,7 +24,7 @@ import { DateField } from "@/shared/components/date-field";
 import { SearchSelect } from "@/shared/components/search-select";
 import type { Group, Person } from "@prisma/client";
 import { SearchPeopleSelect } from "@/features/person/components/search-people-select";
-import { Meetup } from "../types";
+import type { Meetup } from "../types";
 
 const formSchema = z.object({
   subject: z.string().min(1).max(50),

@@ -1,7 +1,8 @@
 import { getGroups } from "@/features/group/server-actions/group";
 import { UpdateMeetupForm } from "@/features/meetup/components/update-meetup-form";
 import { getMeetupById } from "@/features/meetup/server-actions/meetup";
-import type { Group, Meetup, Person } from "@prisma/client";
+import type { Meetup } from "@/features/meetup/types";
+import type { Group, Person } from "@prisma/client";
 
 type Props = {
   params: {
