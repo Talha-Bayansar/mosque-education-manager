@@ -6,26 +6,28 @@ import {
   DrawerContent,
   DrawerTitle,
 } from "@/shared/components/ui/drawer";
-import { UserRole, type Task, type User } from "@prisma/client";
+import { UserRole, type User } from "@prisma/client";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { UpdateTaskForm } from "./update-task-form";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { deleteTask } from "../server-actions/task";
+import { deleteTask, getUpcomingTasks } from "../server-actions/task";
 import { AlertModal } from "@/shared/components/alert-modal";
 import { Button } from "@/shared/components/ui/button";
 import { View } from "@/shared/components/layout/view";
 import { RequireRole } from "@/features/auth/components/require-role";
 
 type Props = {
-  tasks: Task[];
+  tasks: Awaited<ReturnType<typeof getUpcomingTasks>>;
   users: User[];
 };
 
 export const TasksBoard = ({ tasks, users }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+  const [selectedTask, setSelectedTask] = useState<
+    Awaited<ReturnType<typeof getUpcomingTasks>>[number] | null
+  >(null);
   const t = useTranslations();
   const deleteTaskMutation = useMutation({
     mutationFn: async (id: string) => await deleteTask(id),

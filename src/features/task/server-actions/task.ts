@@ -101,7 +101,7 @@ export const createTask = async (
 
 export const updateTask = async (
   id: string,
-  taskInput: Nullable<Prisma.TaskUpdateInput, "team"> & { dueDate: string }
+  taskInput: Nullable<Prisma.TaskUpdateInput, "team"> & { dueDate?: string }
 ) => {
   const user = await requireAuthentication();
 
@@ -113,7 +113,7 @@ export const updateTask = async (
     where: { id, teamId: user.teamId },
     data: {
       ...taskInput,
-      dueDate: new Date(taskInput.dueDate),
+      dueDate: taskInput.dueDate && new Date(taskInput.dueDate),
       team: {
         connect: {
           id: user.teamId,

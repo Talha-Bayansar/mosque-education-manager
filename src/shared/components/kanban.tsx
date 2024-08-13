@@ -1,6 +1,6 @@
 "use client";
 
-import { TaskStatus, type User, type Task } from "@prisma/client";
+import { TaskStatus } from "@prisma/client";
 import { CalendarCheck, Grip, UserIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Card, CardHeader, CardTitle, CardContent } from "./ui/card";
@@ -24,26 +24,23 @@ import { CSS } from "@dnd-kit/utilities";
 import { useEffect, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { updateTask } from "@/features/task/server-actions/task";
+import {
+  getUpcomingTasks,
+  updateTask,
+} from "@/features/task/server-actions/task";
 import { format } from "date-fns";
 
 type Props = {
-  tasks: (Task & {
-    assignedUser?: User;
-  })[];
+  tasks: Awaited<ReturnType<typeof getUpcomingTasks>>;
   onClickTask?: (
-    task: Task & {
-      assignedUser?: User;
-    }
+    task: Awaited<ReturnType<typeof getUpcomingTasks>>[number]
   ) => unknown;
 };
 
 type Column = {
   title: string;
   value: TaskStatus;
-  tasks: (Task & {
-    assignedUser?: User;
-  })[];
+  tasks: Awaited<ReturnType<typeof getUpcomingTasks>>;
 };
 
 export const Kanban = ({ tasks: data, onClickTask }: Props) => {
@@ -101,7 +98,11 @@ export const Kanban = ({ tasks: data, onClickTask }: Props) => {
       });
       setTasks((tasks) =>
         tasks.map((task) =>
-          task.id === active.id ? ({ ...task, status: over?.id } as Task) : task
+          task.id === active.id
+            ? ({ ...task, status: over?.id } as Awaited<
+                ReturnType<typeof getUpcomingTasks>
+              >[number])
+            : task
         )
       );
     }
@@ -131,9 +132,7 @@ const KanbanColumn = ({
 }: {
   column: Column;
   onClickItem?: (
-    task: Task & {
-      assignedUser?: User;
-    }
+    task: Awaited<ReturnType<typeof getUpcomingTasks>>[number]
   ) => unknown;
 }) => {
   const { isOver, setNodeRef } = useDroppable({
@@ -168,11 +167,9 @@ const KanbanItem = ({
   task,
   onClick,
 }: {
-  task: Task & { assignedUser?: User };
+  task: Awaited<ReturnType<typeof getUpcomingTasks>>[number];
   onClick?: (
-    task: Task & {
-      assignedUser?: User;
-    }
+    task: Awaited<ReturnType<typeof getUpcomingTasks>>[number]
   ) => unknown;
 }) => {
   const t = useTranslations();
