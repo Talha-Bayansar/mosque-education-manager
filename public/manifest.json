@@ -1,1 +1,25 @@
-{"theme_color":"#4979b3","background_color":"#4979b3","icons":[{"purpose":"maskable","sizes":"512x512","src":"icon512_maskable.png","type":"image/png"},{"purpose":"any","sizes":"512x512","src":"icon512_rounded.png","type":"image/png"}],"orientation":"portrait","display":"standalone","dir":"auto","lang":"nl-NL","name":"Mosque education manager","short_name":"MEM","start_url":"/dashboard"}
+{
+  "theme_color": "#ffffff",
+  "background_color": "#4979b3",
+  "icons": [
+    {
+      "purpose": "maskable",
+      "sizes": "512x512",
+      "src": "icon512_maskable.png",
+      "type": "image/png"
+    },
+    {
+      "purpose": "any",
+      "sizes": "512x512",
+      "src": "icon512_rounded.png",
+      "type": "image/png"
+    }
+  ],
+  "orientation": "portrait",
+  "display": "standalone",
+  "dir": "auto",
+  "lang": "nl-NL",
+  "name": "Mosque education manager",
+  "short_name": "MEM",
+  "start_url": "/dashboard"
+}
