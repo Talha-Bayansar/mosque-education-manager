@@ -1,9 +1,13 @@
-"use server";
+"use client";
 
 import { View } from "@/shared/components/layout/view";
-import { getTranslations } from "next-intl/server";
-import { getUpcomingMeetups } from "../server-actions/meetup";
-import { format, isSameDay, startOfToday, startOfTomorrow } from "date-fns";
+import {
+  format,
+  isAfter,
+  isSameDay,
+  startOfToday,
+  startOfTomorrow,
+} from "date-fns";
 import {
   Card,
   CardContent,
@@ -12,10 +16,16 @@ import {
 } from "@/shared/components/ui/card";
 import { CalendarIcon, HouseIcon, UserIcon } from "lucide-react";
 import { isArrayEmpty } from "@/lib/utils";
+import { useTranslations } from "next-intl";
+import { getUpcomingMeetups } from "../server-actions/meetup";
 
-export const UpcomingMeetups = async () => {
-  const t = await getTranslations();
-  const upcomingMeetups = await getUpcomingMeetups(startOfToday());
+type Props = {
+  upcomingMeetups: Awaited<ReturnType<typeof getUpcomingMeetups>>;
+};
+
+export const UpcomingMeetups = ({ upcomingMeetups }: Props) => {
+  const t = useTranslations();
+  const today = startOfToday();
 
   return (
     <Card>
@@ -26,37 +36,45 @@ export const UpcomingMeetups = async () => {
         <View>
           <View>
             {!isArrayEmpty(upcomingMeetups) ? (
-              upcomingMeetups.map((meetup) => (
-                <Card key={meetup.id}>
-                  <CardHeader>
-                    <h3 className="font-medium">{meetup.subject}</h3>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="flex gap-2 items-center">
-                      <UserIcon size={16} />
-                      <span>
-                        {`${meetup.speaker?.firstName} ${meetup.speaker?.lastName}`}
-                      </span>
-                    </p>
-                    <p className="flex gap-2 items-center">
-                      <HouseIcon size={16} />
-                      <span>
-                        {`${meetup.host?.firstName} ${meetup.host?.lastName}`}
-                      </span>
-                    </p>
-                    <p className="flex gap-2 items-center">
-                      <CalendarIcon size={16} />
-                      <span>
-                        {isSameDay(new Date(meetup.date), startOfToday())
-                          ? t("today")
-                          : isSameDay(new Date(meetup.date), startOfTomorrow())
-                          ? t("tomorrow")
-                          : format(new Date(meetup.date), "dd/MM/yyyy")}
-                      </span>
-                    </p>
-                  </CardContent>
-                </Card>
-              ))
+              upcomingMeetups
+                .filter(
+                  (meetup) =>
+                    isSameDay(meetup.date, today) || isAfter(meetup.date, today)
+                )
+                .map((meetup) => (
+                  <Card key={meetup.id}>
+                    <CardHeader>
+                      <h3 className="font-medium">{meetup.subject}</h3>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="flex gap-2 items-center">
+                        <UserIcon size={16} />
+                        <span>
+                          {`${meetup.speaker?.firstName} ${meetup.speaker?.lastName}`}
+                        </span>
+                      </p>
+                      <p className="flex gap-2 items-center">
+                        <HouseIcon size={16} />
+                        <span>
+                          {`${meetup.host?.firstName} ${meetup.host?.lastName}`}
+                        </span>
+                      </p>
+                      <p className="flex gap-2 items-center">
+                        <CalendarIcon size={16} />
+                        <span>
+                          {isSameDay(new Date(meetup.date), startOfToday())
+                            ? t("today")
+                            : isSameDay(
+                                new Date(meetup.date),
+                                startOfTomorrow()
+                              )
+                            ? t("tomorrow")
+                            : format(new Date(meetup.date), "dd/MM/yyyy")}
+                        </span>
+                      </p>
+                    </CardContent>
+                  </Card>
+                ))
             ) : (
               <p>{t("noUpcomingMeetups")}</p>
             )}
