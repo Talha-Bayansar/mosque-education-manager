@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/shared/components/ui/card";
-import { isToday, isTomorrow, startOfToday } from "date-fns";
+import { isToday, isTomorrow } from "date-fns";
 import { CalendarIcon, Text, ListCheckIcon, UserIcon } from "lucide-react";
 import { format } from "date-fns";
 import { View } from "@/shared/components/layout/view";
