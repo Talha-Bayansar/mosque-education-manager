@@ -76,9 +76,6 @@ export const UpdateMeetupForm = ({ meetup, groups }: Props) => {
     },
   });
 
-  console.log("meetup.date", meetup.date);
-  console.log("new Date(meetup.date)", new Date(meetup.date));
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {

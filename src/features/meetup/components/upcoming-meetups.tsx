@@ -3,7 +3,7 @@
 import { View } from "@/shared/components/layout/view";
 import { getTranslations } from "next-intl/server";
 import { getUpcomingMeetups } from "../server-actions/meetup";
-import { format, isToday, isTomorrow, startOfToday } from "date-fns";
+import { format, isSameDay, startOfToday, startOfTomorrow } from "date-fns";
 import {
   Card,
   CardContent,
@@ -47,9 +47,9 @@ export const UpcomingMeetups = async () => {
                     <p className="flex gap-2 items-center">
                       <CalendarIcon size={16} />
                       <span>
-                        {isToday(new Date(meetup.date))
+                        {isSameDay(new Date(meetup.date), startOfToday())
                           ? t("today")
-                          : isTomorrow(new Date(meetup.date))
+                          : isSameDay(new Date(meetup.date), startOfTomorrow())
                           ? t("tomorrow")
                           : format(new Date(meetup.date), "dd/MM/yyyy")}
                       </span>
