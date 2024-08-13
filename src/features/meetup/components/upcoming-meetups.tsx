@@ -47,11 +47,11 @@ export const UpcomingMeetups = async () => {
                     <p className="flex gap-2 items-center">
                       <CalendarIcon size={16} />
                       <span>
-                        {isToday(meetup.date)
+                        {isToday(new Date(meetup.date))
                           ? t("today")
-                          : isTomorrow(meetup.date)
+                          : isTomorrow(new Date(meetup.date))
                           ? t("tomorrow")
-                          : format(meetup.date, "dd/MM/yyyy")}
+                          : format(new Date(meetup.date), "dd/MM/yyyy")}
                       </span>
                     </p>
                   </CardContent>
