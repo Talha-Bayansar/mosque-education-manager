@@ -1,58 +1,61 @@
 export const routes = {
   root: "/",
+  getStarted: {
+    root: "/get-started",
+  },
   signin: { root: "/sign-in" },
   dashboard: {
-    root: "/dashboard",
+    root: "/",
     groups: {
-      root: "/dashboard/groups",
+      root: "/groups",
       create: {
-        root: "/dashboard/groups/create",
+        root: "/groups/create",
       },
       id: (id: string) => ({
-        root: `/dashboard/groups/${id}`,
+        root: `/groups/${id}`,
         updateMembers: {
-          root: `/dashboard/groups/${id}/update-members`,
+          root: `/groups/${id}/update-members`,
         },
       }),
     },
     meetups: {
-      root: "/dashboard/meetups",
+      root: "/meetups",
       create: {
-        root: "/dashboard/meetups/create",
+        root: "/meetups/create",
       },
       id: (id: string) => ({
-        root: `/dashboard/meetups/${id}`,
+        root: `/meetups/${id}`,
         update: {
-          root: `/dashboard/meetups/${id}/update`,
+          root: `/meetups/${id}/update`,
         },
         attendance: {
-          root: `/dashboard/meetups/${id}/attendance`,
+          root: `/meetups/${id}/attendance`,
         },
       }),
     },
     people: {
-      root: "/dashboard/people",
+      root: "/people",
       create: {
-        root: "/dashboard/people/create",
+        root: "/people/create",
       },
       id: (id: string) => ({
-        root: `/dashboard/people/${id}`,
+        root: `/people/${id}`,
         update: {
-          root: `/dashboard/people/${id}/update`,
+          root: `/people/${id}/update`,
         },
       }),
     },
     posters: {
-      root: "/dashboard/posters",
+      root: "/posters",
     },
     settings: {
-      root: "/dashboard/settings",
+      root: "/settings",
     },
     tasks: {
-      root: "/dashboard/tasks",
+      root: "/tasks",
     },
     team: {
-      root: "/dashboard/team",
+      root: "/team",
     },
   },
 };
