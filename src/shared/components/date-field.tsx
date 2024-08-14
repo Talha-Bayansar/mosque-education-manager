@@ -65,7 +65,11 @@ export const DateField = ({
           toDate={enableFutureSelection ? undefined : new Date()}
           mode="single"
           selected={field.value}
-          onSelect={field.onChange}
+          onSelect={(date) => {
+            if (date) {
+              field.onChange(date);
+            }
+          }}
         />
       </PopoverContent>
     </Popover>
