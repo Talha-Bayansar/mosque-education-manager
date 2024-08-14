@@ -24,23 +24,19 @@ import { CSS } from "@dnd-kit/utilities";
 import { useEffect, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
-import {
-  getUpcomingTasks,
-  updateTask,
-} from "@/features/task/server-actions/task";
+import { updateTask } from "@/features/task/server-actions/task";
 import { format } from "date-fns";
+import type { Task } from "@/features/task/types";
 
 type Props = {
-  tasks: Awaited<ReturnType<typeof getUpcomingTasks>>;
-  onClickTask?: (
-    task: Awaited<ReturnType<typeof getUpcomingTasks>>[number]
-  ) => unknown;
+  tasks: Task[];
+  onClickTask?: (task: Task) => unknown;
 };
 
 type Column = {
   title: string;
   value: TaskStatus;
-  tasks: Awaited<ReturnType<typeof getUpcomingTasks>>;
+  tasks: Task[];
 };
 
 export const Kanban = ({ tasks: data, onClickTask }: Props) => {
@@ -98,11 +94,7 @@ export const Kanban = ({ tasks: data, onClickTask }: Props) => {
       });
       setTasks((tasks) =>
         tasks.map((task) =>
-          task.id === active.id
-            ? ({ ...task, status: over?.id } as Awaited<
-                ReturnType<typeof getUpcomingTasks>
-              >[number])
-            : task
+          task.id === active.id ? ({ ...task, status: over?.id } as Task) : task
         )
       );
     }
@@ -131,9 +123,7 @@ const KanbanColumn = ({
   onClickItem,
 }: {
   column: Column;
-  onClickItem?: (
-    task: Awaited<ReturnType<typeof getUpcomingTasks>>[number]
-  ) => unknown;
+  onClickItem?: (task: Task) => unknown;
 }) => {
   const { isOver, setNodeRef } = useDroppable({
     id: column.value,
@@ -167,10 +157,8 @@ const KanbanItem = ({
   task,
   onClick,
 }: {
-  task: Awaited<ReturnType<typeof getUpcomingTasks>>[number];
-  onClick?: (
-    task: Awaited<ReturnType<typeof getUpcomingTasks>>[number]
-  ) => unknown;
+  task: Task;
+  onClick?: (task: Task) => unknown;
 }) => {
   const t = useTranslations();
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
