@@ -48,19 +48,19 @@ export const UpcomingMeetups = ({ upcomingMeetups }: Props) => {
                     </CardHeader>
                     <CardContent>
                       <p className="flex gap-2 items-center">
-                        <UserIcon size={16} />
+                        <UserIcon className="flex-shrink-0" size={16} />
                         <span>
                           {`${meetup.speaker?.firstName} ${meetup.speaker?.lastName}`}
                         </span>
                       </p>
                       <p className="flex gap-2 items-center">
-                        <HouseIcon size={16} />
+                        <HouseIcon className="flex-shrink-0" size={16} />
                         <span>
                           {`${meetup.host?.firstName} ${meetup.host?.lastName}`}
                         </span>
                       </p>
                       <p className="flex gap-2 items-center">
-                        <CalendarIcon size={16} />
+                        <CalendarIcon className="flex-shrink-0" size={16} />
                         <span>
                           {isSameDay(new Date(meetup.date), startOfToday())
                             ? t("today")
